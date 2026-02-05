@@ -6,6 +6,7 @@ import { Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RESUME_DATA } from "@/data/resume-data";
 import { cn } from "@/app/lib/utils";
+import { ThemeToggle } from "./theme-toggle";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -20,21 +21,23 @@ export const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: "About", href: "#about" },
+    { name: "About", href: "#skills" },
     { name: "Experience", href: "#experience" },
     { name: "Projects", href: "#projects" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
     <header
       className={cn(
-        "bg-background/50 sticky top-0 z-50 w-full border-b border-transparent backdrop-blur-xl transition-all",
-        isScrolled && "border-border/50 bg-background/80"
+        "bg-background/20 sticky top-0 z-50 w-full border-b border-transparent backdrop-blur-md transition-all",
+        isScrolled && "border-border/40 bg-background/40"
       )}
     >
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
         {/* Logo / Name */}
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <Link
             href="/"
             className="text-lg font-bold tracking-tight transition-opacity hover:opacity-80"

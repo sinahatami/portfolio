@@ -52,8 +52,8 @@ export const RESUME_DATA = {
       title: "Senior Front-End Consultant",
       start: "May 2025",
       end: "Present",
-      description:
-        "Providing expert front-end development services to startups and SMEs. Developed custom React/Angular apps for 5+ clients, reducing deployment cycles by 50% via Docker/Git CI/CD pipelines.",
+      summary: "Specialized consultancy for high-growth startups and SMEs.",
+      description: "Provided expert front-end development services...",
     },
     {
       company: "Widecons",
@@ -62,6 +62,7 @@ export const RESUME_DATA = {
       title: "Full-Stack Engineer",
       start: "Oct 2024",
       end: "Apr 2025",
+      summary: "Specialized consultancy for high-growth startups and SMEs.",
       description:
         "Engineered features for green energy analytics using React and Node.js. Boosted platform efficiency by 70% and implemented lean production methodologies in a fast-paced startup environment.",
     },
@@ -72,6 +73,7 @@ export const RESUME_DATA = {
       title: "Front-End Developer",
       start: "June 2021",
       end: "Sep 2022",
+      summary: "Specialized consultancy for high-growth startups and SMEs.",
       description:
         "Led Micro-Frontend architecture across 25+ modules handling 100K+ daily transactions. Developed reusable UI libraries that accelerated team productivity by 60%.",
     },
@@ -82,21 +84,37 @@ export const RESUME_DATA = {
       title: "Front-End Developer",
       start: "May 2019",
       end: "June 2021",
+      summary: "Specialized consultancy for high-growth startups and SMEs.",
       description:
         "Engineered 8+ large-scale ERP projects. Optimized legacy code performance by 90% (load times < 2s). Mentored 7 junior developers, improving team code quality metrics by 50%.",
     },
   ],
   skills: [
-    "React/Next.js",
-    "Angular/RxJS",
-    "TypeScript",
-    "Node.js",
-    "GraphQL",
-    "Docker/AWS",
-    "Tailwind CSS",
-    "Python",
-    "PostgreSQL",
-    "Micro-Frontends",
+    {
+      category: "Software Architecture",
+      items: [
+        "React/Next.js 15",
+        "TypeScript",
+        "Micro-Frontends",
+        "Node.js",
+        "GraphQL",
+        "Docker",
+        "AWS",
+        "System Design",
+      ],
+    },
+    {
+      category: "Data Science & AI",
+      items: [
+        "Python",
+        "Pandas/NumPy",
+        "Scikit-Learn",
+        "Computer Vision",
+        "NLP",
+        "TensorFlow",
+        "Data Visualization (D3.js)",
+      ],
+    },
   ],
   projects: [
     {

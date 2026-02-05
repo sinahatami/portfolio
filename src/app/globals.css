@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -44,8 +46,8 @@
     --secondary-foreground: hsl(240 5.9% 10%);
     --muted: hsl(240 4.8% 95.9%);
     --muted-foreground: hsl(240 3.8% 46.1%);
-    --accent: hsl(240 4.8% 95.9%);
-    --accent-foreground: hsl(240 5.9% 10%);
+    --accent: hsl(142 76% 36%);
+    --accent-foreground: hsl(0 0% 100%);
     --destructive: hsl(0 84.2% 60.2%);
     --destructive-foreground: hsl(0 0% 98%);
     --border: hsl(240 5.9% 90%);
@@ -68,8 +70,8 @@
     --secondary-foreground: hsl(0 0% 98%);
     --muted: hsl(240 3.7% 15.9%);
     --muted-foreground: hsl(240 5% 64.9%);
-    --accent: hsl(142 76% 36%); /* Your Sustainable Teal */
-    --accent-foreground: hsl(0 0% 98%);
+    --accent: hsl(142 70% 50%); /* Your Sustainable Teal */
+    --accent-foreground: hsl(144 65% 10%);
     --destructive: hsl(0 62.8% 30.6%);
     --destructive-foreground: hsl(0 0% 98%);
     --border: hsl(240 3.7% 15.9%);
@@ -90,6 +92,10 @@
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
+  }
+  button,
+  [role="button"] {
+    cursor: pointer !important;
   }
 }
 
@@ -115,11 +121,12 @@
   button, /* Action buttons */
   .fixed, /* The Command Menu footer */
   a[href^="http"]::after {
-    /* Optional: Print URLs next to links? No, keeps it clean. */
+    display: none !important;
   }
 
   /* 3. Layout Adjustments for Paper */
   main {
+    display: block !important;
     padding: 0 !important;
     margin: 0 !important;
     max-width: 100% !important;
@@ -134,4 +141,44 @@
   .hidden.lg\:block.relative {
     display: none !important;
   }
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 5px;
+  border: 2px solid hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--accent));
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --accent-text: hsl(142 76% 25%);
+  }
+}
+.light .text-accent-hover {
+  color: var(--accent-text, hsl(var(--accent)));
 }
