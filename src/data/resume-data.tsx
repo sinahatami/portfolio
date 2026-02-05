@@ -100,23 +100,52 @@ export const RESUME_DATA = {
   ],
   projects: [
     {
-      title: "Rick and Morty Database",
-      techStack: ["React", "Clean Architecture", "Performance"],
+      title: "Rick and Morty Universe",
+      slug: "rick-and-morty-universe", // Used for the URL
+      techStack: ["React", "Next.js", "TanStack Query", "Framer Motion"],
       description:
-        "Interdimensional database exploring characters and locations. Features real-time search, pagination, and responsive design.",
+        "A high-performance interdimensional encyclopedia. Built to demonstrate state management complex data fetching patterns.",
       link: {
         label: "github.com",
         href: "https://github.com/sinahatami/rick-and-morty-web",
       },
+      // Extended Content for the Case Study
+      content: {
+        tagline: "Mapping the Multiverse with Millisecond Precision",
+        challenge:
+          "The API provides thousands of nodes with complex relationships. The challenge was to create a seamless, non-blocking exploration experience without overwhelming the browser's main thread.",
+        solution:
+          "Implemented an optimistic caching strategy using TanStack Query to pre-fetch character associations. Used Virtualization for infinite scrolling lists to maintain 60fps even with 1000+ DOM nodes.",
+        features: [
+          "Server-Side Rendering for SEO",
+          "Optimistic UI Updates",
+          "Virtual Scrolling for Performance",
+          "Dynamic Theme Generation based on character species",
+        ],
+      },
     },
     {
       title: "Life Expectancy Viz",
-      techStack: ["Angular", "Python", "Data Viz"],
+      slug: "life-expectancy-viz",
+      techStack: ["Angular", "D3.js", "Python", "TypeScript"],
       description:
-        "Interactive dashboard for global life expectancy data using TypeScript, SCSS, and Python for data processing.",
+        "Interactive dashboard for visualizing global life expectancy data. Features complex data normalization and canvas-based rendering.",
       link: {
         label: "github.com",
         href: "https://github.com/sinahatami/dv-project",
+      },
+      content: {
+        tagline: "Visualizing Human Longevity Trends",
+        challenge:
+          "Rendering 50+ years of data across 195 countries created a performance bottleneck in standard DOM-based charting libraries.",
+        solution:
+          "Leveraged D3.js with a Canvas layer for the heavy rendering, keeping the UI thread responsive. Backend Python processing normalized the disparate datasets before they ever reached the client.",
+        features: [
+          "Canvas-based rendering engine",
+          "Python Pandas for data normalization",
+          "Interactive time-series scrubbing",
+          "Exportable reports in PDF/CSV",
+        ],
       },
     },
   ],
