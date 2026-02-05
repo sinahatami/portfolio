@@ -4,11 +4,11 @@ import "./globals.css";
 import React from "react";
 import { Navbar } from "@/components/navbar";
 import { CommandMenu } from "@/components/command-menu";
-import { Toaster } from "sonner";
 import { RESUME_DATA } from "@/data/resume-data";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { Toaster } from "@/components/ui/toaster";
 
 // 1. Configure Fonts
 const inter = Inter({
@@ -50,9 +50,11 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+      {/* ADD suppressHydrationWarning HERE TOO */}
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} bg-background text-foreground`}
+        suppressHydrationWarning
       >
         <script
           type="application/ld+json"
@@ -69,9 +71,9 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
+          <Toaster />
           <CommandMenu />
           <ScrollToTop />
-          <Toaster />
         </ThemeProvider>
       </body>
     </html>
