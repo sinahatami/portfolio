@@ -5,6 +5,7 @@ import { SkillSelection } from "@/components/sections/skill-section";
 import { ContactSection } from "@/components/sections/contact-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
+import { ErrorBoundary } from "@/components/error-boundary";
 
 export default function Page() {
   return (
@@ -15,19 +16,25 @@ export default function Page() {
         <div className="absolute right-0 bottom-0 h-[500px] w-[500px] bg-[radial-gradient(circle_800px_at_100%_200px,#3b82f610,transparent)]"></div>
       </div>
 
-      <HeroSection />
+      <main id="main-content" tabIndex={-1}>
+        <ErrorBoundary>
+          <HeroSection />
+        </ErrorBoundary>
 
-      <ExperienceSection />
+        <ErrorBoundary>
+          <ExperienceSection />
+        </ErrorBoundary>
 
-      <ProjectsSection />
+        <ProjectsSection />
 
-      <EducationSection />
+        <EducationSection />
 
-      <SkillSelection />
+        <SkillSelection />
 
-      <TestimonialsSection />
+        <TestimonialsSection />
 
-      <ContactSection />
+        <ContactSection />
+      </main>
     </div>
   );
 }

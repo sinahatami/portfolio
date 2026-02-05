@@ -49,12 +49,16 @@ export const Navbar = () => {
         </div>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+        <nav
+          className="hidden items-center gap-6 text-sm font-medium md:flex"
+          aria-label="Main navigation"
+        >
           {navLinks.map((link) => (
             <Link
               key={link.name}
               href={link.href}
-              className="text-muted-foreground hover:text-foreground underline-offset-4 transition-colors hover:underline"
+              className="text-muted-foreground hover:text-foreground focus-visible:ring-accent rounded-sm px-2 py-1 underline-offset-4 transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+              aria-label={`Navigate to ${link.name} section`}
             >
               {link.name}
             </Link>

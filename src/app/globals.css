@@ -3,182 +3,278 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  /* Modern Color Palette */
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(222.2 84% 4.9%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(222.2 84% 4.9%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(222.2 84% 4.9%);
+  --color-primary: hsl(222.2 47.4% 11.2%);
+  --color-primary-foreground: hsl(210 40% 98%);
+  --color-secondary: hsl(210 40% 96.1%);
+  --color-secondary-foreground: hsl(222.2 47.4% 11.2%);
+  --color-muted: hsl(210 40% 96.1%);
+  --color-muted-foreground: hsl(215.4 16.3% 46.9%);
+  --color-accent: hsl(199, 89%, 48%); /* Professional blue */
+  --color-accent-foreground: hsl(210 40% 98%);
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive-foreground: hsl(210 40% 98%);
+  --color-border: hsl(214.3 31.8% 91.4%);
+  --color-input: hsl(214.3 31.8% 91.4%);
+  --color-ring: hsl(222.2 84% 4.9%);
 
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
+  /* Extended palette */
+  --color-surface: hsl(0 0% 98%);
+  --color-surface-dark: hsl(222.2 84% 4.9%);
+  --color-gradient-start: hsl(199, 89%, 48%);
+  --color-gradient-mid: hsl(217, 91%, 60%);
+  --color-gradient-end: hsl(235, 86%, 65%);
 
-  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+  --radius-lg: 1rem;
+  --radius-md: 0.75rem;
+  --radius-sm: 0.5rem;
+
+  /* Modern shadows */
+  --shadow-elevation-low: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-elevation-medium: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-elevation-high: 0 10px 40px rgba(0, 0, 0, 0.12);
+  --shadow-neo: 6px 6px 0 0 rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.15);
+
+  /* Fonts */
+  --font-sans:
+    var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Inter",
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  --font-mono:
+    var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    monospace;
 }
 
-/* The Base Layer */
+/* Dark Mode */
+.dark {
+  --color-background: hsl(222.2 84% 4.9%);
+  --color-foreground: hsl(210 40% 98%);
+  --color-card: hsl(222.2 84% 6%);
+  --color-card-foreground: hsl(210 40% 98%);
+  --color-popover: hsl(222.2 84% 6%);
+  --color-popover-foreground: hsl(210 40% 98%);
+  --color-primary: hsl(210 40% 98%);
+  --color-primary-foreground: hsl(222.2 47.4% 11.2%);
+  --color-secondary: hsl(217.2 32.6% 17.5%);
+  --color-secondary-foreground: hsl(210 40% 98%);
+  --color-muted: hsl(217.2 32.6% 17.5%);
+  --color-muted-foreground: hsl(215 20.2% 65.1%);
+  --color-accent: hsl(199, 100%, 55%); /* Brighter in dark mode */
+  --color-accent-foreground: hsl(210 40% 98%);
+  --color-destructive: hsl(0 62.8% 30.6%);
+  --color-destructive-foreground: hsl(210 40% 98%);
+  --color-border: hsl(217.2 32.6% 20%);
+  --color-input: hsl(217.2 32.6% 20%);
+  --color-ring: hsl(212.7 26.8% 83.9%);
+
+  --color-surface: hsl(222.2 84% 6%);
+  --color-surface-dark: hsl(222.2 84% 2%);
+  --color-gradient-start: hsl(199, 100%, 55%);
+  --color-gradient-mid: hsl(217, 100%, 65%);
+  --color-gradient-end: hsl(235, 100%, 70%);
+
+  --shadow-neo: 6px 6px 0 0 rgba(255, 255, 255, 0.1);
+  --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.2);
+}
+
+/* Base styles */
 @layer base {
-  :root {
-    --background: hsl(0 0% 100%);
-    --foreground: hsl(240 10% 3.9%);
-    --card: hsl(0 0% 100%);
-    --card-foreground: hsl(240 10% 3.9%);
-    --popover: hsl(0 0% 100%);
-    --popover-foreground: hsl(240 10% 3.9%);
-    --primary: hsl(240 5.9% 10%);
-    --primary-foreground: hsl(0 0% 98%);
-    --secondary: hsl(240 4.8% 95.9%);
-    --secondary-foreground: hsl(240 5.9% 10%);
-    --muted: hsl(240 4.8% 95.9%);
-    --muted-foreground: hsl(240 3.8% 46.1%);
-    --accent: hsl(142 76% 36%);
-    --accent-foreground: hsl(0 0% 100%);
-    --destructive: hsl(0 84.2% 60.2%);
-    --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(240 5.9% 90%);
-    --input: hsl(240 5.9% 90%);
-    --ring: hsl(240 10% 3.9%);
-    --radius: 0.5rem;
+  * {
+    @apply border-border;
   }
 
-  /* Dark Mode Overrides */
-  .dark {
-    --background: hsl(240 10% 3.9%);
-    --foreground: hsl(0 0% 98%);
-    --card: hsl(240 10% 3.9%);
-    --card-foreground: hsl(0 0% 98%);
-    --popover: hsl(240 10% 3.9%);
-    --popover-foreground: hsl(0 0% 98%);
-    --primary: hsl(0 0% 98%);
-    --primary-foreground: hsl(240 5.9% 10%);
-    --secondary: hsl(240 3.7% 15.9%);
-    --secondary-foreground: hsl(0 0% 98%);
-    --muted: hsl(240 3.7% 15.9%);
-    --muted-foreground: hsl(240 5% 64.9%);
-    --accent: hsl(142 70% 50%); /* Your Sustainable Teal */
-    --accent-foreground: hsl(144 65% 10%);
-    --destructive: hsl(0 62.8% 30.6%);
-    --destructive-foreground: hsl(0 0% 98%);
-    --border: hsl(240 3.7% 15.9%);
-    --input: hsl(240 3.7% 15.9%);
-    --ring: hsl(240 4.9% 83.9%);
-  }
-}
-
-@layer base {
-  *,
-  ::after,
-  ::before {
-    border-color: var(--border);
-  }
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font-feature-settings:
-      "rlig" 1,
-      "calt" 1;
-  }
-  button,
-  [role="button"] {
-    cursor: pointer !important;
-  }
-}
-
-@media print {
-  /* 1. Reset Colors to White Paper Standard */
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --border: 240 5.9% 90%;
+  html {
+    @apply scroll-smooth antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    background: white !important;
-    color: black !important;
+    @apply bg-background text-foreground font-sans;
+    overflow-x: hidden;
   }
 
-  /* 2. Hide "Website" elements */
-  header, /* The Navbar */
-  button, /* Action buttons */
-  .fixed, /* The Command Menu footer */
-  a[href^="http"]::after {
-    display: none !important;
+  /* Selection */
+  ::selection {
+    @apply bg-accent/30 text-foreground;
   }
 
-  /* 3. Layout Adjustments for Paper */
-  main {
-    display: block !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    max-width: 100% !important;
-  }
-
-  section {
-    break-inside: avoid; /* Prevent splitting a job description across two pages */
-    margin-bottom: 2rem;
-  }
-
-  /* Hide the "Hero Visual" grid */
-  .hidden.lg\:block.relative {
-    display: none !important;
+  ::-moz-selection {
+    @apply bg-accent/30 text-foreground;
   }
 }
 
+/* Custom utilities */
 @layer utilities {
-  /* Hide scrollbar for Chrome, Safari and Opera */
+  /* Animation keyframes */
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes gradient-shift {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes slide-in {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /* Utility classes */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-gradient-shift {
+    background-size: 200% 200%;
+    animation: gradient-shift 3s ease infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-slide-in {
+    animation: slide-in 0.6s ease-out;
+  }
+
+  /* Text gradients */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-[hsl(199,89%,48%)] via-[hsl(217,91%,60%)] to-[hsl(235,86%,65%)] bg-clip-text text-transparent;
+  }
+
+  .text-gradient-accent {
+    @apply from-accent bg-gradient-to-r to-[hsl(217,91%,60%)] bg-clip-text text-transparent;
+  }
+
+  /* Backgrounds */
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .bg-dot-pattern {
+    background-image: radial-gradient(hsl(var(--border)) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Shadows */
+  .shadow-elevation-low {
+    box-shadow: var(--shadow-elevation-low);
+  }
+
+  .shadow-elevation-medium {
+    box-shadow: var(--shadow-elevation-medium);
+  }
+
+  .shadow-elevation-high {
+    box-shadow: var(--shadow-elevation-high);
+  }
+
+  .shadow-neo {
+    box-shadow: var(--shadow-neo);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Glass effects */
+  .glass {
+    @apply border border-white/20 bg-white/10 backdrop-blur-md dark:border-white/10 dark:bg-black/10;
+  }
+
+  .glass-dark {
+    @apply border border-white/10 bg-black/30 backdrop-blur-lg;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
 }
 
-/* Custom Scrollbar Styling */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  @apply w-2;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--background));
+  @apply bg-background;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.3);
-  border-radius: 5px;
-  border: 2px solid hsl(var(--background));
+  @apply bg-muted rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--accent));
+  @apply bg-accent;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --accent-text: hsl(142 76% 25%);
-  }
+/* Focus styles */
+:focus-visible {
+  @apply ring-accent ring-offset-background ring-2 ring-offset-2 outline-none;
 }
-.light .text-accent-hover {
-  color: var(--accent-text, hsl(var(--accent)));
+
+/* Smooth transitions */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    @apply bg-white text-black;
+  }
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
 }

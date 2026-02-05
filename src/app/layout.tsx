@@ -33,6 +33,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Structured Data for SEO
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -51,26 +52,39 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      {/* ADD suppressHydrationWarning HERE TOO */}
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} bg-background text-foreground`}
+        className={`${inter.variable} ${jetbrainsMono.variable} bg-background text-foreground antialiased`}
         suppressHydrationWarning
       >
+        {/* Accessibility: Skip to content link */}
+        <a
+          href="#main-content"
+          className="bg-accent text-accent-foreground fixed top-4 left-4 z-50 -translate-y-32 rounded-md px-4 py-2 font-medium transition-transform focus:translate-y-0"
+        >
+          Skip to main content
+        </a>
+
+        {/* SEO: JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
           <div className="flex min-h-screen flex-col">
-            <main className="flex-1">{children}</main>
+            <Navbar />
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
             <Footer />
           </div>
+
+          {/* Global UI Components */}
           <Toaster />
           <CommandMenu />
           <ScrollToTop />
