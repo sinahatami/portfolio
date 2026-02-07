@@ -1,7 +1,7 @@
 import { RESUME_DATA } from "@/data/resume-data";
 import { SpotlightCard } from "../ui/spotlight-card";
-import Image from "next/image";
 import { GraduationCap, ExternalLink } from "lucide-react";
+import { OptimizedImage } from "../ui/optimized-image";
 
 export const EducationSection = () => {
   return (
@@ -17,14 +17,13 @@ export const EducationSection = () => {
           <SpotlightCard key={edu.school} className="flex flex-col gap-4 p-6">
             <div className="flex items-start justify-between gap-4">
               {edu.logoUrl ? (
-                <div className="bg-muted/50 relative h-14 w-14 shrink-0 overflow-hidden rounded-xl border p-1.5">
-                  <Image
-                    src={edu.logoUrl}
-                    alt={edu.school}
-                    fill
-                    className="object-contain"
-                  />
-                </div>
+                <OptimizedImage
+                  src={edu.logoUrl}
+                  alt={`${edu.school} logo`}
+                  width={56}
+                  height={56}
+                  className="object-contain"
+                />
               ) : (
                 <div className="bg-secondary rounded-xl p-3">
                   <GraduationCap className="text-accent h-8 w-8" />
@@ -35,7 +34,7 @@ export const EducationSection = () => {
               </span>
             </div>
 
-            <div>
+            <div className="mt-2">
               {/* UPDATED HEADER WITH LINK SUPPORT */}
               <h3 className="flex items-center gap-2 text-lg leading-tight font-bold">
                 {edu.link ? (

@@ -3,11 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "prepare": "husky"
+    "lint": "next lint",
+    "analyze": "ANALYZE=true next build",
+    "preview": "next build && next start",
+    "format": "prettier --write .",
+    "prepare": "husky",
+    "generate-icons": "node scripts/generate-icons.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -15,10 +19,12 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@react-email/components": "^1.0.7",
     "@react-email/render": "^2.0.4",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@react-three/xr": "^6.6.29",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
-    "cva": "^0.0.0",
     "framer-motion": "^12.31.0",
     "lucide-react": "^0.563.0",
     "next": "16.1.6",
@@ -26,22 +32,27 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
+    "react-spinners": "^0.17.0",
     "react-toastify": "^11.0.5",
+    "recharts": "^3.7.0",
     "resend": "^6.9.1",
     "tailwind-merge": "^3.4.0",
+    "three": "^0.182.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@eslint/compat": "^2.0.2",
+    "@next/bundle-analyzer": "^15.1.6",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "babel-plugin-react-compiler": "1.0.0",
+    "@types/three": "^0.182.0",
+    "autoprefixer": "^10.4.20",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
+    "postcss": "^8",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4",
@@ -52,10 +63,7 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{css,md}": [
-      "prettier --write"
-    ],
-    "package.json": [
+    "*.{css,md,json}": [
       "prettier --write"
     ]
   }

@@ -2,16 +2,9 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RESUME_DATA } from "@/data/resume-data";
-import {
-  Github,
-  Mail,
-  Sparkles,
-  ChevronRight,
-  MapPin,
-  Calendar,
-} from "lucide-react";
-import Image from "next/image";
+import { Github, Sparkles, ChevronRight, MapPin, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
+import { OptimizedImage } from "../ui/optimized-image";
 
 export const HeroSection = () => {
   return (
@@ -142,8 +135,8 @@ export const HeroSection = () => {
           >
             {/* Floating Elements */}
             <div className="absolute -top-6 -right-6 z-10">
-              <Badge className="animate-float bg-white px-4 py-2 shadow-lg dark:bg-gray-900">
-                <Sparkles className="text-accent mr-2 h-3 w-3" />
+              <Badge className="animate-float bg-accent text-accent-foreground px-4 py-2 shadow-lg">
+                <Sparkles className="mr-2 h-3 w-3" />
                 Available for Work
               </Badge>
             </div>
@@ -165,14 +158,14 @@ export const HeroSection = () => {
 
               {/* Image with elegant border */}
               <div className="border-background relative overflow-hidden rounded-2xl border-8 shadow-2xl">
-                <Image
+                <OptimizedImage
                   src={RESUME_DATA.avatarUrl}
                   alt="Sina Hatami"
                   width={500}
                   height={600}
                   className="h-auto w-full object-cover"
                   priority
-                  quality={95}
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
 
                 {/* Gradient overlay */}

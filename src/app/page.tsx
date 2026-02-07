@@ -6,20 +6,28 @@ import { ContactSection } from "@/components/sections/contact-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { TestimonialsSection } from "@/components/sections/testimonials-section";
 import { ErrorBoundary } from "@/components/error-boundary";
+import { TechSphereSection } from "@/components/sections/tech-sphere-section";
+import { GitHubActivitySection } from "@/components/sections/github-activity-section";
+import { VoiceCommands } from "@/components/voice-commands";
+import { ARViewer } from "@/components/ar-viewer";
+import { Suspense } from "react";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
-export default function Page() {
+export default function HomePage() {
   return (
     <div className="selection:bg-accent/30 relative overflow-hidden">
-      {/* GLOBAL BACKGROUND */}
+      {/* Global Background */}
       <div className="bg-background fixed inset-0 -z-10 h-full w-full">
         <div className="absolute top-0 right-0 left-0 h-[500px] bg-[radial-gradient(circle_800px_at_50%_-100px,#10b98115,transparent)]"></div>
-        <div className="absolute right-0 bottom-0 h-[500px] w-[500px] bg-[radial-gradient(circle_800px_at_100%_200px,#3b82f610,transparent)]"></div>
+        <div className="absolute right-0 bottom-0 h-[300px] w-[300px] bg-[radial-gradient(circle_400px_at_100%_100px,#3b82f605,transparent)] md:h-[500px] md:w-[500px] md:bg-[radial-gradient(circle_800px_at_100%_200px,#3b82f610,transparent)]"></div>{" "}
       </div>
 
       <main id="main-content" tabIndex={-1}>
         <ErrorBoundary>
           <HeroSection />
         </ErrorBoundary>
+
+        <TechSphereSection />
 
         <ErrorBoundary>
           <ExperienceSection />
@@ -31,10 +39,19 @@ export default function Page() {
 
         <SkillSelection />
 
+        <ARViewer />
+
+        <GitHubActivitySection />
+
         <TestimonialsSection />
 
         <ContactSection />
       </main>
+
+      {/* Voice Commands */}
+      <Suspense fallback={null}>
+        <VoiceCommands />
+      </Suspense>
     </div>
   );
 }

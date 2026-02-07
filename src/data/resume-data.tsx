@@ -250,32 +250,6 @@ export const RESUME_DATA = {
       },
     },
     {
-      title: "Cancer Prediction (Final Computer Vision Project)",
-      techStack: ["Python", "Computer Vision", "Unsupervised Learning", "SVM"],
-      description: `
-        This report delves into the world of cervical cell analysis, powered by the SIPaKMeD
-        dataset. Comprising over 4,000 meticulously curated images, this dataset is a
-        cornerstone of our investigation into the classification of cervical cells.
-        Our journey begins with an exploration of the SIPaKMeD dataset and its potential
-        applications. We leverage cutting-edge techniques, including automated feature
-        extraction with pretrained models and traditional handcrafted feature engineering,
-        to decode the rich information encapsulated within these cervical cell images.
-        Through clustering and classification methodologies, we seek to uncover patterns
-        and assess the accuracy of our models in distinguishing between cervical cell
-        categories. This report provides a comprehensive overview of our findings, offering
-        valuable insights into the world of cervical health analysis.
-        By the end of this report, you will gain a deeper understanding of how the
-        SIPaKMeD dataset can be harnessed for medical image analysis, showcasing the
-        advantages and limitations of different feature extraction approaches.
-      `,
-      link: {
-        label: "github.com",
-        href: "https://github.com/sinahatami/cv-final-project",
-        hrefLive:
-          "https://github.com/sinahatami/cv-final-project/blob/main/Report%20(2).pdf",
-      },
-    },
-    {
       title:
         "A Multi-Agent Framework for Autonomous Discourse (Final NLP & MAS project)",
       techStack: ["Python", "Computer Vision", "Unsupervised Learning", "SVM"],

@@ -1,21 +1,25 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
+import {
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import { sendContactEmail } from "@/actions/contact";
 import { Button } from "@/components/ui/button";
 import { Loader2, Send, AlertCircle, CheckCircle2 } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 import { toast } from "./ui/toaster";
 
-interface FormErrors {
-  email?: string[];
-  message?: string[];
-}
-
 interface FormState {
   success: boolean;
   message: string;
-  errors?: FormErrors;
+  errors?: {
+    email?: string[];
+    message?: string[];
+  };
 }
 
 const initialState: FormState = {
@@ -25,70 +29,68 @@ const initialState: FormState = {
 };
 
 export function ContactForm() {
-  const [state, formAction, isPending] = useActionState(
+  const [state, formAction, isPending] = useActionState<FormState, FormData>(
     sendContactEmail,
     initialState
   );
-  const [localErrors, setLocalErrors] = useState<FormErrors>({});
+  const [localErrors, setLocalErrors] = useState<Record<string, string[]>>({});
   const formRef = useRef<HTMLFormElement>(null);
 
-  // Reset local errors when form is submitted
-  useEffect(() => {
-    if (state.errors) {
-      setLocalErrors(state.errors);
-    } else {
-      setLocalErrors({});
-    }
-  }, [state.errors]);
+  // Debounced validation
+  const validateField = useCallback((name: string, value: string) => {
+    const errors: string[] = [];
 
-  useEffect(() => {
-    if (state.message && !isPending) {
-      if (state.success) {
-        toast.success(state.message || "Message sent successfully!");
-        formRef.current?.reset();
-        // Reset state after successful submission
-        setTimeout(() => {
-          // Reset the form state
-          if (formRef.current) {
-            const event = new Event("reset", { bubbles: true });
-            formRef.current.dispatchEvent(event);
-          }
-        }, 100);
-      } else {
-        toast.error(state.message || "Please check your inputs.");
-      }
-    }
-  }, [state, isPending]);
-
-  // Client-side validation
-  const validateField = (name: string, value: string) => {
     if (name === "email") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(value)) {
-        setLocalErrors((prev) => ({
-          ...prev,
-          email: ["Please enter a valid email address"],
-        }));
-      } else {
-        setLocalErrors((prev) => ({ ...prev, email: undefined }));
+        errors.push("Please enter a valid email address");
       }
     }
 
-    if (name === "message" && value.length < 10) {
-      setLocalErrors((prev) => ({
-        ...prev,
-        message: ["Message must be at least 10 characters"],
-      }));
-    } else if (name === "message" && value.length >= 10) {
-      setLocalErrors((prev) => ({ ...prev, email: undefined }));
+    if (name === "message") {
+      if (value.length < 10) {
+        errors.push("Message must be at least 10 characters");
+      }
+      if (value.length > 500) {
+        errors.push("Message must be less than 500 characters");
+      }
     }
-  };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    validateField(e.target.name, e.target.value);
-  };
+    if (errors.length > 0) {
+      setLocalErrors((prev) => ({ ...prev, [name]: errors }));
+    } else {
+      setLocalErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  }, []);
+
+  // Debounced handleChange
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      validateField(name, value);
+    },
+    [validateField]
+  );
+
+  // Handle form state changes
+  useEffect(() => {
+    if (state.message && !isPending) {
+      if (state.success) {
+        toast.success(state.message);
+        formRef.current?.reset();
+        setLocalErrors({});
+      } else {
+        toast.error(state.message);
+        if (state.errors) {
+          setLocalErrors(state.errors);
+        }
+      }
+    }
+  }, [state, isPending]);
 
   return (
     <form ref={formRef} action={formAction} className="grid w-full gap-6">
@@ -117,6 +119,7 @@ export function ContactForm() {
               : "hover:border-accent/50 focus:border-accent"
           )}
           placeholder="recruiter@company.com"
+          aria-invalid={!!localErrors?.email}
           aria-describedby={localErrors?.email ? "email-error" : undefined}
         />
       </div>
@@ -146,6 +149,7 @@ export function ContactForm() {
               : "hover:border-accent/50 focus:border-accent"
           )}
           placeholder="Hi Sina, I want to discuss..."
+          aria-invalid={!!localErrors?.message}
           aria-describedby={localErrors?.message ? "message-error" : undefined}
         />
         {localErrors?.message && (
@@ -160,8 +164,10 @@ export function ContactForm() {
 
       <Button
         type="submit"
-        disabled={isPending}
-        className="text-accent-foreground bg-accent hover:bg-accent/90 h-12 w-full font-bold transition-all hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]"
+        disabled={
+          isPending || Object.keys(localErrors).some((key) => localErrors[key])
+        }
+        className="text-accent-foreground bg-accent hover:bg-accent/90 h-12 w-full font-bold transition-all hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] disabled:cursor-not-allowed"
       >
         {isPending ? (
           <>

@@ -3,7 +3,7 @@
 import { CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RESUME_DATA } from "@/data/resume-data";
-import { SpotlightCard } from "../ui/spotlight-card"; // Imported SpotlightCard
+import { SpotlightCard } from "../ui/spotlight-card";
 import {
   Quote,
   FileText,
@@ -12,10 +12,18 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { useState } from "react";
-import { Testimonial } from "@/data/testimonial-interface";
+import type { Testimonial } from "@/data/testimonial-interface";
 
-const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+// Component for individual testimonial
+const TestimonialCard = ({
+  testimonial,
+  isExpanded,
+  onToggle,
+}: {
+  testimonial: Testimonial;
+  isExpanded: boolean;
+  onToggle: () => void;
+}) => {
   const MAX_CHARS = 100;
   const shouldTruncate = testimonial.quote.length > MAX_CHARS;
 
@@ -56,7 +64,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
 
           {shouldTruncate && (
             <button
-              onClick={() => setIsExpanded(!isExpanded)}
+              onClick={onToggle}
               className="text-accent mt-2 flex items-center gap-1 text-xs font-semibold hover:underline"
             >
               {isExpanded ? (
@@ -111,7 +119,10 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
   );
 };
 
+// Main component
 export const TestimonialsSection = () => {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
   return (
     <section
       id="testimonials"
@@ -122,8 +133,15 @@ export const TestimonialsSection = () => {
       </h2>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {RESUME_DATA.testimonials.map((testimonial) => (
-          <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+        {RESUME_DATA.testimonials.map((testimonial, index) => (
+          <TestimonialCard
+            key={testimonial.name}
+            testimonial={testimonial}
+            isExpanded={expandedIndex === index}
+            onToggle={() =>
+              setExpandedIndex(expandedIndex === index ? null : index)
+            }
+          />
         ))}
       </div>
     </section>

@@ -26,7 +26,7 @@ export const ScrollToTop = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
-          className="fixed right-8 bottom-24 z-40" // Moved UP to bottom-24
+          className="fixed right-8 bottom-14 z-40"
         >
           <Button
             variant="outline"
