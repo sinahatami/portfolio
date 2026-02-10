@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, X } from "lucide-react";
+import { Download, X } from "@/lib/icons";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function InstallPrompt() {
@@ -15,7 +15,10 @@ export function InstallPrompt() {
     const isStandalone = window.matchMedia(
       "(display-mode: standalone)"
     ).matches;
-    if (isStandalone || window.navigator.standalone) {
+    if (
+      isStandalone ||
+      ("standalone" in window.navigator && (window.navigator as any).standalone)
+    ) {
       setIsInstalled(true);
     }
 

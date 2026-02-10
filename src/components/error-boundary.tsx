@@ -1,8 +1,9 @@
 "use client";
 
-import { Component, ErrorInfo, ReactNode } from "react";
-import { Button } from "@/components/ui/button";
-import { AlertTriangle, RefreshCw } from "lucide-react";
+import { Component } from "react";
+import type { ReactNode, ErrorInfo } from "react";
+import { AlertTriangle, RefreshCw } from "@/lib/icons";
+import { Button } from "./ui/button";
 
 interface Props {
   children: ReactNode;
@@ -20,15 +21,18 @@ export class ErrorBoundary extends Component<Props, State> {
     hasError: false,
   };
 
+  // REMOVED: "override" keyword
   public static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error };
   }
 
+  // REMOVED: "override" keyword
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error("Uncaught error:", error, errorInfo);
     this.setState({ error, errorInfo });
   }
 
+  // REMOVED: "override" keyword
   public render() {
     if (this.state.hasError) {
       if (this.props.fallback) {

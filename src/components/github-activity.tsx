@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Github, Star, GitBranch, GitCommit, Calendar } from "lucide-react";
+import { Github, Star, GitBranch, GitCommit, Calendar } from "@/lib/icons";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface GitHubStats {

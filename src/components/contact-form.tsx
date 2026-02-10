@@ -9,7 +9,7 @@ import {
 } from "react";
 import { sendContactEmail } from "@/actions/contact";
 import { Button } from "@/components/ui/button";
-import { Loader2, Send, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Loader2, Send, AlertCircle, CheckCircle2 } from "@/lib/icons";
 import { cn } from "@/app/lib/utils";
 import { toast } from "./ui/toaster";
 
@@ -25,7 +25,7 @@ interface FormState {
 const initialState: FormState = {
   success: false,
   message: "",
-  errors: undefined,
+  errors: {},
 };
 
 export function ContactForm() {
@@ -35,6 +35,13 @@ export function ContactForm() {
   );
   const [localErrors, setLocalErrors] = useState<Record<string, string[]>>({});
   const formRef = useRef<HTMLFormElement>(null);
+
+  const debouncedValidate = useCallback(
+    debounce((name: string, value: string) => {
+      validateField(name, value);
+    }, 300),
+    []
+  );
 
   // Debounced validation
   const validateField = useCallback((name: string, value: string) => {
@@ -71,9 +78,9 @@ export function ContactForm() {
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
-      validateField(name, value);
+      debouncedValidate(name, value);
     },
-    [validateField]
+    [debouncedValidate]
   );
 
   // Handle form state changes
@@ -100,9 +107,9 @@ export function ContactForm() {
           className="flex items-center justify-between text-sm font-medium"
         >
           Your Email
-          {localErrors?.email && (
+          {localErrors?.["email"] && (
             <span className="text-destructive flex animate-pulse items-center gap-1 text-xs">
-              <AlertCircle size={10} /> {localErrors.email[0]}
+              <AlertCircle size={10} /> {localErrors?.["email"][0]}
             </span>
           )}
         </label>
@@ -114,13 +121,13 @@ export function ContactForm() {
           onChange={handleChange}
           className={cn(
             "border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-12 w-full rounded-lg border px-4 py-3 text-sm transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
-            localErrors?.email
+            localErrors?.["email"]
               ? "border-destructive focus-visible:ring-destructive"
               : "hover:border-accent/50 focus:border-accent"
           )}
           placeholder="recruiter@company.com"
-          aria-invalid={!!localErrors?.email}
-          aria-describedby={localErrors?.email ? "email-error" : undefined}
+          aria-invalid={!!localErrors?.["email"]}
+          aria-describedby={localErrors?.["email"] ? "email-error" : undefined}
         />
       </div>
 
@@ -144,20 +151,22 @@ export function ContactForm() {
           onChange={handleChange}
           className={cn(
             "border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex min-h-[140px] w-full resize-none rounded-lg border px-4 py-3 text-sm transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
-            localErrors?.message
+            localErrors?.["message"]
               ? "border-destructive focus-visible:ring-destructive"
               : "hover:border-accent/50 focus:border-accent"
           )}
           placeholder="Hi Sina, I want to discuss..."
-          aria-invalid={!!localErrors?.message}
-          aria-describedby={localErrors?.message ? "message-error" : undefined}
+          aria-invalid={!!localErrors?.["message"]}
+          aria-describedby={
+            localErrors?.["message"] ? "message-error" : undefined
+          }
         />
-        {localErrors?.message && (
+        {localErrors?.["message"] && (
           <span
             id="message-error"
             className="text-destructive flex items-center gap-1 text-xs"
           >
-            <AlertCircle size={10} /> {localErrors.message[0]}
+            <AlertCircle size={10} /> {localErrors["message"][0]}
           </span>
         )}
       </div>
@@ -191,4 +200,15 @@ export function ContactForm() {
       </p>
     </form>
   );
+}
+
+function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  wait: number
+): (...args: Parameters<T>) => void {
+  let timeout: NodeJS.Timeout;
+  return (...args: Parameters<T>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
 }

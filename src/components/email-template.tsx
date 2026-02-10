@@ -1,4 +1,4 @@
-import * as React from "react";
+import { RESUME_DATA } from "@/data/resume-data";
 import {
   Html,
   Body,
@@ -42,7 +42,7 @@ export const ContactEmail = ({ message, senderEmail }: ContactEmailProps) => (
           <Hr className="mx-0 my-[26px] w-full border border-solid border-[#eaeaea]" />
 
           <Text className="text-center text-[12px] leading-[24px] text-[#666666]">
-            Sent via <strong>Sina Hatami Portfolio</strong> contact form.
+            Sent via <strong>{RESUME_DATA.name}</strong> contact form.
             <br />
             <Link
               href="https://sinahatami.github.io"

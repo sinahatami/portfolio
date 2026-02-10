@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -11,7 +11,13 @@ import {
   X,
   Sparkles,
   ChevronRight,
-} from "lucide-react";
+  User,
+  Briefcase,
+  Code2,
+  GraduationCap,
+  Brain,
+  MessageCircleCode,
+} from "@/lib/icons";
 import { Button } from "@/components/ui/button";
 import { RESUME_DATA } from "@/data/resume-data";
 import { cn } from "@/app/lib/utils";
@@ -24,22 +30,36 @@ export const Navbar = () => {
   const [activeSection, setActiveSection] = useState("about");
 
   const navLinks = [
-    { name: "About", href: "#about", icon: "👤" },
-    { name: "Experience", href: "#experience", icon: "💼" },
-    { name: "Projects", href: "#projects", icon: "🚀" },
-    { name: "Education", href: "#education", icon: "🎓" },
-    { name: "Skills", href: "#skills", icon: "🛠️" },
-    { name: "Contact", href: "#contact", icon: "📧" },
+    { name: "About", href: "#about", icon: <User className="h-4 w-4" /> },
+    {
+      name: "Experience",
+      href: "#experience",
+      icon: <Briefcase className="h-4 w-4" />,
+    },
+    {
+      name: "Projects",
+      href: "#projects",
+      icon: <Code2 className="h-4 w-4" />,
+    },
+    {
+      name: "Education",
+      href: "#education",
+      icon: <GraduationCap className="h-4 w-4" />,
+    },
+    { name: "Skills", href: "#skills", icon: <Brain className="h-4 w-4" /> },
+    {
+      name: "Contact",
+      href: "#contact",
+      icon: <MessageCircleCode className="h-4 w-4" />,
+    },
   ];
-
-  const isMounted = useRef(true);
 
   // Scroll effects
   useEffect(() => {
-    isMounted.current = true;
+    let isMounted = true;
 
     const handleScroll = () => {
-      if (!isMounted.current) return;
+      if (!isMounted) return;
 
       setIsScrolled(window.scrollY > 20);
 
@@ -60,18 +80,29 @@ export const Navbar = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      isMounted = false;
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [navLinks]); // Added dependency
 
   // Close menu on resize
   useEffect(() => {
+    let isMounted = true;
+
     const handleResize = () => {
+      if (!isMounted) return;
+
       if (window.innerWidth >= 768) {
         setIsMenuOpen(false);
       }
     };
+
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      isMounted = false;
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   return (
@@ -117,7 +148,7 @@ export const Navbar = () => {
                   <Sparkles className="text-accent h-4 w-4 animate-pulse" />
                 </div>
                 <div className="text-muted-foreground text-xs">
-                  Senior Software Engineer
+                  {RESUME_DATA.position}
                 </div>
               </div>
             </Link>
@@ -163,9 +194,11 @@ export const Navbar = () => {
                   className="group relative overflow-hidden rounded-full"
                   asChild
                 >
+                  {/* Changed [0] to .github */}
                   <a
-                    href={RESUME_DATA.contact.social[0].url}
+                    href={RESUME_DATA.contact.social.github.url}
                     target="_blank"
+                    rel="noopener noreferrer"
                     aria-label="GitHub"
                   >
                     <Github className="h-5 w-5" />
@@ -179,9 +212,11 @@ export const Navbar = () => {
                   className="group relative overflow-hidden rounded-full"
                   asChild
                 >
+                  {/* Changed [1] to .linkedin */}
                   <a
-                    href={RESUME_DATA.contact.social[1].url}
+                    href={RESUME_DATA.contact.social.linkedin.url}
                     target="_blank"
+                    rel="noopener noreferrer"
                     aria-label="LinkedIn"
                   >
                     <Linkedin className="h-5 w-5" />
@@ -257,7 +292,11 @@ export const Navbar = () => {
                     className="flex-1"
                     asChild
                   >
-                    <a href={RESUME_DATA.contact.social[0].url} target="_blank">
+                    <a
+                      href={RESUME_DATA.contact.social.github.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <Github className="mr-2 h-4 w-4" />
                       GitHub
                     </a>
@@ -268,7 +307,11 @@ export const Navbar = () => {
                     className="flex-1"
                     asChild
                   >
-                    <a href={RESUME_DATA.contact.social[1].url} target="_blank">
+                    <a
+                      href={RESUME_DATA.contact.social.linkedin.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       <Linkedin className="mr-2 h-4 w-4" />
                       LinkedIn
                     </a>

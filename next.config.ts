@@ -3,21 +3,15 @@ import withBundleAnalyzer from "@next/bundle-analyzer";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Remove swcMinify - it's enabled by default in Next.js 15+
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
-  experimental: {
-    optimizeCss: true,
-    workerThreads: true,
-  },
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "**",
-      },
-    ],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    qualities: [75, 80, 85, 90],
   },
   headers: async () => [
     {
@@ -53,8 +47,9 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default process.env.ANALYZE === "true"
-  ? withBundleAnalyzer({
-      enabled: true,
-    })(nextConfig)
-  : nextConfig;
+// Correct way to use bundle analyzer in Next.js 15+
+const bundleAnalyzer = withBundleAnalyzer({
+  enabled: process.env["ANALYZE"] === "true",
+});
+
+export default bundleAnalyzer(nextConfig);

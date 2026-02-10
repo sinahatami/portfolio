@@ -10,11 +10,11 @@ import {
   ChevronDown,
   ChevronUp,
   ExternalLink,
-} from "lucide-react";
+} from "@/lib/icons";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import type { Testimonial } from "@/data/testimonial-interface";
 
-// Component for individual testimonial
 const TestimonialCard = ({
   testimonial,
   isExpanded,
@@ -34,92 +34,103 @@ const TestimonialCard = ({
       : testimonial.quote;
 
   return (
-    <SpotlightCard className="flex h-full flex-col justify-between p-0">
-      <CardHeader className="flex flex-row items-start justify-between px-6 pt-6 pb-0">
-        <Quote className="text-accent/20 h-8 w-8 rotate-180" />
-        {testimonial.fileUrl && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-accent -mt-2 -mr-2 h-8 w-8"
-            title="View Recommendation Letter"
-            asChild
-          >
-            <a
-              href={testimonial.fileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+    <motion.div
+      layout
+      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+    >
+      <SpotlightCard className="flex h-fit flex-col justify-between overflow-hidden p-0">
+        <CardHeader className="flex flex-row items-start justify-between px-6 pt-6 pb-0">
+          <Quote className="text-accent/20 h-8 w-8 rotate-180" />
+          {testimonial.fileUrl && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-muted-foreground hover:text-accent -mt-2 -mr-2 h-8 w-8"
+              asChild
             >
-              <FileText size={16} />
-            </a>
-          </Button>
-        )}
-      </CardHeader>
-
-      <CardContent className="flex flex-1 flex-col justify-between gap-6 px-6 pt-4 pb-6">
-        <div>
-          <p className="text-muted-foreground text-sm leading-relaxed italic">
-            &quot;{displayQuote}&quot;
-          </p>
-
-          {shouldTruncate && (
-            <button
-              onClick={onToggle}
-              className="text-accent mt-2 flex items-center gap-1 text-xs font-semibold hover:underline"
-            >
-              {isExpanded ? (
-                <>
-                  Show Less <ChevronUp size={12} />
-                </>
-              ) : (
-                <>
-                  Read More <ChevronDown size={12} />
-                </>
-              )}
-            </button>
+              <a
+                href={testimonial.fileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FileText size={16} />
+              </a>
+            </Button>
           )}
-        </div>
+        </CardHeader>
 
-        {/* Bottom Section with specific border color to match skill badges */}
-        <div className="border-border/50 group-hover:border-accent/30 mt-auto flex items-center gap-3 border-t pt-4 transition-colors">
+        <CardContent className="flex flex-1 flex-col justify-between gap-6 px-6 pt-4 pb-6">
           <div>
-            <div className="text-sm leading-tight font-semibold">
-              {testimonial.personalWebsite ? (
-                <a
-                  href={testimonial.personalWebsite}
-                  target="_blank"
-                  className="hover:text-accent inline-flex items-center gap-1 transition-colors"
-                >
-                  {testimonial.name}
-                  <ExternalLink size={10} className="opacity-50" />
-                </a>
-              ) : (
-                testimonial.name
-              )}
-            </div>
+            {/* AnimatePresence handles the smooth entrance of the new text */}
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={isExpanded ? "expanded" : "collapsed"}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="text-muted-foreground text-sm leading-relaxed italic"
+              >
+                &quot;{displayQuote}&quot;
+              </motion.p>
+            </AnimatePresence>
 
-            <div className="text-muted-foreground text-xs">
-              {testimonial.role} @{" "}
-              {testimonial.companyWebsite ? (
-                <a
-                  href={testimonial.companyWebsite}
-                  target="_blank"
-                  className="hover:text-accent transition-colors hover:underline"
-                >
-                  {testimonial.company}
-                </a>
-              ) : (
-                testimonial.company
-              )}
+            {shouldTruncate && (
+              <button
+                onClick={onToggle}
+                className="text-accent mt-2 flex items-center gap-1 text-xs font-semibold hover:underline"
+              >
+                {isExpanded ? (
+                  <>
+                    Show Less <ChevronUp size={12} />
+                  </>
+                ) : (
+                  <>
+                    Read More <ChevronDown size={12} />
+                  </>
+                )}
+              </button>
+            )}
+          </div>
+
+          <div className="border-border/50 group-hover:border-accent/30 mt-auto flex items-center gap-3 border-t pt-4 transition-colors">
+            <div>
+              <div className="text-sm leading-tight font-semibold">
+                {testimonial.personalWebsite ? (
+                  <a
+                    href={testimonial.personalWebsite}
+                    target="_blank"
+                    className="hover:text-accent inline-flex items-center gap-1 transition-colors"
+                  >
+                    {testimonial.name}
+                    <ExternalLink size={10} className="opacity-50" />
+                  </a>
+                ) : (
+                  testimonial.name
+                )}
+              </div>
+              <div className="text-muted-foreground text-xs">
+                {testimonial.role} @{" "}
+                {testimonial.companyWebsite ? (
+                  <a
+                    href={testimonial.companyWebsite}
+                    target="_blank"
+                    className="hover:text-accent transition-colors"
+                  >
+                    {testimonial.company}
+                  </a>
+                ) : (
+                  testimonial.company
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </CardContent>
-    </SpotlightCard>
+        </CardContent>
+      </SpotlightCard>
+    </motion.div>
   );
 };
 
-// Main component
 export const TestimonialsSection = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
@@ -132,7 +143,8 @@ export const TestimonialsSection = () => {
         Endorsements <span className="bg-border h-px flex-1"></span>
       </h2>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {/* items-start is critical here to keep other cards from jumping */}
+      <div className="grid items-start gap-6 md:grid-cols-2 lg:grid-cols-3">
         {RESUME_DATA.testimonials.map((testimonial, index) => (
           <TestimonialCard
             key={testimonial.name}

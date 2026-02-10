@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/app/lib/utils";
-import { useState, useEffect } from "react";
+import { useState, useEffect, JSX } from "react";
 import {
   ClockLoader,
   GridLoader,
@@ -52,7 +52,6 @@ interface LoadingSpinnerProps {
   showLabel?: boolean;
 }
 
-// Theme colors matching your portfolio
 const THEME_COLORS = {
   accent: "#3b82f6",
   blue: "#3b82f6",
@@ -71,16 +70,14 @@ export function LoadingSpinner({
   showLabel = false,
 }: LoadingSpinnerProps) {
   const [primaryColor, setPrimaryColor] = useState(THEME_COLORS.accent);
-  const [secondaryColor, setSecondaryColor] = useState(THEME_COLORS.blue);
+  const [secondaryColor, setSecondaryColor] = useState(THEME_COLORS.purple);
 
-  // Handle theme changes
   useEffect(() => {
     const updateColors = () => {
       if (color) {
         setPrimaryColor(color);
         setSecondaryColor(color);
       } else {
-        // Use theme colors based on variant
         if (variant === "tech-orbit" || variant === "galaxy") {
           setPrimaryColor(THEME_COLORS.accent);
           setSecondaryColor(THEME_COLORS.purple);
@@ -90,22 +87,32 @@ export function LoadingSpinner({
         }
       }
     };
-
     updateColors();
   }, [variant, color]);
 
-  // Custom tech-themed spinners
   const getCustomSpinner = () => {
     switch (variant) {
       case "tech-orbit":
         return (
-          <div className="relative" style={{ width: size, height: size }}>
-            {/* Outer orbiting rings */}
+          <div
+            className="relative flex items-center justify-center"
+            style={{ width: size, height: size }}
+          >
+            {/* Background Ambient Glow */}
+            <div
+              className="absolute inset-0 rounded-full opacity-10 blur-2xl"
+              style={{
+                background: `radial-gradient(circle, ${primaryColor}, ${secondaryColor})`,
+              }}
+            />
+
+            {/* Outer Orbiting Ring - Glass Effect */}
             <motion.div
-              className="absolute inset-0 rounded-full border-2 border-transparent"
+              className="absolute inset-0 rounded-full border-[2px] border-transparent"
               style={{
                 borderTopColor: primaryColor,
-                borderRightColor: secondaryColor,
+                borderRightColor: `${primaryColor}22`,
+                filter: `drop-shadow(0 0 8px ${primaryColor}66)`,
               }}
               animate={{ rotate: 360 }}
               transition={{
@@ -114,11 +121,14 @@ export function LoadingSpinner({
                 ease: "linear",
               }}
             />
+
+            {/* Inner Orbiting Ring - Reversed */}
             <motion.div
-              className="absolute inset-2 rounded-full border-2 border-transparent"
+              className="absolute inset-2 rounded-full border-[1.5px] border-transparent"
               style={{
-                borderBottomColor: primaryColor,
-                borderLeftColor: secondaryColor,
+                borderBottomColor: secondaryColor,
+                borderLeftColor: `${secondaryColor}22`,
+                filter: `drop-shadow(0 0 5px ${secondaryColor}66)`,
               }}
               animate={{ rotate: -360 }}
               transition={{
@@ -127,91 +137,101 @@ export function LoadingSpinner({
                 ease: "linear",
               }}
             />
-            {/* Inner pulsing core */}
+
+            {/* Core Pulsing Sphere */}
             <motion.div
-              className="absolute inset-4 rounded-full"
+              className="relative z-10 flex items-center justify-center rounded-full shadow-lg"
               style={{
-                background: `radial-gradient(circle at center, ${primaryColor}, ${secondaryColor})`,
+                width: size * 0.35,
+                height: size * 0.35,
+                background: `radial-gradient(circle at 30% 30%, #fff, ${primaryColor}, ${secondaryColor})`,
+                boxShadow: `0 0 20px ${primaryColor}44`,
               }}
               animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.7, 1, 0.7],
+                scale: [1, 1.15, 1],
+                opacity: [0.9, 1, 0.9],
               }}
               transition={{
-                duration: 1 / speedMultiplier,
+                duration: 1.2 / speedMultiplier,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-            />
-            {/* Orbiting dots */}
-            {[0, 1, 2, 3].map((i) => (
+            >
+              {/* Inner Lens Flare Effect */}
+              <div className="h-1/2 w-1/2 rounded-full bg-white/20 blur-[1px]" />
+            </motion.div>
+
+            {/* Orbiting Particles */}
+            {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="absolute h-2 w-2 rounded-full"
-                style={{
-                  background: i % 2 === 0 ? primaryColor : secondaryColor,
-                  top: "50%",
-                  left: "50%",
-                  marginTop: -4,
-                  marginLeft: -4,
-                }}
-                animate={{
-                  x: [
-                    Math.cos((i * Math.PI) / 2) * (size / 2),
-                    Math.cos((i * Math.PI) / 2 + Math.PI) * (size / 2),
-                    Math.cos((i * Math.PI) / 2) * (size / 2),
-                  ],
-                  y: [
-                    Math.sin((i * Math.PI) / 2) * (size / 2),
-                    Math.sin((i * Math.PI) / 2 + Math.PI) * (size / 2),
-                    Math.sin((i * Math.PI) / 2) * (size / 2),
-                  ],
-                }}
+                className="absolute"
+                style={{ width: size, height: size }}
+                animate={{ rotate: 360 }}
                 transition={{
-                  duration: 2 / speedMultiplier,
+                  duration: (2.5 + i * 0.5) / speedMultiplier,
                   repeat: Infinity,
                   ease: "linear",
-                  delay: i * 0.1,
                 }}
-              />
+              >
+                <motion.div
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{
+                    background: i === 0 ? "#fff" : primaryColor,
+                    boxShadow: `0 0 10px ${primaryColor}`,
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                  animate={{ scale: [0.8, 1.2, 0.8] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                />
+              </motion.div>
             ))}
           </div>
         );
 
       case "galaxy":
         return (
-          <div className="relative" style={{ width: size, height: size }}>
-            {/* Swirling galaxy effect */}
+          <div
+            className="relative flex items-center justify-center"
+            style={{ width: size, height: size }}
+          >
+            {/* Primary Swirl */}
             <motion.div
               className="absolute inset-0 rounded-full"
               style={{
-                background: `conic-gradient(from 0deg, transparent, ${primaryColor}, ${secondaryColor}, transparent)`,
+                background: `conic-gradient(from 0deg, transparent, ${primaryColor}, transparent)`,
+                WebkitMaskImage:
+                  "radial-gradient(circle, transparent 35%, black 36%)",
+                filter: `drop-shadow(0 0 12px ${primaryColor}88)`,
               }}
               animate={{ rotate: 360 }}
+              transition={{
+                duration: 2 / speedMultiplier,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
+            {/* Secondary Swirl */}
+            <motion.div
+              className="absolute inset-2 rounded-full opacity-50"
+              style={{
+                background: `conic-gradient(from 180deg, transparent, ${secondaryColor}, transparent)`,
+                WebkitMaskImage:
+                  "radial-gradient(circle, transparent 35%, black 36%)",
+              }}
+              animate={{ rotate: -360 }}
               transition={{
                 duration: 3 / speedMultiplier,
                 repeat: Infinity,
                 ease: "linear",
               }}
             />
-            <motion.div
-              className="absolute inset-2 rounded-full"
-              style={{
-                background: `conic-gradient(from 180deg, transparent, ${secondaryColor}, ${primaryColor}, transparent)`,
-              }}
-              animate={{ rotate: -360 }}
-              transition={{
-                duration: 2.5 / speedMultiplier,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-            />
-            {/* Central black hole */}
+            {/* Central "Star" Core */}
             <div
-              className="absolute top-1/2 left-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full"
+              className="h-[30%] w-[30%] rounded-full bg-white shadow-[0_0_20px_#fff]"
               style={{
-                background: `radial-gradient(circle at center, ${primaryColor}, transparent)`,
-                boxShadow: `0 0 20px ${primaryColor}`,
+                background: `radial-gradient(circle at center, #fff, ${primaryColor}aa)`,
               }}
             />
           </div>
@@ -222,7 +242,6 @@ export function LoadingSpinner({
     }
   };
 
-  // Map variants to react-spinners components
   const getSpinnerComponent = () => {
     const commonProps = {
       color: primaryColor,
@@ -230,44 +249,27 @@ export function LoadingSpinner({
       speedMultiplier: speedMultiplier,
     };
 
-    switch (variant) {
-      case "clock":
-        return <ClockLoader {...commonProps} />;
-      case "grid":
-        return <GridLoader {...commonProps} />;
-      case "hash":
-        return <HashLoader {...commonProps} />;
-      case "pulse":
-        return <PulseLoader {...commonProps} />;
-      case "ring":
-        return <RingLoader {...commonProps} />;
-      case "scale":
-        return <ScaleLoader {...commonProps} />;
-      case "beat":
-        return <BeatLoader {...commonProps} />;
-      case "sync":
-        return <SyncLoader {...commonProps} />;
-      case "rise":
-        return <RiseLoader {...commonProps} />;
-      case "moon":
-        return <MoonLoader {...commonProps} />;
-      case "bounce":
-        return <BounceLoader {...commonProps} />;
-      case "circle":
-        return <CircleLoader {...commonProps} />;
-      case "clip":
-        return <ClipLoader {...commonProps} />;
-      case "dot":
-        return <DotLoader {...commonProps} />;
-      case "fade":
-        return <FadeLoader {...commonProps} />;
-      case "propagate":
-        return <PropagateLoader {...commonProps} />;
-      case "puff":
-        return <PuffLoader {...commonProps} />;
-      default:
-        return <RingLoader {...commonProps} />;
-    }
+    const spinnerMap: Record<string, JSX.Element> = {
+      clock: <ClockLoader {...commonProps} />,
+      grid: <GridLoader {...commonProps} />,
+      hash: <HashLoader {...commonProps} />,
+      pulse: <PulseLoader {...commonProps} />,
+      ring: <RingLoader {...commonProps} />,
+      scale: <ScaleLoader {...commonProps} />,
+      beat: <BeatLoader {...commonProps} />,
+      sync: <SyncLoader {...commonProps} />,
+      rise: <RiseLoader {...commonProps} />,
+      moon: <MoonLoader {...commonProps} />,
+      bounce: <BounceLoader {...commonProps} />,
+      circle: <CircleLoader {...commonProps} />,
+      clip: <ClipLoader {...commonProps} />,
+      dot: <DotLoader {...commonProps} />,
+      fade: <FadeLoader {...commonProps} />,
+      propagate: <PropagateLoader {...commonProps} />,
+      puff: <PuffLoader {...commonProps} />,
+    };
+
+    return spinnerMap[variant] || <RingLoader {...commonProps} />;
   };
 
   return (
@@ -278,15 +280,9 @@ export function LoadingSpinner({
 
       {showLabel && (
         <motion.p
-          className="text-muted-foreground mt-4 text-sm font-medium"
-          animate={{
-            opacity: [0.5, 1, 0.5],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          className="text-muted-foreground mt-4 text-xs font-semibold tracking-widest uppercase"
+          animate={{ opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
           {label}
         </motion.p>
@@ -295,23 +291,22 @@ export function LoadingSpinner({
   );
 }
 
-// Preset spinner configurations for different use cases
 export const SpinnerPresets = {
   GitHub: {
     variant: "tech-orbit" as const,
     size: 60,
-    label: "Fetching GitHub data...",
+    label: "Syncing Repository...",
     showLabel: true,
   },
   Page: {
     variant: "ring" as const,
     size: 50,
-    label: "Loading...",
+    label: "Loading Experience...",
     showLabel: true,
   },
   Button: {
     variant: "beat" as const,
-    size: 20,
+    size: 14,
     showLabel: false,
   },
   Card: {
@@ -321,8 +316,8 @@ export const SpinnerPresets = {
   },
   FullScreen: {
     variant: "galaxy" as const,
-    size: 80,
-    label: "Please wait...",
+    size: 100,
+    label: "Initializing Intelligence...",
     showLabel: true,
   },
 };

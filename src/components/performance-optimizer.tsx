@@ -1,58 +1,68 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const PerformanceOptimizer = () => {
+  const [isClient, setIsClient] = useState(false);
+
   useEffect(() => {
-    // Optimize for Core Web Vitals
-    const optimizePerformance = () => {
-      // Set pixel ratio for high DPI displays
-      const setPixelRatio = () => {
-        if (typeof window !== "undefined") {
-          const pixelRatio = Math.min(window.devicePixelRatio, 2);
-          document.documentElement.style.setProperty(
-            "--pixel-ratio",
-            pixelRatio.toString()
-          );
-        }
-      };
+    setIsClient(true);
 
-      // Optimize scroll performance
-      let ticking = false;
-      const handleScroll = () => {
-        if (!ticking) {
-          requestAnimationFrame(() => {
-            // Optional: Add any scroll-based optimizations here
-            ticking = false;
-          });
-          ticking = true;
-        }
-      };
+    // Only run on client
+    if (typeof window === "undefined") return;
 
-      // Debounce resize events
-      let resizeTimeout: NodeJS.Timeout;
-      const handleResize = () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(setPixelRatio, 250);
-      };
+    // Simple performance optimization
+    const optimize = () => {
+      try {
+        // Set pixel ratio
+        const pixelRatio = Math.min(window.devicePixelRatio, 2);
+        document.documentElement.style.setProperty(
+          "--pixel-ratio",
+          pixelRatio.toString()
+        );
 
-      // Initialize
-      setPixelRatio();
+        // Optimize scroll
+        let ticking = false;
+        const handleScroll = () => {
+          if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(() => {
+              // Optional: Throttle heavy operations here
+              ticking = false;
+            });
+          }
+        };
 
-      // Add event listeners
-      window.addEventListener("scroll", handleScroll, { passive: true });
-      window.addEventListener("resize", handleResize, { passive: true });
+        // Debounced resize handler
+        let resizeTimeout: NodeJS.Timeout;
+        const handleResize = () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            const newPixelRatio = Math.min(window.devicePixelRatio, 2);
+            document.documentElement.style.setProperty(
+              "--pixel-ratio",
+              newPixelRatio.toString()
+            );
+          }, 250);
+        };
 
-      // Cleanup
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-        window.removeEventListener("resize", handleResize);
-        clearTimeout(resizeTimeout);
-      };
+        // Add listeners
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        window.addEventListener("resize", handleResize, { passive: true });
+
+        return () => {
+          window.removeEventListener("scroll", handleScroll);
+          window.removeEventListener("resize", handleResize);
+          clearTimeout(resizeTimeout);
+        };
+      } catch (error) {
+        console.warn("Performance optimization failed:", error);
+      }
     };
 
-    return optimizePerformance();
+    return optimize();
   }, []);
 
+  // Don't render anything
   return null;
 };

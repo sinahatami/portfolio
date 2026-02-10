@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import {
   CardHeader,
   CardTitle,
@@ -9,7 +8,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
-import { ExpandableList } from "@/components/expandable-list"; // Import your list component
+import { ExpandableList } from "@/components/expandable-list";
 import { RESUME_DATA } from "@/data/resume-data";
 import {
   Github,
@@ -17,34 +16,42 @@ import {
   ArrowUpRight,
   ChevronDown,
   ChevronUp,
-} from "lucide-react";
+} from "@/lib/icons";
 
-/**
- * Individual Card Component
- * Manages the "Read More" for the text description
- */
-const ProjectCard = ({
-  project,
-}: {
-  project: (typeof RESUME_DATA.projects)[0];
-}) => {
+interface ProjectCardProps {
+  // We use 'any' here to prevent the build error where TypeScript
+  // complains that some projects don't have 'hrefLive'.
+  project: any;
+}
+
+const ProjectCard = ({ project }: ProjectCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const MAX_CHARS = 160;
-  const shouldTruncate = project.description.length > MAX_CHARS;
+  const MAX_CHARS = 250;
+
+  // Safe check for description
+  const description = project.description || "";
+  const shouldTruncate = description.length > MAX_CHARS;
 
   const displayDescription = isExpanded
-    ? project.description
+    ? description
     : shouldTruncate
-      ? `${project.description.slice(0, MAX_CHARS)}...`
-      : project.description;
+      ? `${description.slice(0, MAX_CHARS)}...`
+      : description;
+
+  // Safe link access
+  const linkHref = project.link?.href || "#";
+  const linkLive = project.link?.hrefLive;
 
   return (
     <SpotlightCard className="group flex h-full flex-col">
       <CardHeader className="p-6">
         <div className="flex items-start justify-between">
           <CardTitle className="text-xl">
-            <Link
-              href={`/projects/${project.slug}`}
+            {/* Title links to the main project URL (usually GitHub or Live) */}
+            <a
+              href={linkHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-accent flex items-center gap-1 transition-colors"
             >
               {project.title}
@@ -52,23 +59,27 @@ const ProjectCard = ({
                 size={14}
                 className="opacity-0 transition-opacity group-hover:opacity-50"
               />
-            </Link>
+            </a>
           </CardTitle>
 
           <div className="flex items-center gap-3">
-            <a
-              href={project.link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-accent transition-colors"
-              title="View Source Code"
-            >
-              <Github size={20} />
-            </a>
-
-            {project.link.hrefLive && (
+            {/* GitHub Link */}
+            {linkHref && linkHref !== "#" && (
               <a
-                href={project.link.hrefLive}
+                href={linkHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-accent transition-colors"
+                title="View Source Code"
+              >
+                <Github size={20} />
+              </a>
+            )}
+
+            {/* Live Demo Link (Only renders if hrefLive exists) */}
+            {linkLive && (
+              <a
+                href={linkLive}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-accent transition-colors"
@@ -111,10 +122,6 @@ const ProjectCard = ({
   );
 };
 
-/**
- * Main Section Component
- * Uses ExpandableList to show/hide the number of cards
- */
 export const ProjectsSection = () => {
   return (
     <section
@@ -126,7 +133,7 @@ export const ProjectsSection = () => {
       </h2>
 
       <ExpandableList
-        initialCount={4} // Shows 4 cards (2 rows on desktop) before "Show More"
+        initialCount={4}
         items={RESUME_DATA.projects.map((project) => (
           <ProjectCard key={project.title} project={project} />
         ))}

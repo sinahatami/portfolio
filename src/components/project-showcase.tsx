@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, Github, Play, Code, Globe } from "lucide-react";
+import { X, ExternalLink, Github, Play, Code, Globe } from "@/lib/icons";
 import { Button } from "@/components/ui/button";
 import { RESUME_DATA } from "@/data/resume-data";
 
@@ -15,6 +15,8 @@ export function ProjectShowcase({ projectIndex = 0 }: ProjectShowcaseProps) {
   const [showModal, setShowModal] = useState(false);
 
   const project = RESUME_DATA.projects[activeProject];
+
+  const projectLink = project?.link as { href: string; hrefLive?: string };
 
   return (
     <>
@@ -102,9 +104,9 @@ export function ProjectShowcase({ projectIndex = 0 }: ProjectShowcaseProps) {
                 View Code
               </a>
             </Button>
-            {project?.link?.hrefLive && (
+            {projectLink?.hrefLive && (
               <Button variant="outline" asChild>
-                <a href={project.link.hrefLive} target="_blank">
+                <a href={projectLink.hrefLive} target="_blank">
                   <Globe className="mr-2 h-4 w-4" />
                   Live Demo
                 </a>
@@ -151,7 +153,7 @@ export function ProjectShowcase({ projectIndex = 0 }: ProjectShowcaseProps) {
                 </div>
                 <Button asChild>
                   <a
-                    href={project?.link?.hrefLive || project?.link.href}
+                    href={projectLink?.hrefLive || projectLink?.href}
                     target="_blank"
                   >
                     <ExternalLink className="mr-2 h-4 w-4" />

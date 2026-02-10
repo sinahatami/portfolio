@@ -1,38 +1,17 @@
-const GITHUB_USERNAME = "sinahatami";
-
-interface GitHubRepo {
-  name: string;
-  description: string | null;
-  stargazers_count: number;
-  language: string | null;
-  html_url: string;
-  updated_at: string;
-  forks_count: number;
-}
-
-interface GitHubUser {
-  followers: number;
-  following: number;
-  public_repos: number;
-}
-
-export interface GitHubStats {
-  user: GitHubUser;
-  repos: GitHubRepo[];
-  languages: Record<string, number>;
-  totalStars: number;
-  recentCommits: number;
-}
+import type { GitHubStats } from "@/types/github";
 
 export async function fetchGitHubStats(): Promise<GitHubStats | null> {
   try {
-    const response = await fetch("/api/github", {
-      next: { revalidate: 3600 },
+    const isServer = typeof window === "undefined";
+    const baseUrl = isServer
+      ? process.env["NEXT_PUBLIC_APP_URL"] || "http://localhost:3000"
+      : "";
+
+    const response = await fetch(`${baseUrl}/api/github`, {
+      next: { revalidate: 3600 }, // Cache on server for 1 hour
     });
 
-    if (!response.ok) {
-      throw new Error(`API responded with status: ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`Status: ${response.status}`);
 
     return await response.json();
   } catch (error) {

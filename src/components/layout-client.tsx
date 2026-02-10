@@ -1,47 +1,36 @@
 "use client";
 
-import { useState, useEffect, lazy, Suspense } from "react";
-import { ThemeProvider } from "@/components/theme-provider";
+import { useState, useEffect, Suspense } from "react";
 import { SkillsProvider } from "@/contexts/skills-context";
-import SmoothScroll from "@/components/smooth-scroll";
-import { PerformanceOptimizer } from "@/components/performance-optimizer";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
 import { Toaster } from "@/components/ui/toaster";
-import { ScrollToTop } from "@/components/scroll-to-top";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { SmoothScroll } from "./layout/smooth-scroll";
+import { Footer } from "./layout/footer";
+import { Navbar } from "./layout/navbar";
+import { ScrollToTop } from "./layout/scroll-to-top";
+import { FEATURE_FLAGS } from "@/config/features";
+import { CommandMenu, CustomCursor } from "./features";
+import { PerformanceOptimizer } from "./performance-optimizer";
+import { ParticlesBackground } from "./particles-background";
+import { ThemeProvider } from "next-themes";
 
-// Lazy load heavy components with proper default exports
-const ParticlesBackground = lazy(() =>
-  import("@/components/particles-background").then((mod) => ({
-    default: mod.ParticlesBackground,
-  }))
-);
-const CustomCursor = lazy(() =>
-  import("@/components/custom-cursor").then((mod) => ({
-    default: mod.CustomCursor,
-  }))
-);
-const CommandMenu = lazy(() =>
-  import("@/components/command-menu").then((mod) => ({
-    default: mod.CommandMenu,
-  }))
-);
-const PWARegister = lazy(() =>
-  import("@/components/pwa/pwa-register").then((mod) => ({
-    default: mod.PWARegister,
-  }))
-);
-const OfflineIndicator = lazy(() =>
-  import("@/components/pwa/offline-indicator").then((mod) => ({
-    default: mod.OfflineIndicator,
-  }))
-);
-const InstallPrompt = lazy(() =>
-  import("@/components/pwa/install-prompt").then((mod) => ({
-    default: mod.InstallPrompt,
-  }))
-);
+// Add this at the top of your layout-client.tsx
+if (typeof window !== "undefined") {
+  // Detect infinite render loops
+  let renderCount = 0;
+  //const originalConsole = console.log;
+
+  console.log = function (...args) {
+    if (args[0]?.includes?.("render") || args[0]?.includes?.("Render")) {
+      renderCount++;
+      if (renderCount > 50) {
+        console.error("POSSIBLE INFINITE LOOP DETECTED - 50+ renders");
+        debugger; // Will pause execution in dev tools
+      }
+    }
+    //originalConsole.apply(console, args);
+  };
+}
 
 export default function LayoutClient({
   children,
@@ -63,8 +52,18 @@ export default function LayoutClient({
     };
 
     checkMobile();
+
     const resizeObserver = new ResizeObserver(checkMobile);
     resizeObserver.observe(document.body);
+
+    // Disable any problematic features
+    if (typeof window !== "undefined") {
+      // Force-disable WebGL context creation attempts
+      (window as any).__DISABLE_WEBGL = true;
+
+      // Log for debugging
+      console.log("Feature flags:", FEATURE_FLAGS);
+    }
 
     return () => resizeObserver.disconnect();
   }, []);
@@ -72,7 +71,7 @@ export default function LayoutClient({
   if (!mounted) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <LoadingSpinner />
+        <LoadingSpinner variant="galaxy" size={60} />
       </div>
     );
   }
@@ -89,32 +88,22 @@ export default function LayoutClient({
         <SmoothScroll>
           <PerformanceOptimizer />
 
-          {/* Lazy loaded components with suspense */}
-          <Suspense fallback={null}>
-            <PWARegister />
-            <OfflineIndicator />
-            <InstallPrompt />
-          </Suspense>
-
           {!isMobile && (
             <Suspense fallback={null}>
               <CustomCursor />
               <ParticlesBackground />
             </Suspense>
           )}
-
           <Navbar />
           <div className="flex min-h-screen flex-col">
             <main className="flex-1">{children}</main>
             <Footer />
           </div>
-
           <Toaster />
 
           <Suspense fallback={null}>
             <CommandMenu />
           </Suspense>
-
           <ScrollToTop />
         </SmoothScroll>
       </SkillsProvider>

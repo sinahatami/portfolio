@@ -1,25 +1,16 @@
-import React from "react";
 import { cn } from "@/app/lib/utils";
 
 interface SectionHeaderProps {
   title: string;
   subtitle?: string;
   className?: string;
-  align?: "left" | "center" | "right";
 }
 
 export const SectionHeader = ({
   title,
   subtitle,
   className,
-  align = "left",
 }: SectionHeaderProps) => {
-  const alignmentClasses = {
-    left: "text-left",
-    center: "text-center",
-    right: "text-right",
-  };
-
   return (
     <div className={cn("mb-12 md:mb-16", className)}>
       <div className="flex items-center gap-4">

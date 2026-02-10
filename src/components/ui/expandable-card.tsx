@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/app/lib/utils";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "@/lib/icons";
 
 interface ExpandableCardProps {
   children: React.ReactNode;

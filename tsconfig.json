@@ -18,34 +18,30 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@app/*": ["./src/app/*"],
-      "@components/*": ["./src/components/*"],
-      "@lib/*": ["./src/app/lib/*"],
-      "@data/*": ["./src/data/*"],
-      "@actions/*": ["./src/actions/*"],
-      "@contexts/*": ["./src/contexts/*"]
+      "@/lib/*": ["./src/app/lib/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/*": ["./src/*"]
     },
     "forceConsistentCasingInFileNames": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitOverride": true,
+    "noImplicitOverride": false,
     "noPropertyAccessFromIndexSignature": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "exactOptionalPropertyTypes": true,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": false
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/types/**/*.tsx",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]

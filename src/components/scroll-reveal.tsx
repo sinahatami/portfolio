@@ -20,7 +20,6 @@ export const ScrollReveal = ({
   direction = "up",
   duration = 0.5,
   className = "",
-  threshold = 0.1,
   once = true,
   amount = 0.2,
 }: ScrollRevealProps) => {

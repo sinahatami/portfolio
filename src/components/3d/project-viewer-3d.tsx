@@ -6,7 +6,7 @@ import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { X, Code, ExternalLink } from "lucide-react";
+import { X, Code, ExternalLink } from "@/lib/icons";
 
 interface ProjectModel {
   id: string;
@@ -28,7 +28,7 @@ function ProjectCube({
   const meshRef = useRef<THREE.Mesh>(null);
   const [hovered, setHovered] = useState(false);
 
-  useFrame((state) => {
+  useFrame((_state) => {
     if (meshRef.current) {
       meshRef.current.rotation.x += 0.01;
       meshRef.current.rotation.y += 0.01;

@@ -1,8 +1,9 @@
 "use client";
 
-import { Component, ErrorInfo, ReactNode } from "react";
+import { Component } from "react";
+import type { ErrorInfo, ReactNode } from "react"; // ✅ Added type-only import
 import { Button } from "@/components/ui/button";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw } from "@/lib/icons";
 
 interface Props {
   children: ReactNode;
@@ -19,15 +20,18 @@ export class AnimationErrorBoundary extends Component<Props, State> {
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(_: Error): State {
+  public static getDerivedStateFromError(_: Error): State {
+    // ✅ Added override
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  public override componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // ✅ Added override
     console.error("Animation error caught:", error, errorInfo);
   }
 
-  render() {
+  public override render() {
+    // ✅ Added override
     if (this.state.hasError) {
       if (this.props.fallback) {
         return this.props.fallback;

@@ -1,80 +1,58 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { RESUME_DATA } from "@/data/resume-data";
 import LayoutClient from "@/components/layout-client";
 
-// Optimized font loading with subset and display swap
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
-  preload: true,
-  fallback: ["system-ui", "sans-serif"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
-  preload: true,
-  fallback: ["monospace"],
 });
 
+// Separate Viewport configuration (Next.js 15 requirement)
+export const viewport: Viewport = {
+  themeColor: "#3b82f6",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
-  title: "Sina Hatami | Senior Software Engineer & AI Specialist",
-  description: RESUME_DATA.summary,
-  keywords: [
-    "Senior Software Engineer",
-    "React Developer",
-    "Next.js Expert",
-    "TypeScript",
-    "AI/ML Engineer",
-    "Full Stack Developer",
-    "Frontend Architect",
-  ],
+  metadataBase: new URL("https://sinahatami.dev"),
+  title: {
+    default: "Sina Hatami | Software Engineer & Data Scientist",
+    template: "%s | Sina Hatami",
+  },
+  description: RESUME_DATA.summary.substring(0, 160),
+  keywords: ["Software Engineer", "React Developer", "Data Scientist", "Genoa"],
   authors: [{ name: "Sina Hatami" }],
-  creator: "Sina Hatami",
-  publisher: "Sina Hatami",
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
+  // PWA and Mobile configurations handled via Metadata API
+  appleWebApp: {
+    capable: true,
+    title: "Sina Hatami",
+    statusBarStyle: "black-translucent",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://sinahatami.dev",
-    title: "Sina Hatami | Senior Software Engineer",
-    description: RESUME_DATA.summary,
     siteName: "Sina Hatami Portfolio",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Sina Hatami Portfolio",
-      },
-    ],
+    title: "Sina Hatami | Software Engineer & Data Scientist",
+    description: RESUME_DATA.summary.substring(0, 160),
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sina Hatami | Senior Software Engineer",
-    description: RESUME_DATA.summary,
-    images: ["/og-image.png"],
     creator: "@sinahatami",
-  },
-  verification: {
-    google: "your-google-verification-code",
-  },
-  alternates: {
-    canonical: "https://sinahatami.dev",
   },
 };
 
@@ -88,17 +66,12 @@ export default function RootLayout({
     "@type": "Person",
     name: RESUME_DATA.name,
     url: RESUME_DATA.personalWebsiteUrl,
-    jobTitle: "Senior Software Engineer",
-    worksFor: {
-      "@type": "Organization",
-      name: "Independent Consultant",
-    },
-    alumniOf: RESUME_DATA.education.map((edu) => ({
-      "@type": "EducationalOrganization",
-      name: edu.school,
-    })),
+    image: RESUME_DATA.avatarUrl,
+    jobTitle: "Software Engineer | Data Scientist",
     knowsAbout: RESUME_DATA.skills.flatMap((category) => category.items),
-    sameAs: RESUME_DATA.contact.social.map((social) => social.url),
+    sameAs: Object.values<Record<string, any>>(RESUME_DATA.contact.social).map(
+      (social: any) => social.url
+    ),
   };
 
   return (
@@ -108,45 +81,25 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
+        {/* Manual preloads and JSON-LD only. No spaces between tags! */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <link
           rel="preload"
           as="image"
           href={RESUME_DATA.avatarUrl}
-          type="image/jpeg"
+          fetchPriority="high"
         />
-
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-
-        <meta name="application-name" content="Sina Hatami Portfolio" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta
-          name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"
-        />
-        <meta name="apple-mobile-web-app-title" content="Sina Hatami" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="msapplication-TileColor" content="#3b82f6" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="theme-color" content="#3b82f6" />
-
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
       </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} bg-background text-foreground antialiased`}
         suppressHydrationWarning
       >
         <LayoutClient>{children}</LayoutClient>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

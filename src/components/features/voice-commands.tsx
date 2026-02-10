@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { Mic, MicOff, Volume2, Command, Eye, X } from "lucide-react";
+import { Mic, MicOff, Volume2, Command, Eye, X } from "@/lib/icons";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import { toast } from "./ui/toaster";
+import { toast } from "../ui/toaster";
 
 interface VoiceCommand {
   command: string;

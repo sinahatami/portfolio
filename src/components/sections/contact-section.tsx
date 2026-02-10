@@ -15,12 +15,13 @@ export const ContactSection = () => {
         <div className="grid items-start gap-12 lg:grid-cols-[1fr_400px]">
           <div className="space-y-6">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-              Ready to collaborate ?
+              Let's build something scalable.
             </h2>
             <p className="text-muted-foreground max-w-xl text-lg leading-relaxed">
-              I bridge the gap between complex data and intuitive user
-              interfaces.Let's discuss how we can build the next generation of
-              web applications together.
+              I'm currently based in Genoa, Italy, and actively looking for a
+              roles. Whether you have a question about my stack, a project to
+              discuss, or just want to say hi, I'll try my best to get back to
+              you!
             </p>
             <div className="flex flex-col gap-4 pt-4">
               <div className="text-muted-foreground flex items-center gap-3">
@@ -32,7 +33,9 @@ export const ContactSection = () => {
                     {" "}
                   </span>
                 </span>
-                Available for Full - time & Freelance
+                <span className="text-sm font-medium">
+                  Open to new opportunities
+                </span>
               </div>
               <a
                 href={`mailto:${RESUME_DATA.contact.email}`}

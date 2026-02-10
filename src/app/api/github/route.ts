@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic"; // Make sure it's dynamic
 
 const GITHUB_USERNAME = "sinahatami";
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   const GITHUB_TOKEN = process.env["GITHUB_TOKEN"];
 
   if (!GITHUB_TOKEN) {

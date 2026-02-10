@@ -1,32 +1,36 @@
-import { Github, Linkedin } from "lucide-react";
+import { Github, Linkedin } from "@/lib/icons";
 import { Testimonial } from "./testimonial-interface";
+
+const yearsExperience: string = "4+";
+const position: string = "Software Engineer & Data Scientist";
 
 export const RESUME_DATA = {
   name: "Sina Hatami",
   initials: "SH",
   location: "Genoa, Italy",
   locationLink: "https://www.google.com/maps/place/Genoa,+Italy",
-  about:
-    "Senior Front-End Engineer with 5+ years of expertise in crafting scalable, high-performance web applications. Mastery in React and Angular, complemented by full-stack capabilities.",
-  summary:
-    "Senior Front-End Engineer with 5+ years of expertise in crafting scalable, high-performance web applications for diverse industries, including sustainable tech startups and enterprise software. Mastery in React and Angular, complemented by full-stack capabilities in Node.js and cloud services. Proven track record of optimizing UIs for 90%+ performance gains and leading projects that enhance user engagement by 65%. Seeking opportunities in the Netherlands with visa sponsorship.",
+  yearsExperience: yearsExperience,
+  position: position,
+  numberOfProjects: "+20",
+  about: `${position} focused on building scalable web architectures and intelligent data systems.`,
+  summary: `Experienced with ${yearsExperience} years of expertise in building high-performance web applications. Proficient in React, Next.Js, Angular, and Django, with a strong academic foundation in Data Science & AI.
+    Master of architectural modularity and performance optimization.
+    I translate the complexities of Data Science into high-performance software solutions, leveraging a deep academic foundation in Computer Science to build intelligent systems that are as scalable as they are insightful`,
   avatarUrl: "/avatar.jpg",
   personalWebsiteUrl: "https://sinahatami.github.io",
   contact: {
     email: "hatamisinaa@gmail.com",
     tel: "+39 379 114 9157",
-    social: [
-      {
-        name: "GitHub",
+    social: {
+      github: {
         url: "https://github.com/sinahatami",
         icon: Github,
       },
-      {
-        name: "LinkedIn",
+      linkedin: {
         url: "https://www.linkedin.com/in/sina-hatami/",
         icon: Linkedin,
       },
-    ],
+    },
   },
   education: [
     {
@@ -37,8 +41,10 @@ export const RESUME_DATA = {
       start: "Sep 2022",
       end: "Jul 2025",
       logoUrl: "/logo/unige.png",
-      notes:
-        "Thesis: 'A Systematic Review of Recommender Systems'. Relevant Coursework: Machine Learning, Computer Vision, NLP.",
+      notes: `Thesis: 'A Systematic Review of Recommender Systems'.
+        Relevant Coursework: Digital Signal & Image Processing (DSIP), Machine Learning (ML), Computer Vision (CV),
+        Advanced Machine Learning (Deep Learning & Reinforcement Learning),
+        Natural Language Processing (NLP), Multi-Agent Systems (MAS), Data Visualization (DV).`,
     },
     {
       school: "University of Buin Zahra",
@@ -47,86 +53,146 @@ export const RESUME_DATA = {
       start: "Sep 2017",
       end: "June 2021",
       logoUrl: "/logo/bzte.png",
-      notes: "Capstone: Web-based ERP System in Angular.",
+      notes:
+        "Courses: Computer Programming, Data Structures & Algorithms, Software Architecture, Database Systems, Operating Systems, Computer Networks.",
     },
   ],
   work: [
     {
-      company: "Independent Consultant",
-      link: null,
-      logoUrl: "/logos/consultant-placeholder.png",
-      badges: ["Remote", "React", "Angular", "CI/CD"],
-      title: "Senior Front-End Consultant",
-      start: "May 2025",
-      end: "Present",
-      summary: "Specialized consultancy for high-growth startups and SMEs.",
-      description: "Provided expert front-end development services...",
-    },
-    {
       company: "Widecons",
       link: "https://widecons.com",
       logoUrl: "/logo/widecons.png",
-      badges: ["React", "Node.js", "AWS", "Green Tech"],
-      title: "Full-Stack Engineer",
+      badges: [
+        "React",
+        "Django",
+        "Python",
+        "Machine Learning",
+        "Supervised Learning",
+        "Recommender Systems",
+        "Git",
+        "AWS",
+        "Docker",
+      ],
+      title: "Software Engineer",
       start: "Oct 2024",
       end: "Apr 2025",
-      summary: "Specialized consultancy for high-growth startups and SMEs.",
+      summary:
+        "Innovative startup offering sustainable digital solutions and green technologies.",
       description:
-        "Engineered features for green energy analytics using React and Node.js. Boosted platform efficiency by 70% and implemented lean production methodologies in a fast-paced startup environment.",
+        "Engineered digital consulting platforms using React and Node.js, boosting system efficiency. Implemented lean production methodologies that accelerated feature rollouts while integrating complex green energy analytics.",
     },
     {
       company: "Iran EIT",
       link: "https://en.iraneit.com/",
       logoUrl: "/logo/iran-eit.png",
-      badges: ["Micro-Frontends", "Architecture", "Angular", "Node.js"],
-      title: "Front-End Developer",
+      badges: [
+        "React",
+        "Next.js",
+        "Micro-Frontends",
+        "Software Architecture",
+        "GraphQL",
+        "Jest",
+        "Jasmine",
+        "Node.js",
+        "ASP.NET",
+        "OOP",
+        "Agile",
+        "Git",
+      ],
+      title: "Software Engineer",
       start: "June 2021",
       end: "Sep 2022",
-      summary: "Specialized consultancy for high-growth startups and SMEs.",
+      summary:
+        "Leading provider of integrated software for the national insurance industry serving millions of users.",
       description:
-        "Led Micro-Frontend architecture across 25+ modules handling 100K+ daily transactions. Developed reusable UI libraries that accelerated team productivity by 60%.",
+        "Architected a scalable Micro-Frontend system across 25+ modules to handle 100K+ daily transactions. Led the Software Architecture Committee to establish design patterns that reduced project timelines by 60%.",
     },
     {
       company: "BPT Soft",
       link: "https://www.bptsoft.com/",
       logoUrl: "/logo/bpt-soft.png",
-      badges: ["React", "Angular", "Performance", "Mentorship"],
-      title: "Front-End Developer",
+      badges: [
+        "Angular",
+        "Performance Optimization",
+        "E2E Testing",
+        "SQL Server",
+        "Jest",
+        "Mentorship",
+      ],
+      title: "Software Engineer",
       start: "May 2019",
       end: "June 2021",
-      summary: "Specialized consultancy for high-growth startups and SMEs.",
+      summary:
+        "ERP software specialist developing robust administrative systems for government and academic sectors.",
       description:
-        "Engineered 8+ large-scale ERP projects. Optimized legacy code performance by 90% (load times < 2s). Mentored 7 junior developers, improving team code quality metrics by 50%.",
+        "Delivered 5+ large-scale ERP projects achieving 90% market adoption. Optimized legacy codebases to slash load times to under 2 seconds (90% performance gain) and mentored 5 developers to improve team code quality by 50%.",
     },
   ],
   skills: [
     {
       category: "Software Architecture",
       items: [
-        "React/Next.js 15",
+        "React",
+        "Next.js 16",
+        "Angular",
         "TypeScript",
+        "JavaScript (ES6+)",
+        "CSS3",
+        "HTML5",
+        "Tailwind CSS",
         "Micro-Frontends",
+        "Python",
+        "Django",
+        "C#",
+        "ASP.NET",
+        "SQL",
         "Node.js",
         "GraphQL",
         "Docker",
         "AWS",
-        "System Design",
       ],
     },
     {
       category: "Data Science & AI",
       items: [
         "Python",
+        "TensorFlow",
+        "Keras",
         "Pandas/NumPy",
         "Scikit-Learn",
+        "Machine Learning",
         "Computer Vision",
+        "MediaPipe",
+        "Deep Learning/CNNs",
+        "PyTorch",
+        "YOLO/Object Detection",
+        "OpenCV",
+        "PySpark",
         "NLP",
-        "TensorFlow",
-        "Data Visualization (D3.js)",
       ],
     },
   ],
   projects: [
+    {
+      title: "Modern Portfolio & 3D Visualization",
+      techStack: [
+        "Next.js 16",
+        "React 19",
+        "TypeScript",
+        "Three.js",
+        "Framer Motion",
+        "tailwindcss",
+        "ShadcnUI",
+        "Bundle Analyzer",
+      ],
+      description:
+        "A high-performance professional portfolio featuring interactive 3D WebGL visualizations, real-time GitHub activity integration, and server-side form handling. Optimized for SEO and accessibility with perfect Lighthouse scores.",
+      link: {
+        label: "sinahatami.dev",
+        href: "https://github.com/sinahatami/portfolio",
+        hrefLive: "https://sinahatami.dev",
+      },
+    },
     {
       title: "Rick and Morty Universe",
       techStack: [
@@ -221,6 +287,7 @@ export const RESUME_DATA = {
       link: {
         label: "github.com",
         href: "https://github.com/sinahatami/rl-final-project.git",
+        hrefLive: "",
       },
     },
     {
@@ -275,6 +342,7 @@ export const RESUME_DATA = {
       link: {
         label: "github.com",
         href: "https://github.com/sinahatami/dsip",
+        hrefLive: "",
       },
     },
   ],

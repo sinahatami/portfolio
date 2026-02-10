@@ -34,7 +34,7 @@ const smoothScrollTo = (element: HTMLElement, duration: number = 600) => {
   requestAnimationFrame(animation);
 };
 
-export default function SmoothScroll({ children }: SmoothScrollProps) {
+export function SmoothScroll({ children }: SmoothScrollProps) {
   const pathname = usePathname();
 
   useEffect(() => {

@@ -47,6 +47,16 @@ export const CustomCursor = () => {
     if (isMobile) return;
 
     const handleMouseMove = (e: MouseEvent) => {
+      const isOverScrollbar = e.clientX >= window.innerWidth - 15;
+
+      if (isOverScrollbar) {
+        setIsVisible(false);
+        document.body.style.cursor = "auto";
+      } else {
+        setIsVisible(true);
+        document.body.style.cursor = "none";
+      }
+
       const now = Date.now();
       if (now - lastUpdateTime.current < 16) return;
       lastUpdateTime.current = now;

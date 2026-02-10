@@ -35,15 +35,9 @@ interface SkillsContextType {
 const SkillsContext = createContext<SkillsContextType | undefined>(undefined);
 
 export function SkillsProvider({ children }: { children: ReactNode }) {
-  const [selectedSkill, setSelectedSkillState] = useState<SkillDetail | null>(
-    null
-  );
-  const [hoveredSkill, setHoveredSkillState] = useState<string | null>(null);
+  const [selectedSkill, setSelectedSkill] = useState<SkillDetail | null>(null);
 
-  // Memoized setters
-  const setSelectedSkill = useCallback((skill: SkillDetail | null) => {
-    setSelectedSkillState(skill);
-  }, []);
+  const [hoveredSkill, setHoveredSkillState] = useState<string | null>(null);
 
   const setHoveredSkill = useCallback((skill: string | null) => {
     setHoveredSkillState(skill);
