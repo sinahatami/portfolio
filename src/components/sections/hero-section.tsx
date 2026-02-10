@@ -78,6 +78,9 @@ export const HeroSection = () => {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
                 </span>
+                <span className="text-[10px] font-medium text-green-600 dark:text-green-400">
+                  Online
+                </span>
               </div>
             </div>
 

@@ -1,15 +1,17 @@
-# 🌐 Sina Hatami | Senior Software Engineer
+# 🌐 Sina Hatami | Software Engineer & Data Scientist
 
-# Portfolio
+## 🎯 Portfolio Overview
 
-## 🎯 Overview
+A cutting-edge, high-performance portfolio website built with modern web technologies. This project showcases **4+ years of expertise** in React, Next.js, TypeScript, and AI/ML technologies.
 
-A cutting-edge, high-performance portfolio website built with modern web technologies. This portfolio showcases Sina Hatami's expertise as a **Software Engineer** with 4+ years of experience in React, Next.js, TypeScript, and AI/ML technologies.
+[![Portfolio Preview](https://github.com/sinahatami/portfolio/screenshot.png)](https://sinahatami.vercel.app/)
 
-The site features interactive 3D visualizations, real-time GitHub integration, and a fully responsive design optimized for performance and user experience.
+---
 
-🚀 **Live Demo:** [sinahatami.dev](https://sinahatami.dev) 
-💻 **GitHub Repository:** [github.com/sinahatami/portfolio](https://github.com/sinahatami/portfolio)
+### 🔗 Quick Links
+
+* 🚀 **Live Demo:** [sinahatami.vercel.app](https://sinahatami.vercel.app/)
+* 💻 **GitHub Repository:** [github.com/sinahatami/portfolio](https://github.com/sinahatami/portfolio)
 
 ## ✨ Key Features
 
@@ -160,12 +162,14 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📬 Contact
 
-**Sina Hatami** - Software Engineer
-● **Email** : hatamisinaa@gmail.com
-● **Website** : sinahatami.dev
-● **LinkedIn** : sina-hatami
-● **GitHub** : sinahatami
-● **Location** : Genoa, Italy
+**Sina Hatami** - Software Engineer | Data Scientist
+
+* **📧 Email:** [hatamisinaa@gmail.com](mailto:hatamisinaa@gmail.com)
+* **🌐 Website:** [sinahatami.vercel.app](https://sinahatami.vercel.app/)
+* **💼 LinkedIn:** [linkedin.com/in/sina-hatami](https://www.linkedin.com/in/sina-hatami/)
+* **🐙 GitHub:** [github.com/sinahatami](https://github.com/sinahatami)
+* **📍 Location:** [Genoa, Italy](https://www.google.com/maps/search/?api=1&query=Genoa,+Italy)
+
 <div align="center">
 
 

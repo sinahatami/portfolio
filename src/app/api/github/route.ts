@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const dynamic = "force-dynamic"; // Make sure it's dynamic
+export const dynamic = "force-dynamic";
 
 const GITHUB_USERNAME = "sinahatami";
 
