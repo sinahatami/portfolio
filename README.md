@@ -4,7 +4,7 @@
 
 A cutting-edge, high-performance portfolio website built with modern web technologies. This project showcases **4+ years of expertise** in React, Next.js, TypeScript, and AI/ML technologies.
 
-[![Portfolio Preview](https://github.com/sinahatami/portfolio/screenshot.png)](https://sinahatami.vercel.app/)
+[![Portfolio Preview](/public/screenshot.png)](https://sinahatami.vercel.app/)
 
 ---
 
