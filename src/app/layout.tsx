@@ -75,6 +75,8 @@ export default function RootLayout({
     ),
   };
 
+  const gaId = process.env["NEXT_PUBLIC_GA_ID"];
+
   return (
     <html
       lang="en"
@@ -102,7 +104,7 @@ export default function RootLayout({
         <SpeedInsights />
         <Analytics />
 
-        <GoogleAnalytics gaId="G-8GTPGW16D4" />
+        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );
