@@ -8,22 +8,26 @@ export function OfflineIndicator() {
   const [isOffline, setIsOffline] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsOffline(!navigator.onLine);
+    // 1. Move the check to a guard clause at the top
+    if (typeof window === "undefined") return;
 
-      const handleOnline = () => setIsOffline(false);
-      const handleOffline = () => setIsOffline(true);
+    // 2. Logic now lives in the "safe" zone
+    setIsOffline(!navigator.onLine);
 
-      window.addEventListener("online", handleOnline);
-      window.addEventListener("offline", handleOffline);
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
 
-      return () => {
-        window.removeEventListener("online", handleOnline);
-        window.removeEventListener("offline", handleOffline);
-      };
-    }
-  }, []);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
 
+    // 3. This return is now guaranteed for the client-side path
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []); // Empty dependency array is fine here
+
+  // We handle the "nothing to show" state here
   if (!isOffline) return null;
 
   return (

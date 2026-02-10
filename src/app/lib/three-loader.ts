@@ -1,24 +1,22 @@
-let threeLoaded = false;
-let dreiLoaded = false;
+let threeLoaded: any = null;
+let dreiLoaded: any = null;
 
 export async function loadThree() {
   if (typeof window === "undefined") return;
 
   if (!threeLoaded) {
-    const three = await import("three");
-    threeLoaded = true;
-    return three;
+    threeLoaded = await import("three");
   }
+  return threeLoaded;
 }
 
 export async function loadDrei() {
   if (typeof window === "undefined") return;
 
   if (!dreiLoaded) {
-    const drei = await import("@react-three/drei");
-    dreiLoaded = true;
-    return drei;
+    dreiLoaded = await import("@react-three/drei");
   }
+  return dreiLoaded;
 }
 
 export async function loadThreeFiber() {

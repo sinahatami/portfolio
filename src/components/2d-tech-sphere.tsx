@@ -1,7 +1,7 @@
 // --- FILE: ./src/components/2d-tech-sphere.tsx ---
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 
 interface SkillNode {

@@ -8,7 +8,7 @@ import {
   preloadThreeOnInteraction,
 } from "@/lib/three-loader";
 
-import { useWebGLSupport } from "@/hooks/use-webgl-support";
+// import { useWebGLSupport } from "@/hooks/use-webgl-support";
 
 // Preload on component mount
 preloadThreeOnInteraction();

@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 export function usePerformanceMonitor() {
   useEffect(() => {
-    // Don't run on server or in development
     if (
       typeof window === "undefined" ||
       process.env.NODE_ENV !== "production"
@@ -12,16 +11,13 @@ export function usePerformanceMonitor() {
       return;
     }
 
+    let observer: PerformanceObserver | null = null;
+
     try {
-      // Only set up PerformanceObserver if it exists
       if (typeof PerformanceObserver === "undefined") {
         return;
       }
 
-      // Monitor long tasks (only if supported)
-      let observer: PerformanceObserver | null = null;
-
-      // Check if longtask is supported
       const supportedEntryTypes = PerformanceObserver.supportedEntryTypes || [];
 
       if (supportedEntryTypes.includes("longtask")) {
@@ -35,17 +31,16 @@ export function usePerformanceMonitor() {
 
         observer.observe({ entryTypes: ["longtask"] });
       }
-
-      return () => {
-        if (observer) {
-          observer.disconnect();
-        }
-      };
     } catch (error) {
-      // Silently fail - performance monitoring is non-critical
       console.warn("Performance monitoring failed:", error);
     }
-  }, []); // Empty dependency array
+
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, []);
 
   return null;
 }

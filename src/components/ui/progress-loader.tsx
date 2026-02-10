@@ -20,11 +20,11 @@ export function ProgressLoader({
 
   // Handle the exit delay internally
   useEffect(() => {
-    if (!isLoading && progress >= 100) {
-      // Wait a tiny bit to show 100%, then trigger exit
-      const timer = setTimeout(() => setShow(false), 500);
-      return () => clearTimeout(timer);
+    if (isLoading || progress < 100) {
+      return;
     }
+    const timer = setTimeout(() => setShow(false), 500);
+    return () => clearTimeout(timer);
   }, [isLoading, progress]);
 
   return (

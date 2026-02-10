@@ -2,9 +2,9 @@
 
 export function TechSphereSectionStatic() {
   return (
-    <section className="relative flex min-h-[800px] w-full flex-col items-center justify-center overflow-hidden bg-black py-24">
+    <section className="relative flex min-h-200 w-full flex-col items-center justify-center overflow-hidden bg-black py-24">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-black to-purple-900/10" />
+      <div className="absolute inset-0 bg-linear-to-br from-blue-900/10 via-black to-purple-900/10" />
 
       {/* Grid pattern overlay */}
       <div
@@ -23,7 +23,7 @@ export function TechSphereSectionStatic() {
             <h2 className="text-3xl font-bold tracking-tighter text-white sm:text-4xl md:text-5xl">
               Tech Ecosystem
             </h2>
-            <p className="mt-4 max-w-[700px] text-gray-400 md:text-xl">
+            <p className="mt-4 max-w-175 text-gray-400 md:text-xl">
               My technical orbit. Core technologies and expertise.
             </p>
           </div>
@@ -31,7 +31,7 @@ export function TechSphereSectionStatic() {
 
         {/* Static Tech Visualization */}
         <div className="mx-auto w-full max-w-5xl">
-          <div className="relative mx-auto aspect-square w-full max-w-[500px] overflow-hidden rounded-3xl border border-gray-800 bg-gradient-to-br from-gray-900 to-black">
+          <div className="relative mx-auto aspect-square w-full max-w-125 overflow-hidden rounded-3xl border border-gray-800 bg-linear-to-br from-gray-900 to-black">
             {/* Central Core */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform">
               <div className="relative">
@@ -39,10 +39,10 @@ export function TechSphereSectionStatic() {
                 <div className="absolute inset-0 rounded-full bg-blue-500/20 blur-xl" />
 
                 {/* Middle ring */}
-                <div className="absolute inset-4 rounded-full bg-gradient-to-br from-blue-500/30 to-purple-500/30" />
+                <div className="absolute inset-4 rounded-full bg-linear-to-br from-blue-500/30 to-purple-500/30" />
 
                 {/* Inner core */}
-                <div className="relative flex h-32 w-32 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-purple-600">
+                <div className="relative flex h-32 w-32 items-center justify-center rounded-full bg-linear-to-br from-blue-600 to-purple-600">
                   <span className="text-sm font-bold text-white">CORE</span>
                 </div>
               </div>
@@ -69,7 +69,7 @@ export function TechSphereSectionStatic() {
                 },
                 { name: "AWS", x: "50%", y: "15%", color: "bg-yellow-600" },
                 { name: "Docker", x: "50%", y: "85%", color: "bg-blue-400" },
-              ].map((tech, index) => (
+              ].map((tech, _index) => (
                 <div
                   key={tech.name}
                   className={`absolute ${tech.color} flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 transform items-center justify-center rounded-full`}

@@ -14,11 +14,13 @@ export function LazyComponent({
   onLoad,
 }: LazyComponentProps) {
   useEffect(() => {
-    if (onLoad) {
-      // Call onLoad after component mounts
-      const timer = setTimeout(onLoad, 50);
-      return () => clearTimeout(timer);
-    }
+    if (!onLoad) return;
+
+    const frame = requestAnimationFrame(() => {
+      onLoad();
+    });
+
+    return () => cancelAnimationFrame(frame);
   }, [onLoad]);
 
   return <Suspense fallback={fallback}>{children}</Suspense>;

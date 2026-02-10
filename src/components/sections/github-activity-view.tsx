@@ -7,9 +7,6 @@ import {
   TrendingUp,
   Globe,
   Star,
-  GitBranch,
-  GitCommit,
-  Users,
   ChevronRight,
 } from "@/lib/icons";
 import { Button } from "@/components/ui/button";
@@ -47,36 +44,36 @@ export function GitHubActivityView({
     });
   };
 
-  const statItems = [
-    {
-      icon: Users,
-      label: "Followers",
-      value: stats.user.followers,
-      color: "text-blue-600 dark:text-blue-400",
-      bg: "bg-blue-50 ring-blue-100 dark:bg-blue-500/10 dark:ring-blue-500/20",
-    },
-    {
-      icon: Star,
-      label: "Total Stars",
-      value: stats.totalStars,
-      color: "text-amber-600 dark:text-amber-400",
-      bg: "bg-amber-50 ring-amber-100 dark:bg-amber-500/10 dark:ring-amber-500/20",
-    },
-    {
-      icon: GitBranch,
-      label: "Repositories",
-      value: stats.user.public_repos,
-      color: "text-emerald-600 dark:text-emerald-400",
-      bg: "bg-emerald-50 ring-emerald-100 dark:bg-emerald-500/10 dark:ring-emerald-500/20",
-    },
-    {
-      icon: GitCommit,
-      label: "Recent Commits",
-      value: stats.recentCommits,
-      color: "text-purple-600 dark:text-purple-400",
-      bg: "bg-purple-50 ring-purple-100 dark:bg-purple-500/10 dark:ring-purple-500/20",
-    },
-  ];
+  // const statItems = [
+  //   {
+  //     icon: Users,
+  //     label: "Followers",
+  //     value: stats.user.followers,
+  //     color: "text-blue-600 dark:text-blue-400",
+  //     bg: "bg-blue-50 ring-blue-100 dark:bg-blue-500/10 dark:ring-blue-500/20",
+  //   },
+  //   {
+  //     icon: Star,
+  //     label: "Total Stars",
+  //     value: stats.totalStars,
+  //     color: "text-amber-600 dark:text-amber-400",
+  //     bg: "bg-amber-50 ring-amber-100 dark:bg-amber-500/10 dark:ring-amber-500/20",
+  //   },
+  //   {
+  //     icon: GitBranch,
+  //     label: "Repositories",
+  //     value: stats.user.public_repos,
+  //     color: "text-emerald-600 dark:text-emerald-400",
+  //     bg: "bg-emerald-50 ring-emerald-100 dark:bg-emerald-500/10 dark:ring-emerald-500/20",
+  //   },
+  //   {
+  //     icon: GitCommit,
+  //     label: "Recent Commits",
+  //     value: stats.recentCommits,
+  //     color: "text-purple-600 dark:text-purple-400",
+  //     bg: "bg-purple-50 ring-purple-100 dark:bg-purple-500/10 dark:ring-purple-500/20",
+  //   },
+  // ];
 
   return (
     <SectionContainer
@@ -135,7 +132,7 @@ export function GitHubActivityView({
             Languages
           </h3>
           <div className="space-y-6">
-            {topLanguages.map((lang, index) => (
+            {topLanguages.map((lang, _index) => (
               <div key={lang.name} className="space-y-3">
                 <div className="flex justify-between text-sm font-semibold">
                   <span className="text-slate-700 dark:text-slate-300">
