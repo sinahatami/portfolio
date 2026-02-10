@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { RESUME_DATA } from "@/data/resume-data";
 import LayoutClient from "@/components/layout-client";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -100,6 +101,8 @@ export default function RootLayout({
         <LayoutClient>{children}</LayoutClient>
         <SpeedInsights />
         <Analytics />
+
+        <GoogleAnalytics gaId="G-8GTPGW16D4" />
       </body>
     </html>
   );
