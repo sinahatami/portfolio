@@ -207,8 +207,7 @@ export function GitHubActivityView({
                         )}
                       </div>
                       <p className="line-clamp-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                        {repo.description ||
-                          "Building robust solutions and innovative architectures."}
+                        {repo.description}
                       </p>
                       <div className="flex items-center gap-4 pt-2 text-[11px] font-medium text-slate-400 dark:text-slate-500">
                         <span className="flex items-center gap-1 transition-colors group-hover:text-amber-500 dark:group-hover:text-amber-400">
