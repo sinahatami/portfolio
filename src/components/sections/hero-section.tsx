@@ -240,7 +240,7 @@ export const HeroSection = () => {
                           className="flex items-center gap-2 text-sm"
                         >
                           <Code2 className="h-3.5 w-3.5" />
-                          TypeScript • Django
+                          TypeScript • Python
                         </motion.div>
                       </Badge>
                     </motion.div>
