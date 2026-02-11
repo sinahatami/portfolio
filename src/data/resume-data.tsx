@@ -17,7 +17,7 @@ export const RESUME_DATA = {
     Master of architectural modularity and performance optimization.
     I translate the complexities of Data Science into high-performance software solutions, leveraging a deep academic foundation in Computer Science to build intelligent systems that are as scalable as they are insightful`,
   avatarUrl: "/avatar.jpg",
-  personalWebsiteUrl: "https://sinahatami.github.io",
+  personalWebsiteUrl: "https://sinahatami.vercel.app",
   contact: {
     email: "hatamisinaa@gmail.com",
     tel: "+39 379 114 9157",
@@ -58,6 +58,29 @@ export const RESUME_DATA = {
     },
   ],
   work: [
+    {
+      company: "hAppI Lab",
+      link: "https://radoslawniewiadomski.github.io/happilab/members2.html",
+      logoUrl: "/logo/happllab.png",
+      badges: [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Python",
+        "Deep Learning",
+        "TensorFlow",
+        "OpenCV",
+        "Keras",
+        "PyTorch",
+        "Artificial Neural Networks (ANN)",
+        "Convolutional Neural Networks (CNN)",
+      ],
+      title: "Data Science Researcher (Voluntary)",
+      start: "Sep 2025",
+      end: "Now",
+      summary:
+        "hAppI Lab is a research group at the University of Genoa focused on human activity recognition.",
+      description: `I am part of the hAppI Lab team, collaborating with Professor Radoslaw Niewiadomski on the "Towards Commensal Activities Recognition With Machine Learning" project."`,
+    },
     {
       company: "Widecons",
       link: "https://widecons.com",
