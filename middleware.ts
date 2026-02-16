@@ -22,9 +22,9 @@ export function middleware(_request: NextRequest) {
     default-src 'self';
     script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://www.googletagmanager.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' data: https: blob: https://www.googletagmanager.com;
+    img-src 'self' data: https: blob: https://www.googletagmanager.com https://region1.google-analytics.com;
     font-src 'self' data:;
-    connect-src 'self' https://api.github.com https://resend.com https://www.google-analytics.com;
+    connect-src 'self' https://api.github.com https://resend.com https://www.google-analytics.com https://region1.google-analytics.com;
     frame-src 'self';
     worker-src 'self' blob:;
     media-src 'self';

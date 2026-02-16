@@ -89,12 +89,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <link
-          rel="preload"
-          as="image"
-          href={RESUME_DATA.avatarUrl}
-          fetchPriority="high"
-        />
       </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} bg-background text-foreground antialiased`}
