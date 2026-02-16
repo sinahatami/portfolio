@@ -52,4 +52,6 @@ export {
   BriefcaseIcon,
   Brain,
   MessageCircleCode,
+  BookOpen,
+  ArrowLeft,
 } from "lucide-react";

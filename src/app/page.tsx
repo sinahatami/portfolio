@@ -4,6 +4,7 @@ import { ContactSection } from "@/components/sections/contact-section";
 import { ExperienceSection } from "@/components/sections/experience-section";
 import { ProjectsSection } from "@/components/sections/projects-section";
 import { HeroSection } from "@/components/sections/hero-section";
+import { LatestPosts } from "@/components/sections/latest-posts";
 
 // 1. Critical Server Component: Import directly (No lazy loading for the GitHub fetcher)
 import GitHubActivitySection from "@/components/sections/github-activity-section";
@@ -80,6 +81,8 @@ export default function HomePage() {
         <Suspense fallback={<SectionSkeleton height="300px" />}>
           <TestimonialsSection />
         </Suspense>
+
+        <LatestPosts />
 
         <ContactSection />
       </main>

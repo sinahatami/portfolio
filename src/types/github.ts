@@ -6,6 +6,7 @@ export interface GitHubRepo {
   html_url: string;
   updated_at: string;
   forks_count: number;
+  topics: string[];
 }
 
 export interface GitHubUser {

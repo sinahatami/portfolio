@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Github,
@@ -17,11 +18,42 @@ import {
   GraduationCap,
   Brain,
   MessageCircleCode,
+  BookOpen,
 } from "@/lib/icons";
 import { Button } from "@/components/ui";
 import { RESUME_DATA } from "@/data/resume-data";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
+
+export const navLinks = [
+  { name: "About", href: "/#about", icon: <User className="h-4 w-4" /> },
+  {
+    name: "Experience",
+    href: "/#experience",
+    icon: <Briefcase className="h-4 w-4" />,
+  },
+  {
+    name: "Projects",
+    href: "/#projects",
+    icon: <Code2 className="h-4 w-4" />,
+  },
+  {
+    name: "Education",
+    href: "/#education",
+    icon: <GraduationCap className="h-4 w-4" />,
+  },
+  { name: "Skills", href: "/#skills", icon: <Brain className="h-4 w-4" /> },
+  {
+    name: "Contact",
+    href: "/#contact",
+    icon: <MessageCircleCode className="h-4 w-4" />,
+  },
+  {
+    name: "Blog",
+    href: "/blog",
+    icon: <BookOpen className="h-4 w-4" />,
+  },
+];
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,47 +61,30 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
 
-  const navLinks = [
-    { name: "About", href: "#about", icon: <User className="h-4 w-4" /> },
-    {
-      name: "Experience",
-      href: "#experience",
-      icon: <Briefcase className="h-4 w-4" />,
-    },
-    {
-      name: "Projects",
-      href: "#projects",
-      icon: <Code2 className="h-4 w-4" />,
-    },
-    {
-      name: "Education",
-      href: "#education",
-      icon: <GraduationCap className="h-4 w-4" />,
-    },
-    { name: "Skills", href: "#skills", icon: <Brain className="h-4 w-4" /> },
-    {
-      name: "Contact",
-      href: "#contact",
-      icon: <MessageCircleCode className="h-4 w-4" />,
-    },
-  ];
+  const pathname = usePathname();
 
-  // Scroll effects
+  // Scroll effects & Active Section
   useEffect(() => {
     let isMounted = true;
 
     const handleScroll = () => {
-      if (!isMounted) return;
+      // Only run scroll spy on homepage
+      if (!isMounted || pathname !== "/") return;
 
-      setIsScrolled(window.scrollY > 20);
+      const shouldBeScrolled = window.scrollY > 20;
+      if (isScrolled !== shouldBeScrolled) {
+        setIsScrolled(shouldBeScrolled);
+      }
 
       const totalScroll =
         document.documentElement.scrollHeight - window.innerHeight;
       const currentProgress = (window.scrollY / totalScroll) * 100;
       setScrollProgress(currentProgress);
 
-      // Active section detection
-      const sections = navLinks.map((link) => link.href.substring(1));
+      const sections = navLinks
+        .filter((link) => link.href.startsWith("/#"))
+        .map((link) => link.href.substring(2));
+
       const current = sections.find((section) => {
         const element = document.getElementById(section);
         if (!element) return false;
@@ -79,20 +94,24 @@ export const Navbar = () => {
       if (current) setActiveSection(current);
     };
 
+    // Set active section based on path
+    if (pathname.startsWith("/blog")) {
+      setActiveSection("blog");
+      setIsScrolled(true); // Always show background on blog
+    } else if (pathname === "/") {
+      handleScroll();
+    }
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       isMounted = false;
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [navLinks]); // Added dependency
+  }, [pathname, isScrolled]);
 
   // Close menu on resize
   useEffect(() => {
-    let isMounted = true;
-
     const handleResize = () => {
-      if (!isMounted) return;
-
       if (window.innerWidth >= 768) {
         setIsMenuOpen(false);
       }
@@ -100,10 +119,15 @@ export const Navbar = () => {
 
     window.addEventListener("resize", handleResize);
     return () => {
-      isMounted = false;
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  // Helper to determine if link is active
+  const isLinkActive = (href: string) => {
+    if (href === "/blog") return activeSection === "blog";
+    return activeSection === href.substring(2);
+  };
 
   return (
     <>
@@ -161,7 +185,7 @@ export const Navbar = () => {
                   href={link.href}
                   className={cn(
                     "group relative flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all",
-                    activeSection === link.href.substring(1)
+                    isLinkActive(link.href)
                       ? "text-accent bg-accent/10"
                       : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                   )}
@@ -169,7 +193,7 @@ export const Navbar = () => {
                 >
                   <span className="text-lg">{link.icon}</span>
                   <span>{link.name}</span>
-                  {activeSection === link.href.substring(1) && (
+                  {isLinkActive(link.href) && (
                     <motion.div
                       layoutId="activeNav"
                       className="from-accent/20 absolute inset-0 -z-10 rounded-xl bg-gradient-to-r to-blue-500/20"
@@ -273,7 +297,7 @@ export const Navbar = () => {
                     href={link.href}
                     className={cn(
                       "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all",
-                      activeSection === link.href.substring(1)
+                      isLinkActive(link.href)
                         ? "bg-accent/10 text-accent"
                         : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                     )}

@@ -23,6 +23,7 @@ interface GitHubActivityViewProps {
       language: string | null;
       html_url: string;
       updated_at: string;
+      topics: string[];
     }>;
     languages: Record<string, number>;
     totalStars: number;
@@ -209,6 +210,25 @@ export function GitHubActivityView({
                       <p className="line-clamp-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                         {repo.description}
                       </p>
+
+                      {/* Topics / Skills */}
+                      {repo.topics && repo.topics.length > 0 && (
+                        <div className="flex flex-wrap gap-1 pt-2">
+                          {repo.topics.slice(0, 3).map((topic) => (
+                            <span
+                              key={topic}
+                              className="inline-flex items-center rounded-sm bg-slate-100 px-1.5 py-0.5 text-[10px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400"
+                            >
+                              {topic}
+                            </span>
+                          ))}
+                          {repo.topics.length > 3 && (
+                            <span className="text-[10px] text-slate-400">
+                              +{repo.topics.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      )}
                       <div className="flex items-center gap-4 pt-2 text-[11px] font-medium text-slate-400 dark:text-slate-500">
                         <span className="flex items-center gap-1 transition-colors group-hover:text-amber-500 dark:group-hover:text-amber-400">
                           <Star className="h-3.5 w-3.5" />{" "}

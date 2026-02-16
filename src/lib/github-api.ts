@@ -54,7 +54,7 @@ export async function fetchGitHubStats(): Promise<GitHubStats | null> {
         (a: any, b: any) =>
           new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
       )
-      .slice(0, 4);
+      .slice(0, 6);
 
     // 4. Fetch Commits (Optional / simplified)
     let recentCommits = 0;
@@ -87,6 +87,7 @@ export async function fetchGitHubStats(): Promise<GitHubStats | null> {
         language: repo.language,
         html_url: repo.html_url,
         updated_at: repo.updated_at,
+        topics: repo.topics || [],
       })),
       languages,
       totalStars,
