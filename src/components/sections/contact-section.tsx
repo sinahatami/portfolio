@@ -1,5 +1,5 @@
 import { RESUME_DATA } from "@/data/resume-data";
-import { ContactForm } from "../contact-form";
+import { ContactForm } from "@/components/features/contact-form";
 
 export const ContactSection = () => {
   return (

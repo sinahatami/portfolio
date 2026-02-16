@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Moon, Sun } from "@/lib/icons";
 import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 
 export function ThemeToggle() {
   const [mounted, setMounted] = React.useState(false);

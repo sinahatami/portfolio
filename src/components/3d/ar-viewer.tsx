@@ -11,8 +11,13 @@ import {
   PerspectiveCamera,
 } from "@react-three/drei";
 import * as THREE from "three";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Button,
+} from "@/components/ui";
 import { X, Globe, Smartphone, Info } from "@/lib/icons";
 import { LoadingSpinner } from "../ui/loading-spinner";
 import { OptimizedCanvas } from "../ui/optimized-canvas";

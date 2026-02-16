@@ -18,9 +18,9 @@ import {
   Brain,
   MessageCircleCode,
 } from "@/lib/icons";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { RESUME_DATA } from "@/data/resume-data";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
 
 export const Navbar = () => {

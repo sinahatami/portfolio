@@ -7,7 +7,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { useSkills } from "@/contexts/skills-context";
 import { motion, AnimatePresence } from "framer-motion";
 import { SKILL_DETAILS } from "@/data/skill-details";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 
 export const SkillSelection = () => {
   const { selectedSkill, setSelectedSkill, hoveredSkill, setHoveredSkill } =

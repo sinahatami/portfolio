@@ -3,7 +3,7 @@
 import { Component } from "react";
 import type { ReactNode, ErrorInfo } from "react";
 import { AlertTriangle, RefreshCw } from "@/lib/icons";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 interface Props {
   children: ReactNode;

@@ -1,7 +1,6 @@
 "use client";
 
-import { CardContent, CardHeader } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { CardContent, CardHeader, Button } from "@/components/ui";
 import { RESUME_DATA } from "@/data/resume-data";
 import { SpotlightCard } from "../ui/spotlight-card";
 import {

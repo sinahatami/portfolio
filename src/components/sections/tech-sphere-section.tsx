@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { TechSphere2D } from "../2d-tech-sphere";
+import { TechSphere2D } from "../visualizations/2d-tech-sphere";
 
 export function TechSphereSection() {
   return (

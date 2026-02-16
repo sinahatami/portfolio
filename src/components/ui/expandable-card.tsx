@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 import { ChevronDown, ChevronUp } from "@/lib/icons";
 
 interface ExpandableCardProps {

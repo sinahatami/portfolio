@@ -78,17 +78,6 @@ export function OptimizedCanvas({
       frameloop="demand" // Changed from "always" to save resources
       dpr={[1, 1.5]} // Lower DPR for performance
       gl={safeGLConfig}
-      onCreated={(state) => {
-        // Log WebGL info for debugging
-        const glContext = state.gl.getContext();
-        if (glContext) {
-          console.log("WebGL Info:", {
-            vendor: glContext.getParameter(glContext.VENDOR),
-            renderer: glContext.getParameter(glContext.RENDERER),
-            version: glContext.getParameter(glContext.VERSION),
-          });
-        }
-      }}
       onError={(error) => {
         console.error("WebGL Error:", error);
         setHasError(true);

@@ -1,4 +1,4 @@
-import { fetchGitHubStats } from "@/app/lib/github-api";
+import { fetchGitHubStats } from "@/lib/github-api";
 import { NextResponse } from "next/server";
 
 export async function GET() {

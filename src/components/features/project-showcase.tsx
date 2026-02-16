@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink, Github, Play, Code, Globe } from "@/lib/icons";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { RESUME_DATA } from "@/data/resume-data";
 
 interface ProjectShowcaseProps {

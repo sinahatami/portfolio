@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/common";
 import { SkillsProvider } from "@/contexts/skills-context";
-import { Toaster } from "@/components/ui/toaster";
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { Toaster, LoadingSpinner } from "@/components/ui";
 import { SmoothScroll } from "./layout/smooth-scroll";
 import { Footer } from "./layout/footer";
 import { Navbar } from "./layout/navbar";

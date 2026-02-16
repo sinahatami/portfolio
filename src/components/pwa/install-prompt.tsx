@@ -1,12 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { Download, X } from "@/lib/icons";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
 export function InstallPrompt() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] =
+    useState<BeforeInstallPromptEvent | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
 
@@ -17,7 +23,8 @@ export function InstallPrompt() {
     ).matches;
     if (
       isStandalone ||
-      ("standalone" in window.navigator && (window.navigator as any).standalone)
+      ("standalone" in window.navigator &&
+        (window.navigator as Navigator & { standalone?: boolean }).standalone)
     ) {
       setIsInstalled(true);
     }
@@ -25,7 +32,7 @@ export function InstallPrompt() {
     // Listen for beforeinstallprompt event
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
-      setDeferredPrompt(e);
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
 
       // Show prompt after 5 seconds
       setTimeout(() => {
@@ -57,13 +64,7 @@ export function InstallPrompt() {
     if (!deferredPrompt) return;
 
     deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-
-    if (outcome === "accepted") {
-      console.log("User accepted the install prompt");
-    } else {
-      console.log("User dismissed the install prompt");
-    }
+    await deferredPrompt.userChoice;
 
     setDeferredPrompt(null);
     setShowPrompt(false);

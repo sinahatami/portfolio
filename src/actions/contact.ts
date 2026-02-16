@@ -2,9 +2,9 @@
 
 import { z } from "zod";
 import { Resend } from "resend";
-import { ContactEmail } from "@/components/email-template";
+import { ContactEmail } from "@/components/emails/email-template";
 import { contactFormLimiter } from "@/lib/rate-limit";
-import { ConfirmationEmail } from "@/components/confirmation-email";
+import { ConfirmationEmail } from "@/components/emails/confirmation-email";
 
 // 1. Initialize Resend with your API Key
 const resend = new Resend(process.env["RESEND_API_KEY"]);

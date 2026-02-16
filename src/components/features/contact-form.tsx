@@ -8,10 +8,10 @@ import {
   useCallback,
 } from "react";
 import { sendContactEmail } from "@/actions/contact";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { Loader2, Send, AlertCircle, CheckCircle2 } from "@/lib/icons";
-import { cn } from "@/app/lib/utils";
-import { toast } from "./ui/toaster";
+import { cn } from "@/lib/utils";
+import { toast } from "../ui/toaster";
 
 interface FormState {
   success: boolean;

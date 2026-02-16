@@ -6,13 +6,14 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "preview": "next build && next start",
     "format": "prettier --write .",
     "prepare": "husky",
     "generate-icons": "node scripts/generate-icons.js",
     "analyze": "ANALYZE=true next build --webpack",
-    "build:analyze": "ANALYZE=true next build --webpack"
+    "build:analyze": "ANALYZE=true next build --webpack",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

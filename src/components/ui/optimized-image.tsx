@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Loader2 } from "@/lib/icons";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 
 export interface OptimizedImageProps {
   src: string;

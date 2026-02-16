@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { Mic, MicOff, Volume2, Command, Eye, X } from "@/lib/icons";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "../ui/toaster";
 

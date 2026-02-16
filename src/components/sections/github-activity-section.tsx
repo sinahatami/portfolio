@@ -1,6 +1,6 @@
-import { fetchGitHubStats, formatLanguageData } from "@/app/lib/github-api";
+import { fetchGitHubStats, formatLanguageData } from "@/lib/github-api";
 import { GitHubActivityView } from "./github-activity-view";
-import { SectionContainer } from "@/components/section-container";
+import { SectionContainer } from "@/components/common";
 
 export default async function GitHubActivitySection() {
   // 1. Fetch data on the server

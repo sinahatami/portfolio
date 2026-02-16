@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, Star, GitBranch, GitCommit, Calendar } from "@/lib/icons";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/components/ui";
 
 interface GitHubStats {
   followers: number;

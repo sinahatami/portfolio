@@ -6,9 +6,9 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from "@/components/ui/card";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
-import { ExpandableList } from "@/components/expandable-list";
+} from "@/components/ui";
+import { SpotlightCard } from "@/components/ui";
+import { ExpandableList } from "@/components/common";
 import { RESUME_DATA } from "@/data/resume-data";
 import {
   Github,

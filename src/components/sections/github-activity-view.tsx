@@ -9,9 +9,9 @@ import {
   Star,
   ChevronRight,
 } from "@/lib/icons";
-import { Button } from "@/components/ui/button";
-import { SectionContainer } from "@/components/section-container";
-import { cn } from "@/app/lib/utils";
+import { Button } from "@/components/ui";
+import { SectionContainer } from "@/components/common";
+import { cn } from "@/lib/utils";
 
 interface GitHubActivityViewProps {
   stats: {

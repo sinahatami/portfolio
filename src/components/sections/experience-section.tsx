@@ -1,12 +1,11 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
-import { ExpandableList } from "@/components/expandable-list";
+import { Badge, SpotlightCard, OptimizedImage } from "@/components/ui";
+import { ExpandableList } from "@/components/common";
 import { RESUME_DATA } from "@/data/resume-data";
 import { ExternalLink, Calendar, Briefcase } from "@/lib/icons";
-import { OptimizedImage } from "@/components/ui/optimized-image";
-import { SectionContainer } from "@/components/section-container";
+
+import { SectionContainer } from "@/components/common";
 import { getOptimizedImageProps } from "@/lib/image-optimizer";
 
 export const ExperienceSection = () => {
