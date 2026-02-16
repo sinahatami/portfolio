@@ -20,11 +20,11 @@ export function middleware(_request: NextRequest) {
   // Content Security Policy (CSP)
   const csp = `
     default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://www.googletagmanager.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' data: https: blob:;
+    img-src 'self' data: https: blob: https://www.googletagmanager.com;
     font-src 'self' data:;
-    connect-src 'self' https://api.github.com https://resend.com;
+    connect-src 'self' https://api.github.com https://resend.com https://www.google-analytics.com;
     frame-src 'self';
     worker-src 'self' blob:;
     media-src 'self';
