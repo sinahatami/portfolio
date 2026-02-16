@@ -1,19 +1,14 @@
 import { MetadataRoute } from "next";
+import { RESUME_DATA } from "@/data/resume-data";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env["NEXT_PUBLIC_SITE_URL"];
+  const baseUrl = RESUME_DATA.personalWebsiteUrl;
 
   return {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: [
-        "/api/", // Disallow API routes
-        "/admin/", // If you have admin section
-        "/private/", // Any private routes
-      ],
     },
     sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl,
   };
 }
