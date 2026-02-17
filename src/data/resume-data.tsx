@@ -96,7 +96,7 @@ export const RESUME_DATA = {
         "AWS",
         "Docker",
       ],
-      title: "Software Engineer",
+      title: "Software Engineer | Data Scientist",
       start: "Oct 2024",
       end: "Apr 2025",
       summary:
@@ -122,7 +122,7 @@ export const RESUME_DATA = {
         "Agile",
         "Git",
       ],
-      title: "Software Engineer",
+      title: "Full Stack Engineer",
       start: "June 2021",
       end: "Sep 2022",
       summary:
@@ -142,7 +142,7 @@ export const RESUME_DATA = {
         "Jest",
         "Mentorship",
       ],
-      title: "Software Engineer",
+      title: "Full Stack Engineer",
       start: "May 2019",
       end: "June 2021",
       summary:
@@ -374,7 +374,7 @@ export const RESUME_DATA = {
       name: "Behzad Feizi",
       role: "CEO",
       company: "BPt Soft",
-      quote: `I am proud to introduce Mr.Sina. He was only 19 when he joined the company. He was very inexperienced at first, but he became one of the most important members of the company over time. He has been working as a front-end developer for more than two and a half years. He has developed projects such as HR software, performance evaluation software, and payroll software. 
+      quote: `I am proud to introduce Mr.Sina. He was only 19 when he joined the company. He was very inexperienced at first, but he became one of the most important members of the company over time. He has been working as a engineer for more than two and a half years. He has developed projects such as HR software, performance evaluation software, and payroll software. 
       His level in this field is senior because he can uniquely advance a project from beginning to end at a high level. On the other hand, He has studied server-side languages and artificial intelligence, which is remarkable. Mr.Sina is familiar with and works with a variety of software tools, and develops projects using knowledge such as data structure, algorithm design, and design patterns.
       On the other side, I believe him because he is always looking for new knowledge in computer science. He wants to spare no expense to learn new knowledge. When someone of this low age has high experience and expert in his field, he can succeed anywhere. Moreover, he can architect software on large scale as a software engineer, and his ability to solve the problem is admirable.
       As a consequence, he is an orderly, precise, and motivated person with a bright future ahead of him. He was able to work well in the company. I admire him as the managing director and I ask you to contact me with any questions you have about Mr.Sina.`,
