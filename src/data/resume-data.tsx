@@ -213,7 +213,7 @@ export const RESUME_DATA = {
       link: {
         label: "sinahatami.dev",
         href: "https://github.com/sinahatami/portfolio",
-        hrefLive: "https://sinahatami.dev",
+        hrefLive: "https://sinahatami.vercel.app",
       },
     },
     {

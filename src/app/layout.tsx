@@ -28,7 +28,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sinahatami.dev"),
+  metadataBase: new URL("https://sinahatami.vercel.app"),
   title: {
     default: "Sina Hatami | Software Engineer & Data Scientist",
     template: "%s | Sina Hatami",
@@ -51,9 +51,8 @@ export const metadata: Metadata = {
     description: RESUME_DATA.summary.substring(0, 160),
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
-  twitter: {
-    card: "summary_large_image",
-    creator: "@sinahatami",
+  verification: {
+    google: "iLqF8r0GnAmkWT_ILYgdx1yYSs8mSH_8bb9MrcnH7i",
   },
 };
 
