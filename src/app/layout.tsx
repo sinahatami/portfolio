@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   verification: {
-    google: "iLqF8r0GnAmkWT_ILYgdx1yYSs8mSH_8bb9MrcnH7i",
+    google: "nN8A5Y7nz5EbqkjGooC7_XkhKzt06e937w5PJW4C288",
   },
 };
 
