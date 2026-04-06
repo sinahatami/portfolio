@@ -117,7 +117,7 @@ export const RESUME_DATA = {
         "Jest",
         "Jasmine",
         "Node.js",
-        "ASP.NET",
+        "Django",
         "OOP",
         "Agile",
         "Git",
@@ -387,7 +387,7 @@ export const RESUME_DATA = {
       role: "Senior software developer",
       company: "Iran EIT",
       quote: `It is my pleasure to recommend Sina Hatami for admission as an employee at your company.
-      I am a ten-year senior developer at IranEIT Corporation in Iran. I came to know Sina when I was a co-worker in the infrastructure team at the Web framework project based on the Angular framework and backend of Asp.net core. Sina distinguished herself by submitting an exceptionally well-implementation and interesting solution on the the Web framework structure and ability that is easy to develop future.
+      I am a ten-year senior developer at IranEIT Corporation in Iran. I came to know Sina when I was a co-worker in the infrastructure team at the Web framework project based on the Angular framework and backend of Django core. Sina distinguished herself by submitting an exceptionally well-implementation and interesting solution on the the Web framework structure and ability that is easy to develop future.
       I would rank her in the top 2% of co-workers that I have work in the past 18 years concerning her developer ability research and professional behavior skills.
       Overall, Sina is highly intelligent and because he recently graduated Master's degree in Artificial intelligence at the University of Genova in Italy therefor has good skills in Python, TensorFlow, Machine Learning and Computer Vision.`,
       personalWebsite: "https://www.linkedin.com/in/payamjabbari",
