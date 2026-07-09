@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     qualities: [75, 80, 85, 90],
   },
+  sassOptions: {
+    silenceDeprecations: ["legacy-js-api", "import"],
+  },
   headers: async () => [
     {
       source: "/sw.js",
