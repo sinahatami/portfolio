@@ -10,7 +10,6 @@
     "preview": "next build && next start",
     "format": "prettier --write .",
     "prepare": "husky",
-    "generate-icons": "node scripts/generate-icons.js",
     "analyze": "ANALYZE=true next build --webpack",
     "build:analyze": "ANALYZE=true next build --webpack",
     "type-check": "tsc --noEmit",
