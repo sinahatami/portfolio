@@ -166,7 +166,12 @@ export function VoiceCommands() {
                 {commands.map((cmd) => (
                   <div
                     key={cmd.command}
-                    className="bg-accent/10 hover:border-accent/20 rounded-lg border border-transparent p-2 transition-colors"
+                    onClick={() => {
+                      cmd.action();
+                      toast.success(`Executing: ${cmd.command}`);
+                      setShowCommands(false);
+                    }}
+                    className="bg-accent/10 hover:border-accent/20 hover:bg-accent/20 cursor-pointer rounded-lg border border-transparent p-2 transition-colors"
                   >
                     <div className="text-primary text-xs font-bold">
                       {cmd.command}

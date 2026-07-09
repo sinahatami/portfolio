@@ -78,7 +78,11 @@ export const CommandMenu = () => {
                   <CommandItem
                     value="print-resume"
                     onSelect={() => runCommand(() => window.print())}
-                    // REPLACED cursor-default with cursor-pointer and removed data-[disabled] classes
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      runCommand(() => window.print());
+                    }}
                     className="aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
                   >
                     <FileText className="mr-2 h-4 w-4" />
@@ -95,6 +99,16 @@ export const CommandMenu = () => {
                         )
                       )
                     }
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      runCommand(() =>
+                        window.open(
+                          `mailto:${RESUME_DATA.contact.email}`,
+                          "_self"
+                        )
+                      );
+                    }}
                     className="aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
                   >
                     <Mail className="mr-2 h-4 w-4" />
@@ -118,6 +132,16 @@ export const CommandMenu = () => {
                         )
                       )
                     }
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      runCommand(() =>
+                        window.open(
+                          RESUME_DATA.contact.social.github.url,
+                          "_blank"
+                        )
+                      );
+                    }}
                     className="aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
                   >
                     <Github className="mr-2 h-4 w-4" />
@@ -133,6 +157,16 @@ export const CommandMenu = () => {
                         )
                       )
                     }
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      runCommand(() =>
+                        window.open(
+                          "https://www.linkedin.com/in/sina-hatami/",
+                          "_blank"
+                        )
+                      );
+                    }}
                     className="aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
                   >
                     <Linkedin className="mr-2 h-4 w-4" />
