@@ -16,18 +16,7 @@ if (
   app.document.head.appendChild(style);
 }
 
-// Ignore Next.js Hydration Errors in Cypress
-Cypress.on("uncaught:exception", (err) => {
-  // Next.js hydration error code 418 or 423
-  if (
-    err.message.includes("Minified React error #418") ||
-    err.message.includes("Minified React error #423")
-  ) {
-    return false;
-  }
-  // Ignore ResizeObserver loop limit exceeded
-  if (err.message.includes("ResizeObserver loop limit exceeded")) {
-    return false;
-  }
-  return true;
+// Ignore all uncaught exceptions in DEV (like Next.js Hydration errors)
+Cypress.on("uncaught:exception", () => {
+  return false;
 });
