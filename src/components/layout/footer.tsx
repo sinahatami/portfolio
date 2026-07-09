@@ -2,6 +2,7 @@ import { RESUME_DATA } from "@/data/resume-data";
 import { Heart, Coffee, Sparkles, Github, Linkedin } from "@/lib/icons";
 
 import { LucideIcon } from "lucide-react";
+import packageJson from "../../../package.json";
 
 const SocialIcons: Record<string, LucideIcon> = {
   github: Github as LucideIcon,
@@ -10,6 +11,10 @@ const SocialIcons: Record<string, LucideIcon> = {
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const isDev = process.env.NODE_ENV === "development";
+  const displayVersion = isDev
+    ? `v${packageJson.version}-dev`
+    : `v${packageJson.version}`;
 
   return (
     <footer className="from-background via-background to-background/95 relative mt-32 overflow-hidden border-t bg-gradient-to-b pb-6">
@@ -104,6 +109,12 @@ export const Footer = () => {
               Designed and developed with Next.js 16, TypeScript, and Tailwind
               CSS. Deployed on Vercel.
             </p>
+
+            <div className="flex items-center gap-2">
+              <span className="bg-accent/10 text-accent rounded-full px-2 py-0.5 font-mono text-[10px] font-medium">
+                {displayVersion}
+              </span>
+            </div>
           </div>
         </div>
       </div>
