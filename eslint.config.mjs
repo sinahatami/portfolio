@@ -24,7 +24,7 @@ export default [
       ...nextPlugin.configs["core-web-vitals"].rules,
       "react/no-unescaped-entities": "off",
       "@next/next/no-img-element": "off",
-      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "no-console": "off",
     },
   },
 ];
