@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 import withBundleAnalyzer from "@next/bundle-analyzer";
+import packageJson from "./package.json";
 
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_APP_VERSION: packageJson.version,
+  },
   reactStrictMode: true,
   // Remove swcMinify - it's enabled by default in Next.js 15+
   compiler: {
