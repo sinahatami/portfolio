@@ -1,11 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import preview from "jest-preview";
 import { Button } from "@/components/ui/button";
 
 describe("Button Component", () => {
   it("renders correctly with default props", () => {
     render(<Button>Click me</Button>);
     const button = screen.getByRole("button", { name: /click me/i });
+
+    // Example: Use preview.debug() to open this specific DOM state in your browser!
+    // preview.debug();
+
     expect(button).toBeInTheDocument();
     expect(button).toHaveClass("bg-primary");
   });
