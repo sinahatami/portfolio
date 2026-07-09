@@ -5,7 +5,7 @@
 // Learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
 import { jestPreviewConfigure } from "jest-preview";
-import "./src/app/globals.css";
+import "./src/app/globals.scss";
 
 // Configure Jest Preview
 jestPreviewConfigure({
