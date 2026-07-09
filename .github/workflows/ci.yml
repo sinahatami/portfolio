@@ -39,5 +39,13 @@ jobs:
       - name: Build Next.js Application
         run: yarn build
         env:
-          # Pass dummy environment variables if required for the build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Cypress E2E Tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: yarn start
+          wait-on: 'http://localhost:3000'
+          # We don't need to rebuild because 'yarn build' already ran in the previous step
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
