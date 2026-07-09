@@ -120,8 +120,8 @@ export const SkillSelection = () => {
               setSearch(query);
               if (query) {
                 const allSkills = [
-                  ...RESUME_DATA.skills[0].items,
-                  ...RESUME_DATA.skills[1].items,
+                  ...(RESUME_DATA.skills[0]?.items || []),
+                  ...(RESUME_DATA.skills[1]?.items || []),
                 ];
                 const filtered = allSkills.filter((skill) =>
                   skill.toLowerCase().includes(query)
@@ -174,7 +174,7 @@ export const SkillSelection = () => {
           </div>
 
           <div className="no-scrollbar grid grid-flow-col grid-rows-2 gap-3 overflow-x-auto p-1 pt-1 pb-4">
-            {RESUME_DATA.skills[0].items.map((skill) => {
+            {RESUME_DATA.skills[0]?.items.map((skill) => {
               const detail = SKILL_DETAILS[skill];
               const isHovered = hoveredSkill === skill;
 
@@ -229,7 +229,7 @@ export const SkillSelection = () => {
           </div>
 
           <div className="no-scrollbar grid grid-flow-col grid-rows-2 gap-3 overflow-x-auto p-1 pt-1 pb-4">
-            {RESUME_DATA.skills[1].items.map((skill) => {
+            {RESUME_DATA.skills[1]?.items.map((skill) => {
               const detail = SKILL_DETAILS[skill];
               const isHovered = hoveredSkill === skill;
 

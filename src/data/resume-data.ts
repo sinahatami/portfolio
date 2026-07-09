@@ -1,10 +1,9 @@
-import { Github, Linkedin } from "@/lib/icons";
-import { Testimonial } from "./testimonial-interface";
+import { ResumeData } from "@/types/resume";
 
 const yearsExperience: string = "4+";
 const position: string = "Software Engineer & Data Scientist";
 
-export const RESUME_DATA = {
+export const RESUME_DATA: ResumeData = {
   name: "Sina Hatami",
   initials: "SH",
   location: "Genoa, Italy",
@@ -23,12 +22,14 @@ export const RESUME_DATA = {
     tel: "+39 379 114 9157",
     social: {
       github: {
+        name: "GitHub",
         url: "https://github.com/sinahatami",
-        icon: Github,
+        iconName: "github",
       },
       linkedin: {
+        name: "LinkedIn",
         url: "https://www.linkedin.com/in/sina-hatami/",
-        icon: Linkedin,
+        iconName: "linkedin",
       },
     },
   },
@@ -381,6 +382,7 @@ export const RESUME_DATA = {
       fileUrl: "/recommendations/Recommendation_from_Manager_BPT.pdf",
       personalWebsite: "https://linkedin.com/in/behzad-feizi-2835b29b",
       companyWebsite: "https://www.bptsoft.com/",
+      avatarUrl: null,
     },
     {
       name: "Payam Jabbari",
@@ -392,6 +394,7 @@ export const RESUME_DATA = {
       Overall, Sina is highly intelligent and because he recently graduated Master's degree in Artificial intelligence at the University of Genova in Italy therefor has good skills in Python, TensorFlow, Machine Learning and Computer Vision.`,
       personalWebsite: "https://www.linkedin.com/in/payamjabbari",
       companyWebsite: "https://www.iraneit.com/",
+      avatarUrl: null,
     },
     {
       name: "Radoslaw Niewiadomski",
@@ -414,5 +417,5 @@ export const RESUME_DATA = {
       personalWebsite: "https://radoslawniewiadomski.github.io/",
       companyWebsite: "https://unige.it/en/",
     },
-  ] as Testimonial[],
-} as const;
+  ],
+};

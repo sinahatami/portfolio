@@ -12,7 +12,7 @@ import {
 } from "@/lib/icons";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import type { Testimonial } from "@/data/testimonial-interface";
+import type { Testimonial } from "@/types/resume";
 
 const TestimonialCard = ({
   testimonial,

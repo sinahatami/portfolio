@@ -12,3 +12,7 @@ export * from "./skeleton";
 export * from "./spotlight-card";
 export * from "./static-wrapper";
 export * from "./toaster";
+export * from "./input";
+export * from "./textarea";
+export * from "./label";
+export * from "./form";
