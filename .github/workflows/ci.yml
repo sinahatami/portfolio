@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run Linter
+        run: yarn lint
+
+      - name: Run Type Checking
+        run: yarn type-check
+
+      - name: Run Unit & Integration Tests
+        run: yarn test
+
+      - name: Build Next.js Application
+        run: yarn build
+        env:
+          # Pass dummy environment variables if required for the build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
