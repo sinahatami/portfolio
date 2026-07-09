@@ -27,6 +27,9 @@ jobs:
       - name: Run Linter
         run: yarn lint
 
+      - name: Check Formatting
+        run: npx prettier --check .
+
       - name: Run Type Checking
         run: yarn type-check
 
