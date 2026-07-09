@@ -48,7 +48,7 @@ describe("GitHub API Utilities", () => {
       const result = formatLanguageData(mockData);
 
       expect(result).toHaveLength(5);
-      expect(result[4].name).toBe("CSS"); // Shell and Go are excluded
+      expect(result[4]?.name).toBe("CSS"); // Shell and Go are excluded
     });
   });
 
@@ -65,7 +65,7 @@ describe("GitHub API Utilities", () => {
     });
 
     it("should return null if GITHUB_TOKEN is missing", async () => {
-      delete process.env.GITHUB_TOKEN;
+      delete process.env["GITHUB_TOKEN"];
       const result = await fetchGitHubStats();
       expect(result).toBeNull();
     });
