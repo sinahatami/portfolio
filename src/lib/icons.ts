@@ -54,4 +54,7 @@ export {
   MessageCircleCode,
   BookOpen,
   ArrowLeft,
+  RefreshCcw,
+  SearchX,
+  Home,
 } from "lucide-react";

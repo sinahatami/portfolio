@@ -1,13 +1,13 @@
 import { Suspense, lazy } from "react";
 import { ErrorBoundary } from "@/components/common";
-import { ContactSection } from "@/components/sections/contact-section";
-import { ExperienceSection } from "@/components/sections/experience-section";
-import { ProjectsSection } from "@/components/sections/projects-section";
-import { HeroSection } from "@/components/sections/hero-section";
-import { LatestPosts } from "@/components/sections/latest-posts";
-
-// 1. Critical Server Component: Import directly (No lazy loading for the GitHub fetcher)
-import GitHubActivitySection from "@/components/sections/github-activity-section";
+import {
+  ContactSection,
+  ExperienceSection,
+  ProjectsSection,
+  HeroSection,
+  LatestPosts,
+  GitHubActivitySection,
+} from "@/components/sections";
 
 // 2. Lazy load non-critical UI sections to reduce initial bundle size
 const EducationSection = lazy(() =>
