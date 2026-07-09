@@ -6,6 +6,12 @@ global.fetch = jest.fn();
 describe("GitHub API Utilities", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    // Silence expected console errors during tests
+    jest.spyOn(console, "error").mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   describe("formatLanguageData", () => {
