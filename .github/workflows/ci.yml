@@ -45,7 +45,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           start: yarn start
-          wait-on: 'http://localhost:3000'
+          wait-on: "http://localhost:3000"
           # We don't need to rebuild because 'yarn build' already ran in the previous step
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
