@@ -1,16 +1,35 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import { ErrorBoundary } from "@/components/common";
-import {
-  ContactSection,
-  EducationSection,
-  ExperienceSection,
-  GitHubActivitySection,
-  HeroSection,
-  LatestPosts,
-} from "@/components/sections";
+import { HeroSection } from "@/components/sections";
 
 // 2. Lazy load non-critical CLIENT UI sections to reduce initial bundle size
+const ExperienceSection = dynamic(() =>
+  import("@/components/sections/experience-section").then(
+    (mod) => mod.ExperienceSection
+  )
+);
+
+const EducationSection = dynamic(() =>
+  import("@/components/sections/education-section").then(
+    (mod) => mod.EducationSection
+  )
+);
+
+const LatestPosts = dynamic(() =>
+  import("@/components/sections/latest-posts").then((mod) => mod.LatestPosts)
+);
+
+const ContactSection = dynamic(() =>
+  import("@/components/sections/contact-section").then(
+    (mod) => mod.ContactSection
+  )
+);
+
+const GitHubActivitySection = dynamic(
+  () => import("@/components/sections/github-activity-section")
+);
+
 const ProjectsSection = dynamic(() =>
   import("@/components/sections/projects-section").then(
     (mod) => mod.ProjectsSection
@@ -59,15 +78,17 @@ export default function HomePage() {
           <HeroSection />
         </ErrorBoundary>
 
-        <ErrorBoundary>
+        <Suspense fallback={<SectionSkeleton height="800px" />}>
           <ExperienceSection />
-        </ErrorBoundary>
+        </Suspense>
 
         <Suspense fallback={<SectionSkeleton height="600px" />}>
           <ProjectsSection />
         </Suspense>
 
-        <EducationSection />
+        <Suspense fallback={<SectionSkeleton height="600px" />}>
+          <EducationSection />
+        </Suspense>
 
         <Suspense fallback={<SectionSkeleton height="400px" />}>
           <SkillSelection />
@@ -83,9 +104,13 @@ export default function HomePage() {
           <TestimonialsSection />
         </Suspense>
 
-        <LatestPosts />
+        <Suspense fallback={<SectionSkeleton height="400px" />}>
+          <LatestPosts />
+        </Suspense>
 
-        <ContactSection />
+        <Suspense fallback={<SectionSkeleton height="600px" />}>
+          <ContactSection />
+        </Suspense>
       </main>
 
       <Suspense fallback={null}>
