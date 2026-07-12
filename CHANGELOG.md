@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/sinahatami/portfolio/compare/v1.0.0...v1.0.1) (2026-07-12)
+
+### Performance Improvements
+
+- dynamically import non-critical sections to improve lighthouse execution time ([963ec5d](https://github.com/sinahatami/portfolio/commit/963ec5dbcdc1eaa9c061d6164fc421d5feda390f))
+
 # 1.0.0 (2026-07-10)
 
 ### Bug Fixes
