@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import { OptimizedCanvas } from "@/components/ui/optimized-canvas";
 import * as THREE from "three";
 import {
   Card,
@@ -150,17 +151,14 @@ export function ProjectViewer3D() {
 
   return (
     <div className="relative h-[500px] w-full overflow-hidden rounded-2xl border border-white/10">
-      <Canvas
+      <OptimizedCanvas
         camera={{ position: [0, 2, 8], fov: 60 }}
         style={{
           background: "linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%)",
         }}
-        onCreated={({ gl }) => {
-          gl.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        }}
       >
         <Scene onProjectClick={handleProjectClick} />
-      </Canvas>
+      </OptimizedCanvas>
 
       {/* Project Details Panel */}
       {selectedProject && (

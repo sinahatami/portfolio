@@ -3,17 +3,17 @@ import dynamic from "next/dynamic";
 import { ErrorBoundary } from "@/components/common";
 import {
   ContactSection,
+  EducationSection,
   ExperienceSection,
-  ProjectsSection,
+  GitHubActivitySection,
   HeroSection,
   LatestPosts,
-  GitHubActivitySection,
 } from "@/components/sections";
 
-// 2. Lazy load non-critical UI sections to reduce initial bundle size
-const EducationSection = dynamic(() =>
-  import("@/components/sections/education-section").then(
-    (mod) => mod.EducationSection
+// 2. Lazy load non-critical CLIENT UI sections to reduce initial bundle size
+const ProjectsSection = dynamic(() =>
+  import("@/components/sections/projects-section").then(
+    (mod) => mod.ProjectsSection
   )
 );
 
@@ -63,11 +63,11 @@ export default function HomePage() {
           <ExperienceSection />
         </ErrorBoundary>
 
-        <ProjectsSection />
-
-        <Suspense fallback={<SectionSkeleton height="300px" />}>
-          <EducationSection />
+        <Suspense fallback={<SectionSkeleton height="600px" />}>
+          <ProjectsSection />
         </Suspense>
+
+        <EducationSection />
 
         <Suspense fallback={<SectionSkeleton height="400px" />}>
           <SkillSelection />

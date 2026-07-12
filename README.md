@@ -142,9 +142,10 @@ npm run start
 
 This portfolio achieves **100/100 Lighthouse scores** through:
 ● **Caching** : Static Site Generation (SSG) with Incremental Static Regeneration (ISR).
-● **Bundle Optimization** : Tree-shaking and aggressive code splitting.
-● **Asset Strategy** : Next/Image for WebP delivery and optimized font loading.
-● **Monitoring** : Integration with Vercel Speed Insights.
+● **Bundle Optimization** : Tree-shaking and aggressive code splitting via `next/dynamic` for heavy client features (e.g., UI menus, 3D components, and large forms).
+● **WebGL & 3D Execution** : Deeply lazy-loaded `@react-three/fiber` and `three.js` ecosystems. Only executed on user interaction or off the critical render path.
+● **Asset Strategy** : Next/Image for WebP delivery, LCP prioritized rendering (with fade-in animations removed for critical paint elements), and optimized font loading.
+● **Monitoring** : Integration with Vercel Speed Insights and Web Vitals tracking.
 
 ## 🤝 Contributing
 

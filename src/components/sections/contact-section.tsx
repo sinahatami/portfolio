@@ -1,5 +1,17 @@
+import dynamic from "next/dynamic";
 import { RESUME_DATA } from "@/data/resume-data";
-import { ContactForm } from "@/components/features/contact-form";
+
+const ContactForm = dynamic(
+  () =>
+    import("@/components/features/contact-form").then((mod) => mod.ContactForm),
+  {
+    loading: () => (
+      <div className="flex h-[400px] w-full items-center justify-center">
+        <div className="bg-accent/20 h-8 w-8 animate-pulse rounded-full"></div>
+      </div>
+    ),
+  }
+);
 
 export const ContactSection = () => {
   return (

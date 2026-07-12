@@ -52,8 +52,8 @@ export const OptimizedImage = ({
         quality={quality}
         priority={priority}
         className={cn(
-          "transition-opacity duration-300",
-          isLoading ? "opacity-0" : "opacity-100"
+          !priority && "transition-opacity duration-300",
+          !priority && isLoading ? "opacity-0" : "opacity-100"
         )}
         onLoad={() => setIsLoading(false)}
         {...(!fill && width ? { width } : {})}
