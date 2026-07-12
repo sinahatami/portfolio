@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/sinahatami/portfolio/compare/v1.0.1...v1.0.2) (2026-07-12)
+
+### Performance Improvements
+
+- heavily optimize JS bundle splitting and LCP ([6e565c0](https://github.com/sinahatami/portfolio/commit/6e565c043e7e91adfc9bdb68a53780173bc24c20))
+
 ## [1.0.1](https://github.com/sinahatami/portfolio/compare/v1.0.0...v1.0.1) (2026-07-12)
 
 ### Performance Improvements
