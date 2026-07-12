@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   // Remove swcMinify - it's enabled by default in Next.js 15+
+  experimental: {
+    optimizePackageImports: ["lucide-react", "framer-motion"],
+  },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },

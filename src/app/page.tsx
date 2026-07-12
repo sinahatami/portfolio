@@ -1,4 +1,5 @@
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import { ErrorBoundary } from "@/components/common";
 import {
   ContactSection,
@@ -10,28 +11,28 @@ import {
 } from "@/components/sections";
 
 // 2. Lazy load non-critical UI sections to reduce initial bundle size
-const EducationSection = lazy(() =>
-  import("@/components/sections/education-section").then((mod) => ({
-    default: mod.EducationSection,
-  }))
+const EducationSection = dynamic(() =>
+  import("@/components/sections/education-section").then(
+    (mod) => mod.EducationSection
+  )
 );
 
-const SkillSelection = lazy(() =>
-  import("@/components/sections/skill-section").then((mod) => ({
-    default: mod.SkillSelection,
-  }))
+const SkillSelection = dynamic(() =>
+  import("@/components/sections/skill-section").then(
+    (mod) => mod.SkillSelection
+  )
 );
 
-const TestimonialsSection = lazy(() =>
-  import("@/components/sections/testimonials-section").then((mod) => ({
-    default: mod.TestimonialsSection,
-  }))
+const TestimonialsSection = dynamic(() =>
+  import("@/components/sections/testimonials-section").then(
+    (mod) => mod.TestimonialsSection
+  )
 );
 
-const VoiceCommands = lazy(() =>
-  import("@/components/features/voice-commands").then((mod) => ({
-    default: mod.VoiceCommands,
-  }))
+const VoiceCommands = dynamic(() =>
+  import("@/components/features/voice-commands").then(
+    (mod) => mod.VoiceCommands
+  )
 );
 
 // Reusable Skeleton Component for Suspense fallbacks

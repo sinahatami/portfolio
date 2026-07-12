@@ -8,10 +8,25 @@ import { Footer } from "./layout/footer";
 import { Navbar } from "./layout/navbar";
 import { ScrollToTop } from "./layout/scroll-to-top";
 
-import { CommandMenu, CustomCursor } from "./features";
-import { PerformanceOptimizer } from "./performance-optimizer";
-import { ParticlesBackground } from "./visualizations/particles-background";
+import dynamic from "next/dynamic";
 import { ThemeProvider } from "next-themes";
+import { PerformanceOptimizer } from "./performance-optimizer";
+
+const CommandMenu = dynamic(
+  () => import("./features").then((mod) => mod.CommandMenu),
+  { ssr: false }
+);
+const CustomCursor = dynamic(
+  () => import("./features").then((mod) => mod.CustomCursor),
+  { ssr: false }
+);
+const ParticlesBackground = dynamic(
+  () =>
+    import("./visualizations/particles-background").then(
+      (mod) => mod.ParticlesBackground
+    ),
+  { ssr: false }
+);
 
 export default function LayoutClient({
   children,
