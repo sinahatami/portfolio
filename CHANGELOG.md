@@ -1,3 +1,9 @@
+## [1.0.3](https://github.com/sinahatami/portfolio/compare/v1.0.2...v1.0.3) (2026-07-12)
+
+### Performance Improvements
+
+- aggressively lazy-load below-the-fold ui ([008590f](https://github.com/sinahatami/portfolio/commit/008590f054577694803fc277a3e905f8ea50e8fe))
+
 ## [1.0.2](https://github.com/sinahatami/portfolio/compare/v1.0.1...v1.0.2) (2026-07-12)
 
 ### Performance Improvements
