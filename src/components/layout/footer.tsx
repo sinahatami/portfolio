@@ -1,3 +1,5 @@
+"use client";
+
 import { RESUME_DATA } from "@/data/resume-data";
 import { Heart, Coffee, Sparkles, Github, Linkedin } from "@/lib/icons";
 
@@ -9,10 +11,8 @@ const SocialIcons: Record<string, LucideIcon> = {
 };
 
 export const Footer = () => {
-  const currentYear = new Date().getFullYear();
-  const isDev = process.env.NODE_ENV === "development";
-  const version = process.env["NEXT_PUBLIC_APP_VERSION"] || "0.0.0";
-  const displayVersion = isDev ? `v${version}-dev` : `v${version}`;
+  const currentYear = 2026;
+  const displayVersion = `v${process.env["NEXT_PUBLIC_APP_VERSION"] || "0.0.0"}`;
 
   return (
     <footer className="from-background via-background to-background/95 relative mt-32 overflow-hidden border-t bg-gradient-to-b pb-6">
