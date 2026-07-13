@@ -3,10 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { SkillsProvider } from "@/contexts/skills-context";
 import { Toaster } from "@/components/ui";
-import { SmoothScroll } from "./layout/smooth-scroll";
-import { Footer } from "./layout/footer";
-import { Navbar } from "./layout/navbar";
-import { ScrollToTop } from "./layout/scroll-to-top";
+import { SmoothScroll, Footer, Navbar, ScrollToTop } from "./layout";
 
 import { ThemeProvider } from "next-themes";
 import { PerformanceOptimizer } from "./performance-optimizer";

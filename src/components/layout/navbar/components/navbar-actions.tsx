@@ -1,7 +1,7 @@
 import { Github, Linkedin, Mail, Menu, X } from "@/lib/icons";
 import { Button } from "@/components/ui";
 import { RESUME_DATA } from "@/data/resume-data";
-import { ThemeToggle } from "./theme-toggle";
+import { ThemeToggle } from "../../theme-toggle";
 
 interface NavbarActionsProps {
   isMenuOpen: boolean;
