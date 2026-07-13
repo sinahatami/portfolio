@@ -1,6 +1,5 @@
 "use server";
 
-import { z } from "zod";
 import { Resend } from "resend";
 import { ContactEmail } from "@/components/emails/email-template";
 import { contactFormLimiter } from "@/lib/rate-limit";
@@ -9,22 +8,7 @@ import { ConfirmationEmail } from "@/components/emails/confirmation-email";
 // 1. Initialize Resend with your API Key
 const resend = new Resend(process.env["RESEND_API_KEY"]);
 
-const contactSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
-  message: z
-    .string()
-    .min(10, { message: "Message must be at least 10 characters" })
-    .max(2000, { message: "Message must be less than 2000 characters" }),
-});
-
-interface FormState {
-  success: boolean;
-  message: string;
-  errors?: {
-    email?: string[];
-    message?: string[];
-  };
-}
+import { contactSchema, type FormState } from "@/lib/validations/contact";
 
 export async function sendContactEmail(
   _prevState: FormState | null,

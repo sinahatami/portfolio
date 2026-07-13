@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  fetchGitHubProfile,
+  fetchGitHubRepos,
+  fetchGitHubCommits,
+} from "@/lib/services/github";
 
 export const dynamic = "force-dynamic";
-
-const GITHUB_USERNAME = "sinahatami";
 
 export async function GET(_request: NextRequest) {
   const GITHUB_TOKEN = process.env["GITHUB_TOKEN"];
@@ -15,28 +18,8 @@ export async function GET(_request: NextRequest) {
   }
 
   try {
-    const headers = {
-      Authorization: `Bearer ${GITHUB_TOKEN}`,
-      Accept: "application/vnd.github.v3+json",
-    };
-
-    // Fetch user data
-    const userResponse = await fetch(
-      `https://api.github.com/users/${GITHUB_USERNAME}`,
-      { headers }
-    );
-
-    if (!userResponse.ok) throw new Error("Failed to fetch user");
-    const user = await userResponse.json();
-
-    // Fetch repositories
-    const reposResponse = await fetch(
-      `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`,
-      { headers }
-    );
-
-    if (!reposResponse.ok) throw new Error("Failed to fetch repos");
-    const repos = await reposResponse.json();
+    const user = await fetchGitHubProfile(GITHUB_TOKEN);
+    const repos = await fetchGitHubRepos(GITHUB_TOKEN);
 
     // Process data
     const languages: Record<string, number> = {};
@@ -58,23 +41,12 @@ export async function GET(_request: NextRequest) {
       )
       .slice(0, 4);
 
-    // Try to get commits from a specific repo
     let recentCommits = 0;
     if (sortedRepos.length > 0) {
-      try {
-        const commitsResponse = await fetch(
-          `https://api.github.com/repos/${GITHUB_USERNAME}/${sortedRepos[0].name}/commits?per_page=100`,
-          { headers }
-        );
-
-        if (commitsResponse.ok) {
-          const commits = await commitsResponse.json();
-          recentCommits = Array.isArray(commits) ? commits.length : 0;
-        }
-      } catch (error) {
-        console.log("Could not fetch commits, using fallback");
-        recentCommits = 847; // Fallback value
-      }
+      recentCommits = await fetchGitHubCommits(
+        GITHUB_TOKEN,
+        sortedRepos[0].name
+      );
     }
 
     return NextResponse.json({
