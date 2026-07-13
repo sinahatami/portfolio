@@ -186,7 +186,7 @@ export function VoiceCommands() {
           {transcript && (
             <div className="border-border bg-background/80 animate-in slide-in-from-left-4 fade-in absolute top-2 left-16 flex items-center gap-2 rounded-full border px-4 py-2 whitespace-nowrap backdrop-blur-sm duration-300">
               <Volume2 className="text-primary h-3 w-3" />
-              <span className="text-xs font-medium italic">"{transcript}"</span>
+              <span className="text-xs font-medium italic">{transcript}</span>
             </div>
           )}
 

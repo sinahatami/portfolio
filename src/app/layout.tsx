@@ -83,6 +83,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <meta httpEquiv="Permissions-Policy" content="microphone=*" />
       </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} bg-background text-foreground antialiased`}
