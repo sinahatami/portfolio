@@ -41,6 +41,7 @@ export function GitHubActivityView({
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
+      timeZone: "UTC",
     });
   };
 

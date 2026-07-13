@@ -109,7 +109,10 @@ export const Footer = () => {
             </p>
 
             <div className="flex items-center gap-2">
-              <span className="bg-accent/10 text-accent rounded-full px-2 py-0.5 font-mono text-[10px] font-medium">
+              <span
+                suppressHydrationWarning
+                className="bg-accent/10 text-accent rounded-full px-2 py-0.5 font-mono text-[10px] font-medium"
+              >
                 {displayVersion}
               </span>
             </div>
