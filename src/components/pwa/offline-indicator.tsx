@@ -1,48 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { WifiOff } from "@/lib/icons";
-import { cn } from "@/lib/utils";
+import { useOfflineStatus } from "./hooks/use-offline-status";
+import { OfflineIndicatorAlert } from "./components/offline-indicator-alert";
 
 export function OfflineIndicator() {
-  const [isOffline, setIsOffline] = useState(false);
+  const isOffline = useOfflineStatus();
 
-  useEffect(() => {
-    // 1. Move the check to a guard clause at the top
-    if (typeof window === "undefined") return;
-
-    // 2. Logic now lives in the "safe" zone
-    setIsOffline(!navigator.onLine);
-
-    const handleOnline = () => setIsOffline(false);
-    const handleOffline = () => setIsOffline(true);
-
-    window.addEventListener("online", handleOnline);
-    window.addEventListener("offline", handleOffline);
-
-    // 3. This return is now guaranteed for the client-side path
-    return () => {
-      window.removeEventListener("online", handleOnline);
-      window.removeEventListener("offline", handleOffline);
-    };
-  }, []); // Empty dependency array is fine here
-
-  // We handle the "nothing to show" state here
   if (!isOffline) return null;
 
-  return (
-    <div
-      className={cn(
-        "fixed top-4 left-1/2 z-50 -translate-x-1/2",
-        "animate-in slide-in-from-top-4 fade-in fill-mode-both duration-300"
-      )}
-    >
-      <div className="flex items-center gap-2 rounded-lg bg-yellow-500/90 px-4 py-2 text-yellow-900 shadow-lg backdrop-blur-sm">
-        <WifiOff className="h-4 w-4" />
-        <span className="text-sm font-medium">
-          You are offline. Some features may be limited.
-        </span>
-      </div>
-    </div>
-  );
+  return <OfflineIndicatorAlert />;
 }

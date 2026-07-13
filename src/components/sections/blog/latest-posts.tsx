@@ -8,9 +8,9 @@ import {
   CardTitle,
   CardDescription,
   Badge,
-  Button,
 } from "@/components/ui";
-import { Calendar, ChevronRight, ArrowUpRight } from "@/lib/icons";
+import { Calendar, ArrowUpRight } from "@/lib/icons";
+import { ViewAllButton } from "./components/view-all-button";
 
 export function LatestPosts() {
   const posts = getAllPosts().slice(0, 3); // Get top 3 latest posts
@@ -66,14 +66,7 @@ export function LatestPosts() {
         ))}
       </div>
 
-      <div className="mt-10 flex justify-center">
-        <Button variant="outline" asChild className="group">
-          <Link href="/blog">
-            View All Articles
-            <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
-        </Button>
-      </div>
+      <ViewAllButton />
     </SectionContainer>
   );
 }

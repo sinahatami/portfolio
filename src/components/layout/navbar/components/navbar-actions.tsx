@@ -1,7 +1,8 @@
-import { Github, Linkedin, Mail, Menu, X } from "@/lib/icons";
+import { Github, Linkedin, Mail } from "@/lib/icons";
 import { Button } from "@/components/ui";
 import { RESUME_DATA } from "@/data/resume-data";
 import { ThemeToggle } from "../../theme-toggle";
+import { MobileMenuButton } from "./mobile-menu-button";
 
 interface NavbarActionsProps {
   isMenuOpen: boolean;
@@ -63,16 +64,7 @@ export const NavbarActions = ({
 
       <ThemeToggle />
 
-      {/* Mobile Menu Button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="md:hidden"
-        aria-label="Toggle menu"
-        onClick={onToggleMenu}
-      >
-        {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-      </Button>
+      <MobileMenuButton isMenuOpen={isMenuOpen} onToggleMenu={onToggleMenu} />
     </div>
   );
 };
