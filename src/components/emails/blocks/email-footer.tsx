@@ -1,5 +1,5 @@
 import { Section, Text } from "@react-email/components";
-import { footer, footerText } from "./email-styles";
+import { footer, footerText } from "../styles/email-styles";
 import { RESUME_DATA } from "@/data/resume-data";
 
 export const EmailFooter = () => {

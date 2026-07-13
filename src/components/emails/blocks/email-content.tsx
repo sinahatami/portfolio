@@ -1,5 +1,5 @@
 import { Section, Text, Link } from "@react-email/components";
-import { content, text, buttonContainer, button } from "./email-styles";
+import { content, text, buttonContainer, button } from "../styles/email-styles";
 import { RESUME_DATA } from "@/data/resume-data";
 
 interface EmailContentProps {

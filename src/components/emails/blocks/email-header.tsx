@@ -1,5 +1,5 @@
 import { Section, Heading, Text } from "@react-email/components";
-import { header, h1, badgeText } from "./email-styles";
+import { header, h1, badgeText } from "../styles/email-styles";
 import { RESUME_DATA } from "@/data/resume-data";
 
 export const EmailHeader = () => {

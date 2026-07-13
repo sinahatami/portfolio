@@ -6,10 +6,10 @@ import {
   Html,
   Preview,
 } from "@react-email/components";
-import { main, container, hr } from "./email-styles";
-import { EmailHeader } from "./email-header";
-import { EmailContent } from "./email-content";
-import { EmailFooter } from "./email-footer";
+import { main, container, hr } from "../styles/email-styles";
+import { EmailHeader } from "../blocks/email-header";
+import { EmailContent } from "../blocks/email-content";
+import { EmailFooter } from "../blocks/email-footer";
 
 interface ConfirmationEmailProps {
   senderEmail: string;
