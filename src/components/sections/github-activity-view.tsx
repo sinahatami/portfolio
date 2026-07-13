@@ -1,6 +1,5 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import {
   Github,
   FileCode,
@@ -117,11 +116,11 @@ export function GitHubActivityView({
         ))}
       </div> */}
 
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="grid items-start gap-8 lg:grid-cols-2">
         {/* 2. Languages Card */}
         <div
           className={cn(
-            "rounded-3xl p-8 shadow-sm backdrop-blur-xl transition-colors",
+            "sticky top-24 flex flex-col rounded-3xl p-8 shadow-sm backdrop-blur-xl transition-colors",
             "border border-slate-200 bg-white/50", // Light
             "dark:border-white/10 dark:bg-black/20" // Dark
           )}
@@ -144,10 +143,8 @@ export function GitHubActivityView({
                   </span>
                 </div>
                 <div className="h-2.5 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-200/50 dark:bg-slate-800/50 dark:ring-white/5">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${lang.percentage}%` }}
-                    transition={{ duration: 1.5, ease: "circOut", delay: 0.4 }}
+                  <div
+                    style={{ width: `${lang.percentage}%` }}
                     className={cn(
                       "h-full rounded-full dark:shadow-[0_0_10px_rgba(59,130,246,0.5)]",
                       lang.name === "TypeScript"
@@ -168,7 +165,7 @@ export function GitHubActivityView({
         {/* 3. Recent Updates Card */}
         <div
           className={cn(
-            "rounded-3xl p-8 shadow-sm backdrop-blur-xl transition-colors",
+            "flex flex-col rounded-3xl p-8 shadow-sm backdrop-blur-xl transition-colors",
             "border border-slate-200 bg-white/50", // Light
             "dark:border-white/10 dark:bg-black/20" // Dark
           )}
@@ -180,88 +177,83 @@ export function GitHubActivityView({
             Recent Updates
           </h3>
           <div className="space-y-2">
-            <AnimatePresence mode="popLayout">
-              {stats.repos.map((repo, _index) => (
-                <motion.div
-                  key={repo.name}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className={cn(
-                    "group relative rounded-2xl p-4 transition-all",
-                    // Light
-                    "border border-slate-100 bg-white/70 hover:border-blue-200 hover:bg-white",
-                    // Dark
-                    "dark:border-white/5 dark:bg-white/5 dark:hover:border-blue-500/30 dark:hover:bg-white/10"
-                  )}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-2 pr-4">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <h4 className="text-lg font-bold text-slate-900 transition-colors group-hover:text-blue-600 dark:text-slate-200 dark:group-hover:text-blue-400">
-                          {repo.name}
-                        </h4>
-                        {repo.language && (
-                          <span className="rounded-md border border-blue-100 bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-600 uppercase dark:border-blue-500/20 dark:bg-blue-500/10 dark:text-blue-400">
-                            {repo.language}
+            {stats.repos.map((repo, _index) => (
+              <div
+                key={repo.name}
+                className={cn(
+                  "group relative rounded-2xl p-4 transition-all",
+                  // Light
+                  "border border-slate-100 bg-white/70 hover:border-blue-200 hover:bg-white",
+                  // Dark
+                  "dark:border-white/5 dark:bg-white/5 dark:hover:border-blue-500/30 dark:hover:bg-white/10"
+                )}
+              >
+                <div className="flex items-start justify-between">
+                  <div className="space-y-2 pr-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h4 className="text-lg font-bold text-slate-900 transition-colors group-hover:text-blue-600 dark:text-slate-200 dark:group-hover:text-blue-400">
+                        {repo.name}
+                      </h4>
+                      {repo.language && (
+                        <span className="rounded-md border border-blue-100 bg-blue-50 px-2 py-0.5 text-[10px] font-bold text-blue-600 uppercase dark:border-blue-500/20 dark:bg-blue-500/10 dark:text-blue-400">
+                          {repo.language}
+                        </span>
+                      )}
+                    </div>
+                    <p className="line-clamp-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                      {repo.description}
+                    </p>
+
+                    {/* Topics / Skills */}
+                    {repo.topics && repo.topics.length > 0 && (
+                      <div className="flex flex-wrap gap-1 pt-2">
+                        {repo.topics.slice(0, 3).map((topic) => (
+                          <span
+                            key={topic}
+                            className="inline-flex items-center rounded-sm bg-slate-100 px-1.5 py-0.5 text-[10px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400"
+                          >
+                            {topic}
+                          </span>
+                        ))}
+                        {repo.topics.length > 3 && (
+                          <span className="text-[10px] text-slate-400">
+                            +{repo.topics.length - 3}
                           </span>
                         )}
                       </div>
-                      <p className="line-clamp-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                        {repo.description}
-                      </p>
-
-                      {/* Topics / Skills */}
-                      {repo.topics && repo.topics.length > 0 && (
-                        <div className="flex flex-wrap gap-1 pt-2">
-                          {repo.topics.slice(0, 3).map((topic) => (
-                            <span
-                              key={topic}
-                              className="inline-flex items-center rounded-sm bg-slate-100 px-1.5 py-0.5 text-[10px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-400"
-                            >
-                              {topic}
-                            </span>
-                          ))}
-                          {repo.topics.length > 3 && (
-                            <span className="text-[10px] text-slate-400">
-                              +{repo.topics.length - 3}
-                            </span>
-                          )}
-                        </div>
-                      )}
-                      <div className="flex items-center gap-4 pt-2 text-[11px] font-medium text-slate-400 dark:text-slate-500">
-                        <span className="flex items-center gap-1 transition-colors group-hover:text-amber-500 dark:group-hover:text-amber-400">
-                          <Star className="h-3.5 w-3.5" />{" "}
-                          {repo.stargazers_count}
-                        </span>
-                        <span className="h-1 w-1 rounded-full bg-slate-200 dark:bg-slate-700" />
-                        <span>Updated {formatDate(repo.updated_at)}</span>
-                      </div>
+                    )}
+                    <div className="flex items-center gap-4 pt-2 text-[11px] font-medium text-slate-400 dark:text-slate-500">
+                      <span className="flex items-center gap-1 transition-colors group-hover:text-amber-500 dark:group-hover:text-amber-400">
+                        <Star className="h-3.5 w-3.5" /> {repo.stargazers_count}
+                      </span>
+                      <span className="h-1 w-1 rounded-full bg-slate-200 dark:bg-slate-700" />
+                      <span>Updated {formatDate(repo.updated_at)}</span>
                     </div>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className={cn(
-                        "shrink-0 rounded-xl transition-all",
-                        // Light
-                        "border-slate-200 hover:bg-blue-600 hover:text-white",
-                        // Dark
-                        "dark:border-white/10 dark:bg-transparent dark:text-slate-400 dark:hover:border-blue-500 dark:hover:bg-blue-600 dark:hover:text-white"
-                      )}
-                      asChild
-                    >
-                      <a
-                        href={repo.html_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Globe className="h-5 w-5" />
-                      </a>
-                    </Button>
                   </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className={cn(
+                      "shrink-0 rounded-xl transition-all",
+                      // Light
+                      "border-slate-200 hover:bg-blue-600 hover:text-white",
+                      // Dark
+                      "dark:border-white/10 dark:bg-transparent dark:text-slate-400 dark:hover:border-blue-500 dark:hover:bg-blue-600 dark:hover:text-white"
+                    )}
+                    asChild
+                  >
+                    <a
+                      href={repo.html_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`View ${repo.name} repository on GitHub`}
+                    >
+                      <Globe className="h-5 w-5" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

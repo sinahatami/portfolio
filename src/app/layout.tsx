@@ -1,11 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/react";
 import "./globals.scss";
 import { RESUME_DATA } from "@/data/resume-data";
 import LayoutClient from "@/components/layout-client";
-import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -74,8 +71,6 @@ export default function RootLayout({
     ),
   };
 
-  const gaId = process.env["NEXT_PUBLIC_GA_ID"];
-
   return (
     <html
       lang="en"
@@ -94,10 +89,6 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <LayoutClient>{children}</LayoutClient>
-        <SpeedInsights />
-        <Analytics />
-
-        {gaId && <GoogleAnalytics gaId={gaId} />}
       </body>
     </html>
   );

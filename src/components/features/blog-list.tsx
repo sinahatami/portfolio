@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import {
   Card,
   CardContent,
@@ -21,19 +20,15 @@ export interface BlogPost {
   content: string;
 }
 
-// Helper component for motion link
-const MotionLink = motion(Link);
-
 export function BlogList({ posts }: { posts: BlogPost[] }) {
   return (
     <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
       {posts.map((post, index) => (
-        <MotionLink
+        <Link
           key={post.slug}
           href={`/blog/${post.slug}`}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1 }}
+          className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both duration-500"
+          style={{ animationDelay: `${index * 100}ms` }}
         >
           <Card className="group flex h-full flex-col border-slate-200 bg-white/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10 dark:border-white/10 dark:bg-white/5">
             <CardHeader>
@@ -71,7 +66,7 @@ export function BlogList({ posts }: { posts: BlogPost[] }) {
               </div>
             </CardContent>
           </Card>
-        </MotionLink>
+        </Link>
       ))}
     </div>
   );

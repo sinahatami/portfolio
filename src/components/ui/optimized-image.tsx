@@ -1,7 +1,5 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
-import { Loader2 } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
 export interface OptimizedImageProps {
@@ -29,21 +27,13 @@ export const OptimizedImage = ({
   quality = 80,
   blurDataURL,
 }: OptimizedImageProps) => {
-  const [isLoading, setIsLoading] = useState(true);
-
   return (
     <div
       className={cn(
-        "relative overflow-hidden",
+        "relative h-full w-full overflow-hidden",
         className?.includes("rounded") ? "" : ""
       )}
     >
-      {isLoading && !blurDataURL && (
-        <div className="bg-muted/10 absolute inset-0 z-10 flex items-center justify-center">
-          <Loader2 className="text-muted-foreground h-4 w-4 animate-spin" />
-        </div>
-      )}
-
       <Image
         src={src}
         alt={alt}
@@ -51,11 +41,7 @@ export const OptimizedImage = ({
         sizes={sizes}
         quality={quality}
         priority={priority}
-        className={cn(
-          !priority && "transition-opacity duration-300",
-          !priority && isLoading ? "opacity-0" : "opacity-100"
-        )}
-        onLoad={() => setIsLoading(false)}
+        className={className}
         {...(!fill && width ? { width } : {})}
         {...(!fill && height ? { height } : {})}
         {...(blurDataURL

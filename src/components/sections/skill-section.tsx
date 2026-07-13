@@ -5,7 +5,6 @@ import { SpotlightCard } from "../ui/spotlight-card";
 import { BrainCircuit, Code2, ExternalLink, Info, Search } from "@/lib/icons";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useSkills } from "@/contexts/skills-context";
-import { motion, AnimatePresence } from "framer-motion";
 import { SKILL_DETAILS } from "@/data/skill-details";
 import { cn } from "@/lib/utils";
 
@@ -179,15 +178,13 @@ export const SkillSelection = () => {
               const isHovered = hoveredSkill === skill;
 
               return (
-                <motion.button
+                <button
                   key={skill}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                   onClick={() => handleSkillClick(skill)}
                   onMouseEnter={() => setHoveredSkill(skill)}
                   onMouseLeave={() => setHoveredSkill(null)}
                   className={cn(
-                    "group relative min-w-[120px] flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border p-3 text-center transition-all duration-300",
+                    "group relative min-w-[120px] flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border p-3 text-center transition-all duration-300 hover:scale-105 active:scale-95",
                     isHovered
                       ? "border-accent bg-accent/10 shadow-accent/20 shadow-lg"
                       : "border-border bg-card hover:border-accent/50 hover:bg-accent/5"
@@ -196,16 +193,16 @@ export const SkillSelection = () => {
                   <div className="group-hover:text-accent relative z-10 w-full font-mono text-xs font-medium transition-colors">
                     {skill}
                   </div>
-                  <motion.div
-                    className="via-accent/10 absolute inset-0 bg-gradient-to-r from-transparent to-transparent"
-                    initial={{ x: "-100%" }}
-                    animate={{ x: isHovered ? "100%" : "-100%" }}
-                    transition={{ duration: 0.6 }}
+                  <div
+                    className={cn(
+                      "via-accent/10 absolute inset-0 bg-gradient-to-r from-transparent to-transparent transition-transform duration-500",
+                      isHovered ? "translate-x-full" : "-translate-x-full"
+                    )}
                   />
                   {detail && (
                     <Info className="text-accent/50 group-hover:text-accent absolute top-1 right-1 h-3 w-3" />
                   )}
-                </motion.button>
+                </button>
               );
             })}
           </div>
@@ -234,15 +231,13 @@ export const SkillSelection = () => {
               const isHovered = hoveredSkill === skill;
 
               return (
-                <motion.button
+                <button
                   key={skill}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                   onClick={() => handleSkillClick(skill)}
                   onMouseEnter={() => setHoveredSkill(skill)}
                   onMouseLeave={() => setHoveredSkill(null)}
                   className={cn(
-                    "group relative min-w-[120px] flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border p-3 text-center transition-all duration-300",
+                    "group relative min-w-[120px] flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border p-3 text-center transition-all duration-300 hover:scale-105 active:scale-95",
                     isHovered
                       ? "border-blue-500 bg-blue-500/10 shadow-lg shadow-blue-500/20"
                       : "border-border bg-card hover:border-blue-500/50 hover:bg-blue-500/5"
@@ -251,86 +246,78 @@ export const SkillSelection = () => {
                   <div className="relative z-10 w-full font-mono text-xs font-medium transition-colors group-hover:text-blue-500">
                     {skill}
                   </div>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent"
-                    initial={{ x: "-100%" }}
-                    animate={{ x: isHovered ? "100%" : "-100%" }}
-                    transition={{ duration: 0.6 }}
+                  <div
+                    className={cn(
+                      "absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent transition-transform duration-500",
+                      isHovered ? "translate-x-full" : "-translate-x-full"
+                    )}
                   />
                   {detail && (
                     <Info className="absolute top-1 right-1 h-3 w-3 text-blue-500/50 group-hover:text-blue-500" />
                   )}
-                </motion.button>
+                </button>
               );
             })}
           </div>
         </SpotlightCard>
       </div>
 
-      <AnimatePresence mode="wait">
-        {selectedSkill && isMounted.current && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="bg-background/80 fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md"
-            onClick={() => setSelectedSkill(null)}
+      {selectedSkill && isMounted.current && (
+        <div
+          className="bg-background/80 animate-in fade-in fixed inset-0 z-[1000] flex items-center justify-center p-4 backdrop-blur-md duration-200"
+          onClick={() => setSelectedSkill(null)}
+        >
+          <div
+            className="border-border bg-card animate-in zoom-in-95 slide-in-from-bottom-5 relative w-full max-w-lg overflow-hidden rounded-2xl border shadow-2xl duration-300"
+            onClick={(e) => e.stopPropagation()}
           >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              className="border-border bg-card relative w-full max-w-lg overflow-hidden rounded-2xl border shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="p-8">
-                <div className="mb-6 flex items-center justify-between">
-                  <h3 className="text-2xl font-bold">{selectedSkill.name}</h3>
-                  <button
-                    onClick={() => setSelectedSkill(null)}
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    ✕
-                  </button>
-                </div>
-
-                <p className="text-muted-foreground mb-8 leading-relaxed">
-                  {selectedSkill.description}
-                </p>
-
-                <div className="mb-8 grid grid-cols-2 gap-6">
-                  <div className="space-y-1">
-                    <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-                      Experience
-                    </span>
-                    <p className="font-medium">{selectedSkill.years} Years</p>
-                  </div>
-                  <div className="space-y-1">
-                    <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
-                      Projects
-                    </span>
-                    <p className="font-medium">
-                      {selectedSkill.projects}+ Completed
-                    </p>
-                  </div>
-                </div>
-
+            <div className="p-8">
+              <div className="mb-6 flex items-center justify-between">
+                <h3 className="text-2xl font-bold">{selectedSkill.name}</h3>
                 <button
-                  onClick={() => {
-                    const skillName = selectedSkill.name;
-                    setSelectedSkill(null);
-                    setTimeout(() => viewRelatedProjects(skillName), 300);
-                  }}
-                  className="bg-accent text-accent-foreground flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium transition-opacity hover:opacity-90"
+                  onClick={() => setSelectedSkill(null)}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  <ExternalLink className="h-4 w-4" />
-                  View Related Projects
+                  ✕
                 </button>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+              <p className="text-muted-foreground mb-8 leading-relaxed">
+                {selectedSkill.description}
+              </p>
+
+              <div className="mb-8 grid grid-cols-2 gap-6">
+                <div className="space-y-1">
+                  <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+                    Experience
+                  </span>
+                  <p className="font-medium">{selectedSkill.years} Years</p>
+                </div>
+                <div className="space-y-1">
+                  <span className="text-muted-foreground text-xs font-semibold tracking-wider uppercase">
+                    Projects
+                  </span>
+                  <p className="font-medium">
+                    {selectedSkill.projects}+ Completed
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  const skillName = selectedSkill.name;
+                  setSelectedSkill(null);
+                  setTimeout(() => viewRelatedProjects(skillName), 300);
+                }}
+                className="bg-accent text-accent-foreground flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium transition-opacity hover:opacity-90"
+              >
+                <ExternalLink className="h-4 w-4" />
+                View Related Projects
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="text-muted-foreground mt-8 text-center text-sm">
         <p className="flex items-center justify-center gap-2">

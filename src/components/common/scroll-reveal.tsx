@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useEffect, type ReactNode } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
+import { useRef, useEffect, useState, type ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -14,6 +14,23 @@ interface ScrollRevealProps {
   amount?: number;
 }
 
+const getDirectionClass = (direction: string) => {
+  switch (direction) {
+    case "up":
+      return "translate-y-8";
+    case "down":
+      return "-translate-y-8";
+    case "left":
+      return "translate-x-8";
+    case "right":
+      return "-translate-x-8";
+    case "fade":
+      return "";
+    default:
+      return "translate-y-8";
+  }
+};
+
 export const ScrollReveal = ({
   children,
   delay = 0,
@@ -24,101 +41,91 @@ export const ScrollReveal = ({
   amount = 0.2,
 }: ScrollRevealProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once, amount });
-  const controls = useAnimation();
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (isInView) {
-      controls.start("visible");
-    }
-  }, [controls, isInView]);
+    const element = ref.current;
+    if (!element) return;
 
-  const directionVariants = {
-    up: { y: 30, opacity: 0 },
-    down: { y: -30, opacity: 0 },
-    left: { x: 30, opacity: 0 },
-    right: { x: -30, opacity: 0 },
-    fade: { opacity: 0 },
-  };
-
-  const variants = {
-    hidden: directionVariants[direction],
-    visible: {
-      y: 0,
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration,
-        delay,
-        ease: "easeOut" as const,
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (once) observer.unobserve(element);
+        } else if (!once) {
+          setIsVisible(false);
+        }
       },
-    },
-  };
+      { threshold: amount }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [once, amount]);
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial="hidden"
-      animate={controls}
-      variants={variants}
-      className={className}
+      className={cn(
+        "transition-all ease-out",
+        isVisible
+          ? "translate-x-0 translate-y-0 opacity-100"
+          : `opacity-0 ${getDirectionClass(direction)}`,
+        className
+      )}
+      style={{
+        transitionDuration: `${duration * 1000}ms`,
+        transitionDelay: `${delay * 1000}ms`,
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 
-const item = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
 // Stagger container for multiple items
-// Add the once prop to ScrollRevealStagger props interface and implementation
 export const ScrollRevealStagger = ({
   children,
   className = "",
-  staggerDelay = 0.1,
   threshold = 0.1,
-  once = true, // Add this prop with default
+  once = true,
 }: {
   children: ReactNode;
   className?: string;
-  staggerDelay?: number;
   threshold?: number;
-  once?: boolean; // Add this
+  once?: boolean;
 }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once, amount: threshold });
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
-  const container = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: staggerDelay,
-        delayChildren: 0.2,
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (once) observer.unobserve(element);
+        } else if (!once) {
+          setIsVisible(false);
+        }
       },
-    },
-  };
+      { threshold }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [once, threshold]);
 
   return (
-    <motion.div
-      ref={containerRef}
-      variants={container}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      className={className}
-    >
+    <div ref={ref} className={className} data-stagger-visible={isVisible}>
       {children}
-    </motion.div>
+    </div>
   );
 };
 
@@ -129,9 +136,58 @@ export const ScrollRevealItem = ({
   children: ReactNode;
   className?: string;
 }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
+    // Find our index among siblings to calculate delay
+    const parent = element.parentElement;
+    if (parent) {
+      const siblings = Array.from(parent.children);
+      const myIndex = siblings.indexOf(element);
+      setIndex(myIndex >= 0 ? myIndex : 0);
+    }
+
+    const checkParentVisibility = () => {
+      const parentIsVisible =
+        parent?.getAttribute("data-stagger-visible") === "true";
+      if (parentIsVisible) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    // Use MutationObserver to watch parent attribute changes
+    const observer = new MutationObserver(checkParentVisibility);
+    if (parent) {
+      observer.observe(parent, {
+        attributes: true,
+        attributeFilter: ["data-stagger-visible"],
+      });
+      checkParentVisibility(); // Initial check
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <motion.div variants={item} className={className}>
+    <div
+      ref={ref}
+      className={cn(
+        "transition-all duration-500 ease-out",
+        isVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0",
+        className
+      )}
+      style={{
+        transitionDelay: `${index * 100}ms`,
+      }}
+    >
       {children}
-    </motion.div>
+    </div>
   );
 };

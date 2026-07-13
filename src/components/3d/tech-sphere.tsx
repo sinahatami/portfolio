@@ -1,8 +1,6 @@
-// --- FILE: ./src/components/tech-sphere.tsx ---
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { LoadingSpinner } from "../ui/loading-spinner";
 
@@ -21,6 +19,14 @@ const TechSphereFallback2D = () => {
 
   return (
     <div className="relative aspect-square w-full max-w-[500px]">
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        @keyframes subtle-bounce { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.7; } 50% { transform: translateY(-5px) scale(1.1); opacity: 1; } }
+        @keyframes subtle-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+      `,
+        }}
+      />
       {/* Background gradient */}
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-900/20 via-black to-purple-900/20" />
 
@@ -33,43 +39,32 @@ const TechSphereFallback2D = () => {
           const y = Math.sin(angle) * radius;
 
           return (
-            <motion.div
+            <div
               key={skill}
               className="absolute top-1/2 left-1/2"
               style={{
-                x,
-                y,
+                transform: `translate(${x}px, ${y}px)`,
                 marginLeft: -40,
                 marginTop: -40,
               }}
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.7, 1, 0.7],
-              }}
-              transition={{
-                duration: 2,
-                delay: index * 0.1,
-                repeat: Infinity,
-              }}
             >
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm">
+              <div
+                className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm"
+                style={{
+                  animation: `subtle-bounce 2s ease-in-out infinite ${index * 0.1}s`,
+                }}
+              >
                 <span className="text-xs font-bold text-white">{skill}</span>
               </div>
-            </motion.div>
+            </div>
           );
         })}
 
         {/* Center sphere */}
         <div className="absolute top-1/2 left-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2">
-          <motion.div
+          <div
             className="h-full w-full rounded-full bg-gradient-to-br from-blue-500/30 to-purple-500/30"
-            animate={{
-              scale: [1, 1.05, 1],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-            }}
+            style={{ animation: "subtle-pulse 3s ease-in-out infinite" }}
           />
         </div>
       </div>

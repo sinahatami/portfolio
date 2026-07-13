@@ -21,7 +21,6 @@ import {
   PropagateLoader,
   PuffLoader,
 } from "react-spinners";
-import { motion } from "framer-motion";
 
 interface LoadingSpinnerProps {
   size?: number;
@@ -98,6 +97,17 @@ export function LoadingSpinner({
             className="relative flex items-center justify-center"
             style={{ width: size, height: size }}
           >
+            <style
+              dangerouslySetInnerHTML={{
+                __html: `
+              @keyframes spin { 100% { transform: rotate(360deg); } }
+              @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
+              @keyframes pulse-scale { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.15); opacity: 1; } }
+              @keyframes particle-scale { 0%, 100% { transform: scale(0.8); } 50% { transform: scale(1.2); } }
+            `,
+              }}
+            />
+
             {/* Background Ambient Glow */}
             <div
               className="absolute inset-0 rounded-full opacity-10 blur-2xl"
@@ -107,85 +117,64 @@ export function LoadingSpinner({
             />
 
             {/* Outer Orbiting Ring - Glass Effect */}
-            <motion.div
+            <div
               className="absolute inset-0 rounded-full border-[2px] border-transparent"
               style={{
                 borderTopColor: primaryColor,
                 borderRightColor: `${primaryColor}22`,
                 filter: `drop-shadow(0 0 8px ${primaryColor}66)`,
-              }}
-              animate={{ rotate: 360 }}
-              transition={{
-                duration: 2 / speedMultiplier,
-                repeat: Infinity,
-                ease: "linear",
+                animation: `spin ${2 / speedMultiplier}s linear infinite`,
               }}
             />
 
             {/* Inner Orbiting Ring - Reversed */}
-            <motion.div
+            <div
               className="absolute inset-2 rounded-full border-[1.5px] border-transparent"
               style={{
                 borderBottomColor: secondaryColor,
                 borderLeftColor: `${secondaryColor}22`,
                 filter: `drop-shadow(0 0 5px ${secondaryColor}66)`,
-              }}
-              animate={{ rotate: -360 }}
-              transition={{
-                duration: 1.5 / speedMultiplier,
-                repeat: Infinity,
-                ease: "linear",
+                animation: `spin-reverse ${1.5 / speedMultiplier}s linear infinite`,
               }}
             />
 
             {/* Core Pulsing Sphere */}
-            <motion.div
+            <div
               className="relative z-10 flex items-center justify-center rounded-full shadow-lg"
               style={{
                 width: size * 0.35,
                 height: size * 0.35,
                 background: `radial-gradient(circle at 30% 30%, #fff, ${primaryColor}, ${secondaryColor})`,
                 boxShadow: `0 0 20px ${primaryColor}44`,
-              }}
-              animate={{
-                scale: [1, 1.15, 1],
-                opacity: [0.9, 1, 0.9],
-              }}
-              transition={{
-                duration: 1.2 / speedMultiplier,
-                repeat: Infinity,
-                ease: "easeInOut",
+                animation: `pulse-scale ${1.2 / speedMultiplier}s ease-in-out infinite`,
               }}
             >
               {/* Inner Lens Flare Effect */}
               <div className="h-1/2 w-1/2 rounded-full bg-white/20 blur-[1px]" />
-            </motion.div>
+            </div>
 
             {/* Orbiting Particles */}
             {[0, 1, 2].map((i) => (
-              <motion.div
+              <div
                 key={i}
                 className="absolute"
-                style={{ width: size, height: size }}
-                animate={{ rotate: 360 }}
-                transition={{
-                  duration: (2.5 + i * 0.5) / speedMultiplier,
-                  repeat: Infinity,
-                  ease: "linear",
+                style={{
+                  width: size,
+                  height: size,
+                  animation: `spin ${(2.5 + i * 0.5) / speedMultiplier}s linear infinite`,
                 }}
               >
-                <motion.div
+                <div
                   className="h-1.5 w-1.5 rounded-full"
                   style={{
                     background: i === 0 ? "#fff" : primaryColor,
                     boxShadow: `0 0 10px ${primaryColor}`,
                     marginLeft: "auto",
                     marginRight: "auto",
+                    animation: `particle-scale 1s infinite`,
                   }}
-                  animate={{ scale: [0.8, 1.2, 0.8] }}
-                  transition={{ duration: 1, repeat: Infinity }}
                 />
-              </motion.div>
+              </div>
             ))}
           </div>
         );
@@ -196,35 +185,33 @@ export function LoadingSpinner({
             className="relative flex items-center justify-center"
             style={{ width: size, height: size }}
           >
+            <style
+              dangerouslySetInnerHTML={{
+                __html: `
+              @keyframes spin { 100% { transform: rotate(360deg); } }
+              @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
+            `,
+              }}
+            />
             {/* Primary Swirl */}
-            <motion.div
+            <div
               className="absolute inset-0 rounded-full"
               style={{
                 background: `conic-gradient(from 0deg, transparent, ${primaryColor}, transparent)`,
                 WebkitMaskImage:
                   "radial-gradient(circle, transparent 35%, black 36%)",
                 filter: `drop-shadow(0 0 12px ${primaryColor}88)`,
-              }}
-              animate={{ rotate: 360 }}
-              transition={{
-                duration: 2 / speedMultiplier,
-                repeat: Infinity,
-                ease: "linear",
+                animation: `spin ${2 / speedMultiplier}s linear infinite`,
               }}
             />
             {/* Secondary Swirl */}
-            <motion.div
+            <div
               className="absolute inset-2 rounded-full opacity-50"
               style={{
                 background: `conic-gradient(from 180deg, transparent, ${secondaryColor}, transparent)`,
                 WebkitMaskImage:
                   "radial-gradient(circle, transparent 35%, black 36%)",
-              }}
-              animate={{ rotate: -360 }}
-              transition={{
-                duration: 3 / speedMultiplier,
-                repeat: Infinity,
-                ease: "linear",
+                animation: `spin-reverse ${3 / speedMultiplier}s linear infinite`,
               }}
             />
             {/* Central "Star" Core */}
@@ -274,18 +261,24 @@ export function LoadingSpinner({
 
   return (
     <div className={cn("flex flex-col items-center justify-center", className)}>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        @keyframes pulse-opacity { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+      `,
+        }}
+      />
       {variant === "tech-orbit" || variant === "galaxy"
         ? getCustomSpinner()
         : getSpinnerComponent()}
 
       {showLabel && (
-        <motion.p
+        <p
           className="text-muted-foreground mt-4 text-xs font-semibold tracking-widest uppercase"
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          style={{ animation: "pulse-opacity 2s ease-in-out infinite" }}
         >
           {label}
-        </motion.p>
+        </p>
       )}
     </div>
   );

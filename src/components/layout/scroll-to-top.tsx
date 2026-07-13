@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui";
 import { ArrowUp } from "@/lib/icons";
-import { motion, AnimatePresence } from "framer-motion";
 
 export const ScrollToTop = () => {
   const [show, setShow] = useState(false);
@@ -19,25 +18,19 @@ export const ScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  if (!show) return null;
+
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 20 }}
-          className="fixed right-8 bottom-14 z-40"
-        >
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={scrollToTop}
-            className="bg-background border-border hover:border-accent hover:bg-accent hover:text-accent-foreground h-12 w-12 rounded-full border shadow-2xl transition-all duration-300"
-          >
-            <ArrowUp className="h-5 w-5" />
-          </Button>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div className="animate-in fade-in slide-in-from-bottom-4 fixed right-8 bottom-14 z-40 duration-300">
+      <Button
+        variant="outline"
+        size="icon"
+        onClick={scrollToTop}
+        className="bg-background border-border hover:border-accent hover:bg-accent hover:text-accent-foreground h-12 w-12 rounded-full border shadow-2xl transition-all duration-300"
+        aria-label="Scroll to top"
+      >
+        <ArrowUp className="h-5 w-5" />
+      </Button>
+    </div>
   );
 };

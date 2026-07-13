@@ -21,7 +21,7 @@ A cutting-edge, high-performance portfolio website built with modern web technol
 ● Dark/Light Theme : Fully customizable theme system with persistent user preferences.
 ● Interactive 3D Elements : Tech sphere visualization and project showcases using
 Three.js.
-● Smooth Animations : Framer Motion-powered transitions and micro-interactions.
+● Smooth Animations : Native CSS-powered transitions, keyframes, and micro-interactions.
 ● Responsive Design : Flawless experience across all device sizes (mobile, tablet,
 desktop).
 ● Custom Cursor : Interactive cursor with hover effects (optimized for desktop).
@@ -52,7 +52,7 @@ devices.
 Category Technologies
 Core Framework Next.js 14 (App Router), React 18,
 TypeScript 5
-Styling & UI Tailwind CSS, Shadcn/ui, Framer Motion,
+Styling & UI Tailwind CSS, Shadcn/ui,
 Lucide React
 3D & Graphics Three.js, @react-three/fiber,
 @react-three/drei, WebGL

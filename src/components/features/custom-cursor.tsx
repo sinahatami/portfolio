@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { motion, useSpring } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const CustomCursor = () => {
@@ -13,11 +12,7 @@ export const CustomCursor = () => {
 
   // Throttle mouse updates
   const lastUpdateTime = useRef<number>(0);
-  const rafId = useRef<number | null>(null);
-
-  // Single spring for main cursor
-  const cursorX = useSpring(0, { stiffness: 800, damping: 40 });
-  const cursorY = useSpring(0, { stiffness: 800, damping: 40 });
+  const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -36,7 +31,6 @@ export const CustomCursor = () => {
     window.addEventListener("resize", checkMobile);
 
     return () => {
-      if (rafId.current) cancelAnimationFrame(rafId.current);
       window.removeEventListener("resize", checkMobile);
       document.body.style.cursor = "auto";
     };
@@ -57,11 +51,15 @@ export const CustomCursor = () => {
         document.body.style.cursor = "none";
       }
 
+      setMousePosition({ x: e.clientX, y: e.clientY });
+
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
+      }
+
       const now = Date.now();
       if (now - lastUpdateTime.current < 16) return;
       lastUpdateTime.current = now;
-
-      setMousePosition({ x: e.clientX, y: e.clientY });
 
       const target = e.target as HTMLElement;
       const isInteractive =
@@ -95,77 +93,44 @@ export const CustomCursor = () => {
     };
   }, [isMobile]);
 
-  // Update spring positions
-  useEffect(() => {
-    if (isMobile) return;
-
-    const updateCursor = () => {
-      cursorX.set(mousePosition.x);
-      cursorY.set(mousePosition.y);
-      rafId.current = requestAnimationFrame(updateCursor);
-    };
-
-    rafId.current = requestAnimationFrame(updateCursor);
-    return () => {
-      if (rafId.current) cancelAnimationFrame(rafId.current);
-    };
-  }, [mousePosition, cursorX, cursorY, isMobile]);
-
   if (isMobile) return null;
 
   return (
     <>
       {/* Main Cursor */}
-      <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[9999]"
-        style={{
-          x: cursorX,
-          y: cursorY,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-        animate={{
-          scale: cursorVariant === "interactive" ? 1.2 : 1,
-          opacity: isVisible ? 1 : 0,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 600,
-          damping: 35,
-          mass: 0.5,
-        }}
+      <div
+        ref={cursorRef}
+        className={cn(
+          "pointer-events-none fixed top-0 left-0 z-[9999] transition-opacity duration-300",
+          isVisible ? "opacity-100" : "opacity-0"
+        )}
       >
         <div
           className={cn(
-            "relative h-6 w-6 rounded-full border transition-all duration-150",
+            "relative h-6 w-6 rounded-full border transition-all duration-150 ease-out",
             cursorVariant === "interactive"
-              ? "border-accent bg-accent/20"
-              : "border-accent/50 bg-accent/10"
+              ? "border-accent bg-accent/20 scale-125"
+              : "border-accent/50 bg-accent/10 scale-100"
           )}
         >
-          <motion.div
-            className="bg-accent absolute top-1/2 left-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
-            animate={{
-              scale: isClicking ? 0.7 : 1,
-            }}
-            transition={{ duration: 0.1 }}
+          <div
+            className={cn(
+              "bg-accent absolute top-1/2 left-1/2 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full transition-transform duration-100",
+              isClicking ? "scale-75" : "scale-100"
+            )}
           />
         </div>
-      </motion.div>
+      </div>
 
       {/* Click ripple effect */}
       {isClicking && (
-        <motion.div
-          className="border-accent pointer-events-none fixed top-0 left-0 z-[9998] rounded-full border"
+        <div
+          className="border-accent pointer-events-none fixed top-0 left-0 z-[9998] animate-ping rounded-full border"
           style={{
-            x: cursorX,
-            y: cursorY,
-            translateX: "-50%",
-            translateY: "-50%",
+            transform: `translate3d(${mousePosition.x}px, ${mousePosition.y}px, 0) translate(-50%, -50%)`,
+            width: "40px",
+            height: "40px",
           }}
-          initial={{ scale: 1, opacity: 0.5 }}
-          animate={{ scale: 2, opacity: 0 }}
-          transition={{ duration: 0.3 }}
         />
       )}
     </>

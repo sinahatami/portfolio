@@ -11,7 +11,6 @@ import {
   ExternalLink,
 } from "@/lib/icons";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import type { Testimonial } from "@/types/resume";
 
 const TestimonialCard = ({
@@ -33,11 +32,8 @@ const TestimonialCard = ({
       : testimonial.quote;
 
   return (
-    <motion.div
-      layout
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-    >
-      <SpotlightCard className="flex h-fit flex-col justify-between overflow-hidden p-0">
+    <div className="h-full transition-all duration-300 ease-out">
+      <SpotlightCard className="flex h-full flex-col justify-between overflow-hidden p-0">
         <CardHeader className="flex flex-row items-start justify-between px-6 pt-6 pb-0">
           <Quote className="text-accent/20 h-8 w-8 rotate-180" />
           {testimonial.fileUrl && (
@@ -51,6 +47,7 @@ const TestimonialCard = ({
                 href={testimonial.fileUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Download Document"
               >
                 <FileText size={16} />
               </a>
@@ -60,19 +57,9 @@ const TestimonialCard = ({
 
         <CardContent className="flex flex-1 flex-col justify-between gap-6 px-6 pt-4 pb-6">
           <div>
-            {/* AnimatePresence handles the smooth entrance of the new text */}
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={isExpanded ? "expanded" : "collapsed"}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="text-muted-foreground text-sm leading-relaxed italic"
-              >
-                &quot;{displayQuote}&quot;
-              </motion.p>
-            </AnimatePresence>
+            <p className="text-muted-foreground text-sm leading-relaxed italic transition-all duration-300">
+              &quot;{displayQuote}&quot;
+            </p>
 
             {shouldTruncate && (
               <button
@@ -99,7 +86,7 @@ const TestimonialCard = ({
                   <a
                     href={testimonial.personalWebsite}
                     target="_blank"
-                    className="hover:text-accent inline-flex items-center gap-1 transition-colors"
+                    className="hover:text-accent inline-flex items-center gap-1 py-1 transition-colors"
                   >
                     {testimonial.name}
                     <ExternalLink size={10} className="opacity-50" />
@@ -114,7 +101,7 @@ const TestimonialCard = ({
                   <a
                     href={testimonial.companyWebsite}
                     target="_blank"
-                    className="hover:text-accent transition-colors"
+                    className="hover:text-accent inline-block py-1 transition-colors"
                   >
                     {testimonial.company}
                   </a>
@@ -126,7 +113,7 @@ const TestimonialCard = ({
           </div>
         </CardContent>
       </SpotlightCard>
-    </motion.div>
+    </div>
   );
 };
 

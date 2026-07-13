@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import { Github, Star, GitBranch, GitCommit, Calendar } from "@/lib/icons";
 import { Skeleton } from "@/components/ui";
 
@@ -95,11 +94,9 @@ export function GitHubActivity() {
     <div className="space-y-6">
       {/* Stats Grid */}
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="rounded-xl border bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-6"
+        <div
+          className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both rounded-xl border bg-gradient-to-br from-blue-500/10 to-blue-600/5 p-6 duration-500"
+          style={{ animationDelay: "100ms" }}
         >
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-blue-500/20 p-2">
@@ -110,13 +107,11 @@ export function GitHubActivity() {
               <div className="text-muted-foreground text-sm">Followers</div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="rounded-xl border bg-gradient-to-br from-amber-500/10 to-amber-600/5 p-6"
+        <div
+          className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both rounded-xl border bg-gradient-to-br from-amber-500/10 to-amber-600/5 p-6 duration-500"
+          style={{ animationDelay: "200ms" }}
         >
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-amber-500/20 p-2">
@@ -127,13 +122,11 @@ export function GitHubActivity() {
               <div className="text-muted-foreground text-sm">Stars</div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="rounded-xl border bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 p-6"
+        <div
+          className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both rounded-xl border bg-gradient-to-br from-emerald-500/10 to-emerald-600/5 p-6 duration-500"
+          style={{ animationDelay: "300ms" }}
         >
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-emerald-500/20 p-2">
@@ -144,13 +137,11 @@ export function GitHubActivity() {
               <div className="text-muted-foreground text-sm">Repositories</div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="rounded-xl border bg-gradient-to-br from-purple-500/10 to-purple-600/5 p-6"
+        <div
+          className="animate-in fade-in slide-in-from-bottom-4 fill-mode-both rounded-xl border bg-gradient-to-br from-purple-500/10 to-purple-600/5 p-6 duration-500"
+          style={{ animationDelay: "400ms" }}
         >
           <div className="flex items-center gap-3">
             <div className="rounded-lg bg-purple-500/20 p-2">
@@ -161,7 +152,7 @@ export function GitHubActivity() {
               <div className="text-muted-foreground text-sm">Following</div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Recent Activity */}
@@ -172,12 +163,10 @@ export function GitHubActivity() {
         </h3>
         <div className="space-y-3">
           {stats?.recent_activity.map((activity, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.1 * index }}
-              className="flex items-center gap-4 rounded-lg border border-white/5 bg-white/5 p-4"
+              className="animate-in fade-in slide-in-from-right-4 fill-mode-both flex items-center gap-4 rounded-lg border border-white/5 bg-white/5 p-4 duration-500"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20">
                 <GitCommit className="h-5 w-5 text-blue-500" />
@@ -191,7 +180,7 @@ export function GitHubActivity() {
               <div className="text-muted-foreground text-sm">
                 {activity.date}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

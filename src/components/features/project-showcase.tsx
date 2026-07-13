@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { X, ExternalLink, Github, Play, Code, Globe } from "@/lib/icons";
 import { Button } from "@/components/ui";
 import { RESUME_DATA } from "@/data/resume-data";
@@ -28,27 +27,20 @@ export function ProjectShowcase({ projectIndex = 0 }: ProjectShowcaseProps) {
             variant={activeProject === index ? "default" : "outline"}
             size="sm"
             onClick={() => setActiveProject(index)}
-            className="relative"
+            className="relative overflow-hidden transition-colors"
           >
-            {proj.title.split(" ")[0]}
+            <span className="relative z-10">{proj.title.split(" ")[0]}</span>
             {activeProject === index && (
-              <motion.div
-                layoutId="activeProject"
-                className="bg-accent/20 absolute inset-0 rounded-md"
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              />
+              <div className="bg-accent/20 absolute inset-0 rounded-md transition-all duration-300 ease-out" />
             )}
           </Button>
         ))}
       </div>
 
       {/* Project Display */}
-      <motion.div
+      <div
+        className="animate-in fade-in slide-in-from-bottom-4 grid gap-8 duration-500 lg:grid-cols-2"
         key={activeProject}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -20 }}
-        className="grid gap-8 lg:grid-cols-2"
       >
         {/* Left: Demo/Visual */}
         <div className="relative overflow-hidden rounded-2xl border bg-gradient-to-br from-gray-900 to-black">
@@ -114,57 +106,49 @@ export function ProjectShowcase({ projectIndex = 0 }: ProjectShowcaseProps) {
             )}
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Demo Modal */}
-      <AnimatePresence>
-        {showModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm"
-            onClick={() => setShowModal(false)}
+      {showModal && (
+        <div
+          className="animate-in fade-in fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm duration-200"
+          onClick={() => setShowModal(false)}
+        >
+          <div
+            className="animate-in zoom-in-95 relative m-4 w-full max-w-4xl rounded-2xl bg-gray-900 p-1 duration-300"
+            onClick={(e) => e.stopPropagation()}
           >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative m-4 w-full max-w-4xl rounded-2xl bg-gray-900 p-1"
-              onClick={(e) => e.stopPropagation()}
+            <Button
+              size="icon"
+              variant="ghost"
+              className="absolute top-2 right-2 z-10"
+              onClick={() => setShowModal(false)}
             >
-              <Button
-                size="icon"
-                variant="ghost"
-                className="absolute top-2 right-2 z-10"
-                onClick={() => setShowModal(false)}
-              >
-                <X className="h-4 w-4" />
-              </Button>
+              <X className="h-4 w-4" />
+            </Button>
 
-              <div className="aspect-video rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20" />
+            <div className="aspect-video rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20" />
 
-              <div className="absolute right-4 bottom-4 left-4 flex items-center justify-between rounded-lg bg-black/50 p-4 backdrop-blur-sm">
-                <div>
-                  <div className="font-medium">{project?.title}</div>
-                  <div className="text-muted-foreground text-sm">
-                    Interactive Demo
-                  </div>
+            <div className="absolute right-4 bottom-4 left-4 flex items-center justify-between rounded-lg bg-black/50 p-4 backdrop-blur-sm">
+              <div>
+                <div className="font-medium">{project?.title}</div>
+                <div className="text-muted-foreground text-sm">
+                  Interactive Demo
                 </div>
-                <Button asChild>
-                  <a
-                    href={projectLink?.hrefLive || projectLink?.href}
-                    target="_blank"
-                  >
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    Open Full Demo
-                  </a>
-                </Button>
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <Button asChild>
+                <a
+                  href={projectLink?.hrefLive || projectLink?.href}
+                  target="_blank"
+                >
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  Open Full Demo
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { TechSphere2D } from "../visualizations/2d-tech-sphere";
+import { cn } from "@/lib/utils";
 
 export function TechSphereSection() {
   return (
@@ -12,24 +12,18 @@ export function TechSphereSection() {
       <div className="relative z-10 container mx-auto px-4 md:px-6">
         {/* 2. Text Content */}
         <div className="mb-12 flex flex-col items-center text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="mx-auto flex w-full max-w-5xl items-center justify-center"
+          <div
+            className="animate-in fade-in zoom-in-90 fill-mode-both mx-auto flex w-full max-w-5xl items-center justify-center duration-1000"
+            style={{ animationDelay: "200ms" }}
           >
             <TechSphere2D />
-          </motion.div>
+          </div>
         </div>
 
         {/* 3. SIMPLE 2D VERSION - Replace the 3D component */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="mx-auto flex w-full max-w-5xl items-center justify-center"
+        <div
+          className="animate-in fade-in zoom-in-90 fill-mode-both mx-auto flex w-full max-w-5xl items-center justify-center duration-1000"
+          style={{ animationDelay: "200ms" }}
         >
           <div className="relative aspect-square w-full max-w-[500px] overflow-hidden rounded-2xl border border-gray-800 bg-gradient-to-br from-gray-900 to-black">
             {/* Central sphere (CSS only) */}
@@ -80,23 +74,21 @@ export function TechSphereSection() {
                 position: "top-1/4 left-1/2",
               },
             ].map((tech, index) => (
-              <motion.div
+              <div
                 key={tech.name}
-                className={`absolute ${tech.position} rounded-full bg-gray-900/50 px-4 py-2 backdrop-blur-sm`}
-                animate={{
-                  y: [0, -10, 0],
-                  opacity: [0.7, 1, 0.7],
-                }}
-                transition={{
-                  duration: 3,
-                  delay: index * 0.2,
-                  repeat: Infinity,
+                className={cn(
+                  "absolute rounded-full bg-gray-900/50 px-4 py-2 backdrop-blur-sm",
+                  tech.position
+                )}
+                style={{
+                  animation: "bounce 3s infinite",
+                  animationDelay: `${index * 0.2}s`,
                 }}
               >
-                <span className={`text-sm font-bold ${tech.color}`}>
+                <span className={cn("text-sm font-bold", tech.color)}>
                   {tech.name}
                 </span>
-              </motion.div>
+              </div>
             ))}
 
             {/* Connection lines */}
@@ -130,7 +122,7 @@ export function TechSphereSection() {
               3D Tech Sphere (Debug Mode)
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

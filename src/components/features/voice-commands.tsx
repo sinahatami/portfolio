@@ -3,8 +3,8 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { Mic, MicOff, Volume2, Command, Eye, X } from "@/lib/icons";
 import { Button } from "@/components/ui";
-import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "../ui/toaster";
+import { cn } from "@/lib/utils";
 
 interface VoiceCommand {
   command: string;
@@ -149,72 +149,60 @@ export function VoiceCommands() {
     <div className="fixed bottom-18 left-8 z-50">
       <div className="relative">
         {/* Commands List - Aligned Left-0 to grow rightwards */}
-        <AnimatePresence>
-          {showCommands && (
-            <motion.div
-              initial={{ opacity: 0, y: 10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.95 }}
-              className="border-border bg-background/95 absolute bottom-full left-0 mb-4 w-64 rounded-2xl border p-4 shadow-2xl backdrop-blur-md"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-                <Command className="h-4 w-4" />
-                Available Commands
-              </h3>
-              <div className="max-h-64 space-y-2 overflow-y-auto pr-2">
-                {commands.map((cmd) => (
-                  <div
-                    key={cmd.command}
-                    onClick={() => {
-                      cmd.action();
-                      toast.success(`Executing: ${cmd.command}`);
-                      setShowCommands(false);
-                    }}
-                    className="bg-accent/10 hover:border-accent/20 hover:bg-accent/20 cursor-pointer rounded-lg border border-transparent p-2 transition-colors"
-                  >
-                    <div className="text-primary text-xs font-bold">
-                      {cmd.command}
-                    </div>
-                    <div className="text-muted-foreground text-[10px] leading-tight">
-                      {cmd.description}
-                    </div>
+        {showCommands && (
+          <div
+            className="border-border bg-background/95 animate-in slide-in-from-bottom-2 fade-in absolute bottom-full left-0 mb-4 w-64 rounded-2xl border p-4 shadow-2xl backdrop-blur-md duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold">
+              <Command className="h-4 w-4" />
+              Available Commands
+            </h3>
+            <div className="max-h-64 space-y-2 overflow-y-auto pr-2">
+              {commands.map((cmd) => (
+                <div
+                  key={cmd.command}
+                  onClick={() => {
+                    cmd.action();
+                    toast.success(`Executing: ${cmd.command}`);
+                    setShowCommands(false);
+                  }}
+                  className="bg-accent/10 hover:border-accent/20 hover:bg-accent/20 cursor-pointer rounded-lg border border-transparent p-2 transition-colors"
+                >
+                  <div className="text-primary text-xs font-bold">
+                    {cmd.command}
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                  <div className="text-muted-foreground text-[10px] leading-tight">
+                    {cmd.description}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="flex flex-col items-start gap-3">
           {/* Transcript Display */}
-          <AnimatePresence>
-            {transcript && (
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                className="border-border bg-background/80 absolute top-2 left-16 flex items-center gap-2 rounded-full border px-4 py-2 whitespace-nowrap backdrop-blur-sm"
-              >
-                <Volume2 className="text-primary h-3 w-3" />
-                <span className="text-xs font-medium italic">
-                  "{transcript}"
-                </span>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {transcript && (
+            <div className="border-border bg-background/80 animate-in slide-in-from-left-4 fade-in absolute top-2 left-16 flex items-center gap-2 rounded-full border px-4 py-2 whitespace-nowrap backdrop-blur-sm duration-300">
+              <Volume2 className="text-primary h-3 w-3" />
+              <span className="text-xs font-medium italic">"{transcript}"</span>
+            </div>
+          )}
 
           {/* Voice Button Content */}
           <Button
             size="icon"
             onClick={toggleListening}
-            className={`relative h-14 w-14 rounded-full shadow-2xl transition-all duration-300 ${
+            className={cn(
+              "relative h-14 w-14 rounded-full shadow-2xl transition-all duration-300",
               permissionError
                 ? "bg-muted text-muted-foreground"
                 : isListening
                   ? "scale-105 bg-red-500 text-white hover:bg-red-600"
                   : "bg-accent hover:bg-accent/90"
-            }`}
+            )}
+            aria-label="Toggle voice listening"
           >
             {permissionError ? (
               <X className="h-6 w-6" />
@@ -239,9 +227,11 @@ export function VoiceCommands() {
               e.stopPropagation();
               setShowCommands(!showCommands);
             }}
-            className={`border-border bg-background/50 h-10 w-10 rounded-full backdrop-blur-sm ${
+            className={cn(
+              "border-border bg-background/50 h-10 w-10 rounded-full backdrop-blur-sm transition-colors",
               showCommands ? "bg-accent text-accent-foreground" : ""
-            }`}
+            )}
+            aria-label="Show available voice commands"
           >
             <Eye className="h-4 w-4" />
           </Button>

@@ -69,8 +69,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 href={linkHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-accent transition-colors"
+                className="text-muted-foreground hover:text-accent p-1 transition-colors"
                 title="View Source Code"
+                aria-label="View Source Code"
               >
                 <Github size={20} />
               </a>
@@ -82,8 +83,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                 href={linkLive}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-accent transition-colors"
+                className="text-muted-foreground hover:text-accent p-1 transition-colors"
                 title="View Live Demo"
+                aria-label="View Live Demo"
               >
                 <Globe size={20} />
               </a>

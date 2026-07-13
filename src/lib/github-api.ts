@@ -49,12 +49,10 @@ export async function fetchGitHubStats(): Promise<GitHubStats | null> {
       0
     );
 
-    const sortedRepos = repos
-      .sort(
-        (a: any, b: any) =>
-          new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
-      )
-      .slice(0, 6);
+    const sortedRepos = repos.sort(
+      (a: any, b: any) =>
+        new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+    );
 
     // 4. Fetch Commits (Optional / simplified)
     let recentCommits = 0;

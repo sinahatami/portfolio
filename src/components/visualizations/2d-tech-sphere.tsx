@@ -1,8 +1,7 @@
-// --- FILE: ./src/components/2d-tech-sphere.tsx ---
 "use client";
 
 import { useState, useMemo } from "react";
-import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface SkillNode {
   name: string;
@@ -31,6 +30,17 @@ export function TechSphere2D() {
 
   return (
     <div className="relative aspect-square w-full max-w-[500px]">
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        @keyframes slow-pulse-rotate { 
+          0% { transform: scale(1) rotate(0deg); }
+          50% { transform: scale(1.05) rotate(180deg); }
+          100% { transform: scale(1) rotate(360deg); }
+        }
+      `,
+        }}
+      />
       {/* Background gradient */}
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-900/20 via-black to-purple-900/20" />
 
@@ -38,17 +48,9 @@ export function TechSphere2D() {
       <div className="relative h-full w-full">
         {/* Central hub */}
         <div className="absolute top-1/2 left-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2">
-          <motion.div
+          <div
             className="h-full w-full rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20"
-            animate={{
-              scale: [1, 1.05, 1],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
+            style={{ animation: "slow-pulse-rotate 20s linear infinite" }}
           />
           <div className="absolute inset-4 rounded-full bg-gradient-to-br from-blue-500/30 to-purple-500/30" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-lg font-bold text-white">
@@ -64,22 +66,21 @@ export function TechSphere2D() {
           const y = Math.sin(angle) * radius;
           const isHovered = hoveredSkill === skill.name;
 
+          const targetX = x + (isHovered ? Math.cos(angle) * 10 : 0);
+          const targetY = y + (isHovered ? Math.sin(angle) * 10 : 0);
+
           return (
-            <motion.div
+            <div
               key={skill.name}
-              className="absolute top-1/2 left-1/2 cursor-pointer"
+              className={cn(
+                "absolute top-1/2 left-1/2 cursor-pointer transition-all duration-300 ease-out",
+                isHovered ? "z-10 scale-110" : "z-0 scale-100"
+              )}
               style={{
-                x,
-                y,
+                transform: `translate(${targetX}px, ${targetY}px)`,
                 marginLeft: -50,
                 marginTop: -50,
               }}
-              animate={{
-                x: x + (isHovered ? Math.cos(angle) * 10 : 0),
-                y: y + (isHovered ? Math.sin(angle) * 10 : 0),
-                scale: isHovered ? 1.2 : 1,
-              }}
-              transition={{ type: "spring", stiffness: 300 }}
               onMouseEnter={() => setHoveredSkill(skill.name)}
               onMouseLeave={() => setHoveredSkill(null)}
               onClick={() => {
@@ -88,7 +89,8 @@ export function TechSphere2D() {
               }}
             >
               <div
-                className={`flex h-20 w-20 flex-col items-center justify-center rounded-full p-2 backdrop-blur-sm transition-all ${
+                className={cn(
+                  "flex h-20 w-20 flex-col items-center justify-center rounded-full p-2 backdrop-blur-sm transition-all",
                   skill.category === "frontend"
                     ? "border border-blue-500/30 bg-blue-500/20"
                     : skill.category === "backend"
@@ -96,7 +98,7 @@ export function TechSphere2D() {
                       : skill.category === "ai"
                         ? "border border-purple-500/30 bg-purple-500/20"
                         : "border border-yellow-500/30 bg-yellow-500/20"
-                }`}
+                )}
               >
                 <span className="text-center text-xs font-bold text-white">
                   {skill.name}
@@ -108,7 +110,7 @@ export function TechSphere2D() {
                   />
                 </div>
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>

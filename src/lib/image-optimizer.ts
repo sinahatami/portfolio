@@ -9,6 +9,7 @@ export interface OptimizedImageConfig {
   priority: boolean;
   loading: "eager" | "lazy";
   sizes?: string;
+  fill?: boolean;
 }
 
 export const getOptimizedImageProps = (
@@ -26,11 +27,10 @@ export const getOptimizedImageProps = (
       sizes: "(max-width: 768px) 100vw, 50vw",
     },
     logo: {
-      width: 56,
-      height: 56,
       quality: 85,
       priority: false,
       loading: "lazy" as const,
+      fill: true,
     },
     project: {
       width: 400,

@@ -2,32 +2,25 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { SkillsProvider } from "@/contexts/skills-context";
-import { Toaster, LoadingSpinner } from "@/components/ui";
+import { Toaster } from "@/components/ui";
 import { SmoothScroll } from "./layout/smooth-scroll";
 import { Footer } from "./layout/footer";
 import { Navbar } from "./layout/navbar";
 import { ScrollToTop } from "./layout/scroll-to-top";
 
-import dynamic from "next/dynamic";
 import { ThemeProvider } from "next-themes";
 import { PerformanceOptimizer } from "./performance-optimizer";
+import dynamic from "next/dynamic";
 
 const CommandMenu = dynamic(
   () => import("./features").then((mod) => mod.CommandMenu),
   { ssr: false }
 );
-const CustomCursor = dynamic(
-  () => import("./features").then((mod) => mod.CustomCursor),
-  { ssr: false }
-);
-const ParticlesBackground = dynamic(
-  () =>
-    import("./visualizations/particles-background").then(
-      (mod) => mod.ParticlesBackground
-    ),
-  { ssr: false }
-);
 
+const VoiceCommands = dynamic(
+  () => import("./features").then((mod) => mod.VoiceCommands),
+  { ssr: false }
+);
 export default function LayoutClient({
   children,
 }: {
@@ -61,14 +54,6 @@ export default function LayoutClient({
     return () => resizeObserver.disconnect();
   }, []);
 
-  if (!mounted) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <LoadingSpinner variant="galaxy" size={60} />
-      </div>
-    );
-  }
-
   return (
     <ThemeProvider
       attribute="class"
@@ -81,10 +66,10 @@ export default function LayoutClient({
         <SmoothScroll>
           <PerformanceOptimizer />
 
-          {!isMobile && (
+          {mounted && !isMobile && (
             <Suspense fallback={null}>
-              <CustomCursor />
-              <ParticlesBackground />
+              {/* <CustomCursor /> */}
+              {/* <ParticlesBackground /> */}
             </Suspense>
           )}
           <Navbar />
@@ -96,6 +81,7 @@ export default function LayoutClient({
 
           <Suspense fallback={null}>
             <CommandMenu />
+            <VoiceCommands />
           </Suspense>
           <ScrollToTop />
         </SmoothScroll>
