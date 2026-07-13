@@ -1,3 +1,9 @@
+# [1.1.0](https://github.com/sinahatami/portfolio/compare/v1.0.3...v1.1.0) (2026-07-13)
+
+### Features
+
+- optimize github section and restore features ([aecd4a3](https://github.com/sinahatami/portfolio/commit/aecd4a3da1b79ae8bef5bd312eca97cf32a229d7))
+
 ## [1.0.3](https://github.com/sinahatami/portfolio/compare/v1.0.2...v1.0.3) (2026-07-12)
 
 ### Performance Improvements
