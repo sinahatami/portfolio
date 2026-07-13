@@ -1,3 +1,9 @@
+## [1.1.2](https://github.com/sinahatami/portfolio/compare/v1.1.1...v1.1.2) (2026-07-13)
+
+### Bug Fixes
+
+- **ui:** resolve hydration mismatch in GitHub activity and footer ([1dcc685](https://github.com/sinahatami/portfolio/commit/1dcc6850d4b804ae9e0bca3bb806268b9ef29cd2))
+
 ## [1.1.1](https://github.com/sinahatami/portfolio/compare/v1.1.0...v1.1.1) (2026-07-13)
 
 ### Bug Fixes
