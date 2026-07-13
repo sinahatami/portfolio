@@ -1,6 +1,6 @@
 import { getAllPosts } from "@/lib/blog";
 import { SectionContainer } from "@/components/common";
-import { BlogList } from "@/components/features/blog-list";
+import { BlogList } from "@/components/features";
 
 export const metadata = {
   title: "Blog | Sina Hatami",

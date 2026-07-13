@@ -3,7 +3,9 @@ import { RESUME_DATA } from "@/data/resume-data";
 
 const ContactForm = dynamic(
   () =>
-    import("@/components/features/contact-form").then((mod) => mod.ContactForm),
+    import("@/components/features/contact/contact-form").then(
+      (mod) => mod.ContactForm
+    ),
   {
     loading: () => (
       <div className="flex h-[400px] w-full items-center justify-center">

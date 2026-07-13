@@ -44,14 +44,23 @@ export const CustomCursor = () => {
       const isOverScrollbar = e.clientX >= window.innerWidth - 15;
 
       if (isOverScrollbar) {
-        setIsVisible(false);
+        setIsVisible((prev) => {
+          if (prev) return false;
+          return prev;
+        });
         document.body.style.cursor = "auto";
       } else {
-        setIsVisible(true);
+        setIsVisible((prev) => {
+          if (!prev) return true;
+          return prev;
+        });
         document.body.style.cursor = "none";
       }
 
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      setMousePosition((prev) => {
+        if (prev.x === e.clientX && prev.y === e.clientY) return prev;
+        return { x: e.clientX, y: e.clientY };
+      });
 
       if (cursorRef.current) {
         cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate(-50%, -50%)`;
@@ -68,7 +77,11 @@ export const CustomCursor = () => {
         target.closest("button") ||
         target.closest("a");
 
-      setCursorVariant(isInteractive ? "interactive" : "default");
+      setCursorVariant((prev) => {
+        const next = isInteractive ? "interactive" : "default";
+        if (prev === next) return prev;
+        return next;
+      });
     };
 
     const handleMouseDown = () => setIsClicking(true);
