@@ -5,19 +5,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { sendContactEmail } from "@/actions/contact";
-import {
-  Button,
-  Input,
-  Textarea,
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  toast,
-} from "@/components/ui";
-import { Loader2, Send, CheckCircle2 } from "@/lib/icons";
+import { Form, toast } from "@/components/ui";
+import { ContactFormFields } from "./contact-form-fields";
+import { ContactFormSubmit } from "./contact-form-submit";
 
 const contactSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -79,75 +69,12 @@ export function ContactForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="grid w-full gap-6"
       >
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex items-center justify-between">
-                Your Email
-              </FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder="recruiter@company.com"
-                  className="h-12"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+        <ContactFormFields form={form} />
+        <ContactFormSubmit
+          isPending={isPending}
+          isSuccess={isSuccess}
+          isValid={form.formState.isValid}
         />
-
-        <FormField
-          control={form.control}
-          name="message"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="flex items-center justify-between">
-                Message
-                <span className="text-muted-foreground text-xs font-normal">
-                  {field.value.length}/2000
-                </span>
-              </FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Hi Sina, I want to discuss..."
-                  className="min-h-[140px] resize-none"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button
-          type="submit"
-          disabled={isPending || !form.formState.isValid}
-          className="bg-accent text-accent-foreground hover:bg-accent/90 h-12 w-full font-bold transition-all hover:scale-[1.02] hover:shadow-lg active:scale-[0.98] disabled:cursor-not-allowed"
-        >
-          {isPending ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Sending...
-            </>
-          ) : isSuccess ? (
-            <>
-              <CheckCircle2 className="mr-2 h-4 w-4" />
-              Sent Successfully!
-            </>
-          ) : (
-            <>
-              Send Message <Send className="ml-2 h-4 w-4" />
-            </>
-          )}
-        </Button>
-
-        <p className="text-muted-foreground text-center text-xs">
-          I typically respond within 24 hours
-        </p>
       </form>
     </Form>
   );
