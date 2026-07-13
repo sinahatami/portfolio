@@ -1,11 +1,6 @@
 import { Command } from "@/lib/icons";
-import { toast } from "@/components/ui";
-
-interface VoiceCommand {
-  command: string;
-  description: string;
-  action: () => void;
-}
+import { VoiceCommandItem } from "./voice-command-item";
+import type { VoiceCommand } from "../hooks/use-voice-commands";
 
 interface VoiceCommandsListProps {
   showCommands: boolean;
@@ -31,20 +26,11 @@ export function VoiceCommandsList({
       </h3>
       <div className="max-h-64 space-y-2 overflow-y-auto pr-2">
         {commands.map((cmd) => (
-          <div
+          <VoiceCommandItem
             key={cmd.command}
-            onClick={() => {
-              cmd.action();
-              toast.success(`Executing: ${cmd.command}`);
-              setShowCommands(false);
-            }}
-            className="bg-accent/10 hover:border-accent/20 hover:bg-accent/20 cursor-pointer rounded-lg border border-transparent p-2 transition-colors"
-          >
-            <div className="text-primary text-xs font-bold">{cmd.command}</div>
-            <div className="text-muted-foreground text-[10px] leading-tight">
-              {cmd.description}
-            </div>
-          </div>
+            cmd={cmd}
+            setShowCommands={setShowCommands}
+          />
         ))}
       </div>
     </div>
