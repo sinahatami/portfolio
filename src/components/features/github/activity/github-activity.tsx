@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Skeleton } from "@/components/ui";
 import { GitHubStatsGrid } from "../stats/github-stats-grid";
 import { GitHubRecentActivity } from "./github-recent-activity";
+import { GitHubActivityLoading } from "./github-activity-loading";
+import { GitHubActivityError } from "./github-activity-error";
 
 interface GitHubStats {
   followers: number;
@@ -74,21 +75,11 @@ export function GitHubActivity() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        {[...Array(4)].map((_, i) => (
-          <Skeleton key={i} className="h-24 rounded-xl" />
-        ))}
-      </div>
-    );
+    return <GitHubActivityLoading />;
   }
 
   if (error) {
-    return (
-      <div className="rounded-xl border border-dashed border-red-300 bg-red-50/10 p-8 text-center dark:border-red-800 dark:bg-red-900/10">
-        <p className="text-red-600 dark:text-red-400">{error}</p>
-      </div>
-    );
+    return <GitHubActivityError error={error} />;
   }
 
   return (

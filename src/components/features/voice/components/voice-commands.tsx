@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 import { VoiceCommandsList } from "./voice-commands-list";
 import { VoiceTranscript } from "./voice-transcript";
 import { VoiceButton } from "./voice-button";
+import { ShowCommandsButton } from "./show-commands-button";
 
 interface VoiceCommand {
   command: string;
@@ -178,6 +179,9 @@ export function VoiceCommands() {
             permissionError={permissionError}
             isListening={isListening}
             toggleListening={toggleListening}
+          />
+
+          <ShowCommandsButton
             showCommands={showCommands}
             setShowCommands={setShowCommands}
           />
