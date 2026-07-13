@@ -1,5 +1,5 @@
 import { GraduationCap, ExternalLink, Calendar } from "@/lib/icons";
-import { OptimizedImage } from "@/components/ui/optimized-image";
+import { OptimizedImage } from "@/components/ui";
 import { getOptimizedImageProps } from "@/lib/image-optimizer";
 
 interface EducationSchoolInfoProps {

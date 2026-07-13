@@ -1,4 +1,4 @@
-import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { SpotlightCard } from "@/components/ui";
 import { EducationSchoolInfo } from "./education-school-info";
 import { EducationDetails } from "./education-details";
 

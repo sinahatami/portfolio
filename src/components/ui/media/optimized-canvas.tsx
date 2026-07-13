@@ -4,7 +4,7 @@
 import React, { Suspense, useState, useEffect } from "react";
 import { Canvas, CanvasProps } from "@react-three/fiber";
 import type { WebGLRendererParameters } from "three";
-import { LoadingSpinner } from "./loading-spinner";
+import { LoadingSpinner } from "../loaders/loading-spinner";
 import { useWebGLSupport } from "@/hooks/use-webgl-support";
 
 interface OptimizedCanvasProps extends CanvasProps {

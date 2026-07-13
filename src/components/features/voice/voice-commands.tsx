@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { Mic, MicOff, Volume2, Command, Eye, X } from "@/lib/icons";
-import { Button } from "@/components/ui";
-import { toast } from "@/components/ui/toaster";
+import { Button, toast } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 

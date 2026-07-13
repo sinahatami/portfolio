@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { LoadingSpinner } from "../ui/loading-spinner";
+import { LoadingSpinner } from "../ui/loaders/loading-spinner";
 
 import { TechSphereFallback2D } from "./tech-sphere-fallback";
 

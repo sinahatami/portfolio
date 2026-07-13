@@ -15,9 +15,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  toast,
 } from "@/components/ui";
 import { Loader2, Send, CheckCircle2 } from "@/lib/icons";
-import { toast } from "@/components/ui/toaster";
 
 const contactSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),

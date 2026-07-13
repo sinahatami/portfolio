@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { OptimizedCanvas } from "@/components/ui/optimized-canvas";
+import { OptimizedCanvas } from "@/components/ui";
 import { ProjectScene } from "./project-scene";
 import { ProjectDetailsPanel } from "./project-details-panel";
 import type { ProjectModel } from "./project-model";

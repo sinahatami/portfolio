@@ -2,7 +2,7 @@
 
 import { Component } from "react";
 import type { ErrorInfo, ReactNode } from "react"; // ✅ Added type-only import
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui";
 import { RefreshCw } from "@/lib/icons";
 
 interface Props {

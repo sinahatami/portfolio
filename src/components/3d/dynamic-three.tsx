@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-import { LoadingSpinner } from "../ui/loading-spinner";
+import { LoadingSpinner } from "../ui/loaders/loading-spinner";
 import { preloadThreeOnInteraction } from "@/lib/three-loader";
 
 // Preload on component mount

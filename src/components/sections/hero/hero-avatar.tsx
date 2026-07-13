@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Badge } from "@/components/ui";
 import { Sparkles, Code2 } from "@/lib/icons";
-import { OptimizedImage } from "@/components/ui/optimized-image";
+import { OptimizedImage } from "@/components/ui";
 import { RESUME_DATA } from "@/data/resume-data";
 
 export const HeroAvatar = () => {

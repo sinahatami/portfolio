@@ -1,4 +1,4 @@
-import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { SpotlightCard } from "@/components/ui";
 import { Info } from "@/lib/icons";
 import { SKILL_DETAILS } from "@/data/skill-details";
 import { cn } from "@/lib/utils";

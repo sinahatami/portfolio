@@ -19,8 +19,8 @@ import {
   Button,
 } from "@/components/ui";
 import { X, Globe, Smartphone, Info } from "@/lib/icons";
-import { LoadingSpinner } from "../ui/loading-spinner";
-import { OptimizedCanvas } from "../ui/optimized-canvas";
+import { LoadingSpinner } from "../ui/loaders/loading-spinner";
+import { OptimizedCanvas } from "../ui/media/optimized-canvas";
 import { useWebGLSupport } from "@/hooks/use-webgl-support";
 
 // --- Types ---
