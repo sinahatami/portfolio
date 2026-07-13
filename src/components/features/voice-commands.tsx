@@ -5,6 +5,7 @@ import { Mic, MicOff, Volume2, Command, Eye, X } from "@/lib/icons";
 import { Button } from "@/components/ui";
 import { toast } from "../ui/toaster";
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 
 interface VoiceCommand {
   command: string;
@@ -18,6 +19,7 @@ export function VoiceCommands() {
   const [showCommands, setShowCommands] = useState(false);
   const [permissionError, setPermissionError] = useState(false);
   const [recognition, setRecognition] = useState<any>(null);
+  const { theme, setTheme } = useTheme();
 
   const commands = useMemo<VoiceCommand[]>(
     () => [
@@ -74,10 +76,10 @@ export function VoiceCommands() {
       {
         command: "toggle theme",
         description: "Toggle dark/light mode",
-        action: () => window.dispatchEvent(new CustomEvent("theme-toggle")),
+        action: () => setTheme(theme === "dark" ? "light" : "dark"),
       },
     ],
-    []
+    [theme, setTheme]
   );
 
   useEffect(() => {
@@ -122,6 +124,14 @@ export function VoiceCommands() {
     }
   }, [commands]);
 
+  useEffect(() => {
+    const handleClickOutside = () => setShowCommands(false);
+    if (showCommands) {
+      document.addEventListener("click", handleClickOutside);
+    }
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [showCommands]);
+
   const toggleListening = useCallback(async () => {
     if (!recognition) {
       toast.error("Speech recognition not supported in this browser");
@@ -130,6 +140,13 @@ export function VoiceCommands() {
 
     if (isListening) {
       recognition.stop();
+      return;
+    }
+
+    if (permissionError) {
+      toast.error(
+        "Microphone access is permanently denied. Please check your browser settings."
+      );
       return;
     }
 
@@ -146,12 +163,12 @@ export function VoiceCommands() {
   }, [recognition, isListening]);
 
   return (
-    <div className="fixed bottom-18 left-8 z-50">
+    <div className="fixed bottom-4 left-4 z-50 md:bottom-14 md:left-8">
       <div className="relative">
-        {/* Commands List - Aligned Left-0 to grow rightwards */}
+        {/* Commands List - Aligned to the right of the buttons */}
         {showCommands && (
           <div
-            className="border-border bg-background/95 animate-in slide-in-from-bottom-2 fade-in absolute bottom-full left-0 mb-4 w-64 rounded-2xl border p-4 shadow-2xl backdrop-blur-md duration-200"
+            className="border-border bg-background/95 animate-in slide-in-from-left-2 fade-in absolute bottom-0 left-full ml-4 w-64 rounded-2xl border p-4 shadow-2xl backdrop-blur-md duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold">
@@ -184,9 +201,11 @@ export function VoiceCommands() {
         <div className="flex flex-col items-start gap-3">
           {/* Transcript Display */}
           {transcript && (
-            <div className="border-border bg-background/80 animate-in slide-in-from-left-4 fade-in absolute top-2 left-16 flex items-center gap-2 rounded-full border px-4 py-2 whitespace-nowrap backdrop-blur-sm duration-300">
-              <Volume2 className="text-primary h-3 w-3" />
-              <span className="text-xs font-medium italic">{transcript}</span>
+            <div className="border-border bg-background/80 animate-in slide-in-from-left-4 fade-in absolute top-2 left-16 flex max-w-[60vw] items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm duration-300 md:max-w-xs">
+              <Volume2 className="text-primary h-3 w-3 shrink-0" />
+              <span className="truncate text-xs font-medium italic">
+                {transcript}
+              </span>
             </div>
           )}
 
@@ -195,7 +214,7 @@ export function VoiceCommands() {
             size="icon"
             onClick={toggleListening}
             className={cn(
-              "relative h-14 w-14 rounded-full shadow-2xl transition-all duration-300",
+              "relative h-12 w-12 rounded-full shadow-2xl transition-all duration-300 md:h-14 md:w-14",
               permissionError
                 ? "bg-muted text-muted-foreground"
                 : isListening
@@ -205,11 +224,11 @@ export function VoiceCommands() {
             aria-label="Toggle voice listening"
           >
             {permissionError ? (
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5 md:h-6 md:w-6" />
             ) : isListening ? (
-              <MicOff className="h-6 w-6" />
+              <MicOff className="h-5 w-5 md:h-6 md:w-6" />
             ) : (
-              <Mic className="h-6 w-6" />
+              <Mic className="h-5 w-5 md:h-6 md:w-6" />
             )}
 
             {isListening && (
@@ -228,12 +247,12 @@ export function VoiceCommands() {
               setShowCommands(!showCommands);
             }}
             className={cn(
-              "border-border bg-background/50 h-10 w-10 rounded-full backdrop-blur-sm transition-colors",
+              "border-border bg-background/50 h-8 w-8 rounded-full backdrop-blur-sm transition-colors md:h-10 md:w-10",
               showCommands ? "bg-accent text-accent-foreground" : ""
             )}
             aria-label="Show available voice commands"
           >
-            <Eye className="h-4 w-4" />
+            <Eye className="h-3 w-3 md:h-4 md:w-4" />
           </Button>
         </div>
       </div>

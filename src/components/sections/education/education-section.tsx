@@ -1,7 +1,7 @@
 import { RESUME_DATA } from "@/data/resume-data";
-import { SpotlightCard } from "../ui/spotlight-card";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { GraduationCap, ExternalLink, Calendar } from "@/lib/icons";
-import { OptimizedImage } from "../ui/optimized-image";
+import { OptimizedImage } from "@/components/ui/optimized-image";
 import { getOptimizedImageProps } from "@/lib/image-optimizer";
 
 export const EducationSection = () => {

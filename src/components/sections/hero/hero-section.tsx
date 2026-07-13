@@ -7,7 +7,7 @@ export const HeroSection = () => {
   return (
     <section
       id="about"
-      className="relative overflow-hidden px-6 pt-12 pb-20 md:pt-32 md:pb-32"
+      className="relative overflow-hidden px-6 pt-28 pb-20 md:pt-32 md:pb-32"
     >
       {/* Background Elements */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">

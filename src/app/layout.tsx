@@ -3,6 +3,8 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.scss";
 import { RESUME_DATA } from "@/data/resume-data";
 import LayoutClient from "@/components/layout-client";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -90,6 +92,8 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <LayoutClient>{children}</LayoutClient>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

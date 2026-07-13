@@ -11,12 +11,22 @@ import {
   CommandSeparator,
 } from "cmdk";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Mail, Github, Linkedin, FileText } from "@/lib/icons";
+import {
+  Mail,
+  Github,
+  Linkedin,
+  FileText,
+  Moon,
+  Sun,
+  Command as CommandIcon,
+} from "@/lib/icons";
 import { RESUME_DATA } from "@/data/resume-data";
+import { useTheme } from "next-themes";
 
 export const CommandMenu = () => {
   const [open, setOpen] = useState(false);
   const [isMac, setIsMac] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     setIsMac(navigator.platform.toUpperCase().indexOf("MAC") >= 0);
@@ -50,11 +60,20 @@ export const CommandMenu = () => {
         to open the command menu
       </p>
 
+      {/* Mobile Trigger Button */}
+      <button
+        onClick={() => setOpen(true)}
+        className="border-border bg-background hover:bg-accent hover:text-accent-foreground fixed right-16 bottom-4 z-40 flex h-10 w-10 items-center justify-center rounded-full border shadow-2xl transition-all md:hidden"
+        aria-label="Open command menu"
+      >
+        <CommandIcon className="h-4 w-4" />
+      </button>
+
       <Dialog.Root open={open} onOpenChange={setOpen}>
         <Dialog.Portal>
           <Dialog.Overlay className="animate-in fade-in fixed inset-0 z-50 bg-black/50 backdrop-blur-sm duration-200" />
 
-          <Dialog.Content className="bg-background animate-in zoom-in-95 fixed top-[50%] left-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] overflow-hidden border p-0 shadow-lg duration-200 sm:rounded-lg">
+          <Dialog.Content className="bg-background animate-in zoom-in-95 fixed top-16 left-[50%] z-50 w-[95vw] max-w-lg translate-x-[-50%] overflow-hidden rounded-xl border p-0 shadow-lg duration-200 sm:w-full sm:rounded-lg md:top-[50%] md:translate-y-[-50%]">
             <Dialog.Title className="sr-only">Command Menu</Dialog.Title>
             <Dialog.Description className="sr-only">
               Quickly access links and actions
@@ -113,6 +132,30 @@ export const CommandMenu = () => {
                   >
                     <Mail className="mr-2 h-4 w-4" />
                     <span>Send Email</span>
+                  </CommandItem>
+
+                  <CommandItem
+                    value="toggle-theme"
+                    onSelect={() =>
+                      runCommand(() =>
+                        setTheme(theme === "dark" ? "light" : "dark")
+                      )
+                    }
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      runCommand(() =>
+                        setTheme(theme === "dark" ? "light" : "dark")
+                      );
+                    }}
+                    className="aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none"
+                  >
+                    {theme === "dark" ? (
+                      <Sun className="mr-2 h-4 w-4" />
+                    ) : (
+                      <Moon className="mr-2 h-4 w-4" />
+                    )}
+                    <span>Toggle Theme</span>
                   </CommandItem>
                 </CommandGroup>
 

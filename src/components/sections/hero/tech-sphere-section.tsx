@@ -1,6 +1,6 @@
 "use client";
 
-import { TechSphere2D } from "../visualizations/2d-tech-sphere";
+import { TechSphere2D } from "@/components/visualizations/2d-tech-sphere";
 import { cn } from "@/lib/utils";
 
 export function TechSphereSection() {

@@ -21,6 +21,12 @@ const VoiceCommands = dynamic(
   () => import("./features").then((mod) => mod.VoiceCommands),
   { ssr: false }
 );
+
+const CustomCursor = dynamic(
+  () => import("./features").then((mod) => mod.CustomCursor),
+  { ssr: false }
+);
+
 export default function LayoutClient({
   children,
 }: {
@@ -57,7 +63,7 @@ export default function LayoutClient({
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="dark"
+      defaultTheme="light"
       enableSystem={false}
       disableTransitionOnChange={false}
       storageKey="portfolio-theme"
@@ -68,7 +74,7 @@ export default function LayoutClient({
 
           {mounted && !isMobile && (
             <Suspense fallback={null}>
-              {/* <CustomCursor /> */}
+              <CustomCursor />
               {/* <ParticlesBackground /> */}
             </Suspense>
           )}

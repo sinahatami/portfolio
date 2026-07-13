@@ -21,15 +21,15 @@ export const ScrollToTop = () => {
   if (!show) return null;
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 fixed right-8 bottom-14 z-40 duration-300">
+    <div className="animate-in fade-in slide-in-from-bottom-4 fixed right-4 bottom-4 z-40 duration-300 md:right-8 md:bottom-14">
       <Button
         variant="outline"
         size="icon"
         onClick={scrollToTop}
-        className="bg-background border-border hover:border-accent hover:bg-accent hover:text-accent-foreground h-12 w-12 rounded-full border shadow-2xl transition-all duration-300"
+        className="bg-background border-border hover:border-accent hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full border shadow-2xl transition-all duration-300 md:h-12 md:w-12"
         aria-label="Scroll to top"
       >
-        <ArrowUp className="h-5 w-5" />
+        <ArrowUp className="h-4 w-4 md:h-5 md:w-5" />
       </Button>
     </div>
   );

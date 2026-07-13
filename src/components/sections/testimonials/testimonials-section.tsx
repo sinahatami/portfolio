@@ -2,7 +2,7 @@
 
 import { CardContent, CardHeader, Button } from "@/components/ui";
 import { RESUME_DATA } from "@/data/resume-data";
-import { SpotlightCard } from "../ui/spotlight-card";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
 import {
   Quote,
   FileText,
