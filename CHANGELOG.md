@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/sinahatami/portfolio/compare/v1.1.0...v1.1.1) (2026-07-13)
+
+### Bug Fixes
+
+- resolve React [#418](https://github.com/sinahatami/portfolio/issues/418) hydration mismatch in footer and toaster ([158db0d](https://github.com/sinahatami/portfolio/commit/158db0d244fade4fdfa04e8f5a0f3dce845430f1))
+
 # [1.1.0](https://github.com/sinahatami/portfolio/compare/v1.0.3...v1.1.0) (2026-07-13)
 
 ### Features
