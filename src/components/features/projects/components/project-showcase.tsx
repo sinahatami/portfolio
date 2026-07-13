@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { X, ExternalLink, Github, Play, Code, Globe } from "@/lib/icons";
+import { Github, Play, Code, Globe } from "@/lib/icons";
 import { Button } from "@/components/ui";
 import { RESUME_DATA } from "@/data/resume-data";
+import { ProjectSelector } from "./project-selector";
+import { ProjectModal } from "./project-modal";
 
 interface ProjectShowcaseProps {
   projectIndex?: number;
@@ -19,23 +21,10 @@ export function ProjectShowcase({ projectIndex = 0 }: ProjectShowcaseProps) {
 
   return (
     <>
-      {/* Project Selector */}
-      <div className="mb-8 flex flex-wrap gap-2">
-        {RESUME_DATA.projects.map((proj, index) => (
-          <Button
-            key={proj.title}
-            variant={activeProject === index ? "default" : "outline"}
-            size="sm"
-            onClick={() => setActiveProject(index)}
-            className="relative overflow-hidden transition-colors"
-          >
-            <span className="relative z-10">{proj.title.split(" ")[0]}</span>
-            {activeProject === index && (
-              <div className="bg-accent/20 absolute inset-0 rounded-md transition-all duration-300 ease-out" />
-            )}
-          </Button>
-        ))}
-      </div>
+      <ProjectSelector
+        activeProject={activeProject}
+        setActiveProject={setActiveProject}
+      />
 
       {/* Project Display */}
       <div
@@ -108,47 +97,12 @@ export function ProjectShowcase({ projectIndex = 0 }: ProjectShowcaseProps) {
         </div>
       </div>
 
-      {/* Demo Modal */}
-      {showModal && (
-        <div
-          className="animate-in fade-in fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm duration-200"
-          onClick={() => setShowModal(false)}
-        >
-          <div
-            className="animate-in zoom-in-95 relative m-4 w-full max-w-4xl rounded-2xl bg-gray-900 p-1 duration-300"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Button
-              size="icon"
-              variant="ghost"
-              className="absolute top-2 right-2 z-10"
-              onClick={() => setShowModal(false)}
-            >
-              <X className="h-4 w-4" />
-            </Button>
-
-            <div className="aspect-video rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20" />
-
-            <div className="absolute right-4 bottom-4 left-4 flex items-center justify-between rounded-lg bg-black/50 p-4 backdrop-blur-sm">
-              <div>
-                <div className="font-medium">{project?.title}</div>
-                <div className="text-muted-foreground text-sm">
-                  Interactive Demo
-                </div>
-              </div>
-              <Button asChild>
-                <a
-                  href={projectLink?.hrefLive || projectLink?.href}
-                  target="_blank"
-                >
-                  <ExternalLink className="mr-2 h-4 w-4" />
-                  Open Full Demo
-                </a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ProjectModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        project={project}
+        projectLink={projectLink}
+      />
     </>
   );
 }

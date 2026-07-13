@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { Mic, MicOff, Volume2, Command, Eye, X } from "@/lib/icons";
-import { Button, toast } from "@/components/ui";
-import { cn } from "@/lib/utils";
+import { toast } from "@/components/ui";
 import { useTheme } from "next-themes";
+import { VoiceCommandsList } from "./voice-commands-list";
+import { VoiceTranscript } from "./voice-transcript";
+import { VoiceButton } from "./voice-button";
 
 interface VoiceCommand {
   command: string;
@@ -164,95 +165,22 @@ export function VoiceCommands() {
   return (
     <div className="fixed bottom-4 left-4 z-50 md:bottom-14 md:left-8">
       <div className="relative">
-        {/* Commands List - Aligned to the right of the buttons */}
-        {showCommands && (
-          <div
-            className="border-border bg-background/95 animate-in slide-in-from-left-2 fade-in absolute bottom-0 left-full ml-4 w-64 rounded-2xl border p-4 shadow-2xl backdrop-blur-md duration-200"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-              <Command className="h-4 w-4" />
-              Available Commands
-            </h3>
-            <div className="max-h-64 space-y-2 overflow-y-auto pr-2">
-              {commands.map((cmd) => (
-                <div
-                  key={cmd.command}
-                  onClick={() => {
-                    cmd.action();
-                    toast.success(`Executing: ${cmd.command}`);
-                    setShowCommands(false);
-                  }}
-                  className="bg-accent/10 hover:border-accent/20 hover:bg-accent/20 cursor-pointer rounded-lg border border-transparent p-2 transition-colors"
-                >
-                  <div className="text-primary text-xs font-bold">
-                    {cmd.command}
-                  </div>
-                  <div className="text-muted-foreground text-[10px] leading-tight">
-                    {cmd.description}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        <VoiceCommandsList
+          showCommands={showCommands}
+          setShowCommands={setShowCommands}
+          commands={commands}
+        />
 
         <div className="flex flex-col items-start gap-3">
-          {/* Transcript Display */}
-          {transcript && (
-            <div className="border-border bg-background/80 animate-in slide-in-from-left-4 fade-in absolute top-2 left-16 flex max-w-[60vw] items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm duration-300 md:max-w-xs">
-              <Volume2 className="text-primary h-3 w-3 shrink-0" />
-              <span className="truncate text-xs font-medium italic">
-                {transcript}
-              </span>
-            </div>
-          )}
+          <VoiceTranscript transcript={transcript} />
 
-          {/* Voice Button Content */}
-          <Button
-            size="icon"
-            onClick={toggleListening}
-            className={cn(
-              "relative h-12 w-12 rounded-full shadow-2xl transition-all duration-300 md:h-14 md:w-14",
-              permissionError
-                ? "bg-muted text-muted-foreground"
-                : isListening
-                  ? "scale-105 bg-red-500 text-white hover:bg-red-600"
-                  : "bg-accent hover:bg-accent/90"
-            )}
-            aria-label="Toggle voice listening"
-          >
-            {permissionError ? (
-              <X className="h-5 w-5 md:h-6 md:w-6" />
-            ) : isListening ? (
-              <MicOff className="h-5 w-5 md:h-6 md:w-6" />
-            ) : (
-              <Mic className="h-5 w-5 md:h-6 md:w-6" />
-            )}
-
-            {isListening && (
-              <span className="absolute inset-0 flex items-center justify-center">
-                <span className="absolute h-full w-full animate-ping rounded-full bg-red-500/20" />
-              </span>
-            )}
-          </Button>
-
-          {/* Show Commands Button */}
-          <Button
-            size="icon"
-            variant="outline"
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowCommands(!showCommands);
-            }}
-            className={cn(
-              "border-border bg-background/50 h-8 w-8 rounded-full backdrop-blur-sm transition-colors md:h-10 md:w-10",
-              showCommands ? "bg-accent text-accent-foreground" : ""
-            )}
-            aria-label="Show available voice commands"
-          >
-            <Eye className="h-3 w-3 md:h-4 md:w-4" />
-          </Button>
+          <VoiceButton
+            permissionError={permissionError}
+            isListening={isListening}
+            toggleListening={toggleListening}
+            showCommands={showCommands}
+            setShowCommands={setShowCommands}
+          />
         </div>
       </div>
     </div>

@@ -1,10 +1,10 @@
-export { VoiceCommands } from "./voice/voice-commands";
+export { VoiceCommands } from "./voice/components/voice-commands";
 export { CommandMenu } from "./command-menu/command-menu";
 export { CustomCursor } from "./cursor/custom-cursor";
-export { BlogList } from "./blog/blog-list";
-export { BlogPostHeader } from "./blog/blog-post-header";
-export { BlogPostContent } from "./blog/blog-post-content";
-export { BlogPostFooter } from "./blog/blog-post-footer";
+export { BlogList } from "./blog/list/blog-list";
+export { BlogPostHeader } from "./blog/post/blog-post-header";
+export { BlogPostContent } from "./blog/post/blog-post-content";
+export { BlogPostFooter } from "./blog/post/blog-post-footer";
 export { ContactForm } from "./contact/contact-form";
-export { GitHubActivity } from "./github/github-activity";
-export { ProjectShowcase } from "./projects/project-showcase";
+export { GitHubActivity } from "./github/activity/github-activity";
+export { ProjectShowcase } from "./projects/components/project-showcase";

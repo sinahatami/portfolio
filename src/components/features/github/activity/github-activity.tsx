@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui";
-import { GitHubStatsGrid } from "./github-stats-grid";
+import { GitHubStatsGrid } from "../stats/github-stats-grid";
 import { GitHubRecentActivity } from "./github-recent-activity";
 
 interface GitHubStats {
