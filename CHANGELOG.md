@@ -1,3 +1,9 @@
+## [1.2.4](https://github.com/sinahatami/portfolio/compare/v1.2.3...v1.2.4) (2026-11-08)
+
+### Bug Fixes
+
+- rename middleware export to proxy for Next.js 16 ([cbfdb17](https://github.com/sinahatami/portfolio/commit/cbfdb17388812eb72f9eb53298a1be2ee0b615a0))
+
 ## [1.2.3](https://github.com/sinahatami/portfolio/compare/v1.2.2...v1.2.3) (2026-11-08)
 
 ### Bug Fixes
