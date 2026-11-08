@@ -207,7 +207,7 @@ export const RESUME_DATA: ResumeData = {
         "Framer Motion",
         "tailwindcss",
         "ShadcnUI",
-        "Bundle Analyzer",
+        "PWA",
       ],
       description:
         "A high-performance professional portfolio featuring interactive 3D WebGL visualizations, real-time GitHub activity integration, and server-side form handling. Optimized for SEO and accessibility with perfect Lighthouse scores.",
@@ -218,78 +218,109 @@ export const RESUME_DATA: ResumeData = {
       },
     },
     {
+      title: "HoldsUp",
+      techStack: [
+        "TypeScript",
+        "Python",
+        "pnpm Workspaces",
+        "Docker",
+        "Machine Learning",
+      ],
+      description:
+        "A full-stack monorepo application with TypeScript frontend, Python ML backend, and an integrated product catalog with evaluation pipeline for AI-driven features.",
+      link: {
+        label: "github.com",
+        href: "https://github.com/sinahatami/holdsup",
+      },
+    },
+    {
+      title: "ChangeRadar",
+      techStack: [
+        "Python",
+        "RAG",
+        "LLM",
+        "Semantic Search",
+        "NLP",
+        "Streamlit",
+      ],
+      description:
+        "AI-powered code change impact analysis tool using dependency-aware retrieval and RAG. Analyzes pull requests and surfaces affected components by combining static code analysis with semantic search over a codebase knowledge base.",
+      link: {
+        label: "github.com",
+        href: "https://github.com/sinahatami/ChangeRadar",
+      },
+    },
+    {
       title: "Rick and Morty Universe",
       techStack: [
         "React",
         "Next.js",
+        "TypeScript",
         "TanStack Query",
         "tailwindcss",
         "vitest",
       ],
       description:
-        "A high-performance interdimensional encyclopedia. Built to demonstrate state management complex data fetching patterns.",
+        "A high-performance interdimensional encyclopedia with infinite scroll, deep linking, and URL state sync. Demonstrates clean architecture patterns, complex data fetching, and server-side rendering with TanStack Query.",
       link: {
+        label: "github.com",
         href: "https://github.com/sinahatami/rick-and-morty-web",
         hrefLive: "https://sinahatami.github.io/rick-and-morty-web",
       },
     },
     {
       title: "Life Expectancy Data Visualization",
-      techStack: ["Angular", "D3.js", "Python", "TypeScript", "bootstrap"],
+      techStack: ["Angular 17", "D3.js", "TypeScript", "Python", "Bootstrap"],
       description:
-        "This web application provides interactive visualizations of global life expectancy data as reported by the World Health Organization (WHO).",
+        "Five interactive visualizations of global life expectancy and its correlates using WHO data. Features heatmaps, scatter plots with linear regression, and interactive choropleth maps built with Angular 17 and D3.js.",
       link: {
         label: "github.com",
-        href: "https://github.com/sinahatami/dv-project",
-        hrefLive: "https://sinahatami.github.io/dv-project/",
+        href: "https://github.com/sinahatami/dv",
+        hrefLive: "https://sinahatami.github.io/dv/",
       },
     },
     {
-      title: "Master's thesis: A Systematic Review of Recommender Systems",
+      title: "Augmented Reality Spatial Computing",
+      techStack: ["Unity", "C#", "Vuforia", "AR Foundation", "Computer Vision"],
+      description:
+        "Final AR project and lab assignments at the University of Genoa covering spatial tracking, marker-based object placement, and custom environment texturing using Unity, Vuforia, and AR Foundation.",
+      link: {
+        label: "github.com",
+        href: "https://github.com/sinahatami/ar",
+      },
+    },
+    {
+      title: "Wildfire Risk Prediction (Master's Thesis)",
       techStack: [
-        "Machine Learning",
         "Python",
-        "NumPy",
-        "Pandas",
-        "Scikit-learn",
+        "XGBoost",
+        "Deep Learning",
+        "Random Forest",
+        "Remote Sensing",
+        "ERA5",
       ],
-      description: `This thesis presents a comprehensive and systematic review of
-        recommender systems, aiming to analyze and compare key methodologies
-        developed in the field over the past decade. Using the PRISMA (Preferred
-        Reporting Items for Systematic Reviews and Meta-Analyses) framework, a
-        structured review process was applied to select more than 20 high-quality
-        research papers published between 2010 and 2025. The reviewed studies are
-        categorized into five core methodological groups: collaborative filtering, matrix
-        factorization, deep learning, hybrid models, and reinforcement learning. Each
-        approach is critically evaluated with respect to its ability to address persistent
-        challenges in the field, including data sparsity, cold-start problems, scalability,
-        dynamic user preferences, and emerging ethical concerns such as bias and
-        privacy. The review not only highlights the evolution of algorithms but also
-        reveals key trends and trade-offs between accuracy, interpretability, and
-        computational efficiency. To bridge theory and practice, the thesis further
-        introduces an original project: an AI-driven Fire Risk Recommender System,
-        designed to assess and predict wildfire risks in California. Using open-access
-        spatiotemporal data sets, including NASA FIRMS, MODIS, and ERA5, andadvanced feature engineering, the model uses an XGBoost classifier to forecast
-        fire occurrence and identify the most influential environmental factors. The
-        results demonstrate the broader applicability of recommender systems in
-        real-world decision support, especially in the context of environmental safety. In
-        general, this work contributes to the ongoing development of intelligent,
-        context-aware recommendation technologies through a structured academic
-        synthesis and innovative practical implementation.`,
+      description:
+        "AI-driven wildfire risk prediction system using ERA5 climate data, NASA FIRMS, MODIS, and NDVI vegetation indices. Applies XGBoost and deep learning to forecast fire occurrence across California with advanced spatiotemporal feature engineering.",
       link: {
         label: "github.com",
-        href: "https://github.com/sinahatami/fire-risk-thesis.git",
+        href: "https://github.com/sinahatami/fire-risk-thesis",
       },
     },
     {
-      title: "Towards Commensal Activities Recognition With Machine Learning",
-      techStack: ["Python", "Machine Learning", "LSTM", "MediaPipe", "OpenCV"],
-      description: `This project involved manual annotation of video frames to
-        label meaningful human behaviors like speech, providing ground truth for model
-        training. MediaPipe was then utilized to extract facial pose estimations for two
-        interacting individuals. Finally, recurrent neural networks (LSTM and GRU)
-        were employed to design and implement a model capable of accurately
-        estimating each person's pose during commensal interactions`,
+      title: "Multi-Agent Autonomous Debate Framework",
+      techStack: ["Python", "NLP", "GPT-2", "spaCy", "Multi-Agent Systems"],
+      description:
+        "Autonomous debate framework where a moderator and two debater agents interact using GPT-2 for argument generation and spaCy for relevance scoring. The moderator selects topics, referees multi-round exchanges, and declares a winner.",
+      link: {
+        label: "github.com",
+        href: "https://github.com/sinahatami/mas-nlp",
+      },
+    },
+    {
+      title: "Commensal Activity Recognition",
+      techStack: ["Python", "LSTM", "GRU", "MediaPipe", "TensorFlow", "OpenCV"],
+      description:
+        "Research pipeline for recognizing nonverbal behaviors during commensal interactions. Syncs manual ELAN video annotations with MediaPipe facial pose extraction, then trains LSTM/GRU models to classify human activities from paired video streams.",
       link: {
         label: "github.com",
         href: "https://github.com/sinahatami/commensal",
@@ -298,75 +329,96 @@ export const RESUME_DATA: ResumeData = {
       },
     },
     {
-      title: "Recycling Robot (Final Reinforcement Learning Project)",
-      techStack: ["Python", "Machine Learning"],
-      description: `
-        The title of my project was Recycling Robot and the description of the project is
-        as follows: “Add some complexity to the model discussed in class (like making
-        the reward a random variable, for example, or adding one more state (half full
-        battery)) and explore the different regimes/results which can be obtained by
-        varying the parameters at your disposal”. In addition, I got the full grade for my
-        final project.
-      `,
+      title: "Cervical Cell Classification (Computer Vision)",
+      techStack: [
+        "Python",
+        "TensorFlow",
+        "VGG16",
+        "SVM",
+        "Computer Vision",
+        "Medical Imaging",
+      ],
+      description:
+        "Comparative study of cervical cell classification on the SIPaKMeD dataset (4,000+ images). Benchmarks deep feature extraction with VGG16 against handcrafted HOG features fed into an SVM, analyzing trade-offs in accuracy and interpretability.",
       link: {
         label: "github.com",
-        href: "https://github.com/sinahatami/rl-final-project.git",
-        hrefLive: "",
+        href: "https://github.com/sinahatami/cv",
+        hrefLive: "https://github.com/sinahatami/cv/blob/main/Report%20(2).pdf",
       },
     },
     {
-      title: "Cancer Prediction (Final Computer Vision Project)",
-      techStack: ["Python", "Computer Vision", "Unsupervised Learning", "SVM"],
-      description: `
-        This report delves into the world of cervical cell analysis, powered by the SIPaKMeD
-        dataset. Comprising over 4,000 meticulously curated images, this dataset is a
-        cornerstone of our investigation into the classification of cervical cells.
-        Our journey begins with an exploration of the SIPaKMeD dataset and its potential
-        applications. We leverage cutting-edge techniques, including automated feature
-        extraction with pretrained models and traditional handcrafted feature engineering,
-        to decode the rich information encapsulated within these cervical cell images.
-        Through clustering and classification methodologies, we seek to uncover patterns
-        and assess the accuracy of our models in distinguishing between cervical cell
-        categories. This report provides a comprehensive overview of our findings, offering
-        valuable insights into the world of cervical health analysis.
-        By the end of this report, you will gain a deeper understanding of how the
-        SIPaKMeD dataset can be harnessed for medical image analysis, showcasing the
-        advantages and limitations of different feature extraction approaches.
-      `,
+      title: "Trustworthy AI — Adversarial ML & XAI",
+      techStack: [
+        "Python",
+        "Adversarial ML",
+        "XAI",
+        "SecML",
+        "Scikit-learn",
+        "Deep Learning",
+      ],
+      description:
+        "Labs and projects from the Trustworthy AI course at UniGe covering evasion attacks, data poisoning, malware evasion, and defenses. Includes explainable AI (XAI) experiments to audit and interpret model decisions.",
       link: {
         label: "github.com",
-        href: "https://github.com/sinahatami/cv-final-project",
-        hrefLive:
-          "https://github.com/sinahatami/cv-final-project/blob/main/Report%20(2).pdf",
+        href: "https://github.com/sinahatami/trustworthy-ai",
       },
     },
     {
-      title:
-        "A Multi-Agent Framework for Autonomous Discourse (Final NLP & MAS project)",
-      techStack: ["Python", "Computer Vision", "Unsupervised Learning", "SVM"],
-      description: `
-        It features an autonomous debate framework where three distinct agents, a moderator and two debaters—interact using GPT-based language models.
-        The moderator initiates the session by selecting a subject, after which the debaters engage in a multi-round exchange.
-        The process concludes with the moderator evaluating the arguments and declaring a winner based on the quality of the discourse.
-      `,
+      title: "Machine Learning Fundamentals",
+      techStack: [
+        "Python",
+        "TensorFlow",
+        "PyTorch",
+        "Scikit-learn",
+        "Jupyter Notebook",
+      ],
+      description:
+        "Comprehensive ML coursework covering neural networks, CNNs, Transformers, GANs, and reinforcement learning. Implements core algorithms from scratch and benchmarks them on standard datasets.",
       link: {
         label: "github.com",
-        href: "https://github.com/sinahatami/mas-nlp-project",
+        href: "https://github.com/sinahatami/ml",
       },
     },
     {
-      title:
-        "Signal and Image Synthesis via Frequency and State-Space Analysis (Final DSIP project)",
-      techStack: ["Python"],
-      description: `
-        This project implements several fundamental concepts in signal and image processing using Python, ranging from Fourier series approximations to optimal state estimation.
-        It explores the frequency domain through the identification of signal components using FFT and the analysis of the Gibbs phenomenon as harmonic counts increase.
-        Additionally, the project demonstrates the design of a Kalman Filter for tracking noisy signals and their derivatives, alongside advanced image processing techniques like Haar Wavelet Transforms for detail measurement and Gaussian high-pass filtering in both spatial and frequency domains.
-      `,
+      title: "Digital Signal & Image Processing",
+      techStack: [
+        "Python",
+        "NumPy",
+        "SciPy",
+        "Jupyter Notebook",
+        "Signal Processing",
+      ],
+      description:
+        "Final project and coursework covering Fourier series approximations, FFT-based frequency analysis, Gibbs phenomenon, Kalman filtering for noisy signal tracking, Haar Wavelet Transforms, and Gaussian high-pass filtering.",
       link: {
         label: "github.com",
         href: "https://github.com/sinahatami/dsip",
-        hrefLive: "",
+      },
+    },
+    {
+      title: "Distributed Computing — PySpark & Simulation",
+      techStack: [
+        "Python",
+        "PySpark",
+        "Hadoop",
+        "HDFS",
+        "Discrete Event Simulation",
+      ],
+      description:
+        "Coursework at the University of Genoa: large-scale data queries on HDFS using PySpark and Python-based discrete event simulations for queuing theory and network analysis.",
+      link: {
+        label: "github.com",
+        href: "https://github.com/sinahatami/dc",
+      },
+    },
+    {
+      title: "High Performance Computing — CUDA, OpenMP, MPI",
+      techStack: ["C++", "CUDA", "OpenMP", "MPI", "Parallel Programming"],
+      description:
+        "HPC assignments from the University of Genoa implementing parallel algorithms with CUDA GPU acceleration, shared-memory parallelism via OpenMP, and distributed message-passing with MPI.",
+      link: {
+        label: "github.com",
+        href: "https://github.com/sinahatami/hpc",
       },
     },
   ],
