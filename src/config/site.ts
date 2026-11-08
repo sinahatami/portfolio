@@ -3,9 +3,7 @@ import { z } from "zod";
 
 const siteConfigSchema = z.object({
   baseUrl: z.string().url("Base URL must be a valid URL."),
-  googleVerificationId: z
-    .string()
-    .min(1, "Google verification ID is required."),
+  googleVerificationId: z.string().min(1).optional(),
 });
 
 const siteConfig = {
