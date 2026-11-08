@@ -41,12 +41,28 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Start Next.js server
+        run: nohup yarn start > /tmp/nextjs.log 2>&1 &
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Wait for Next.js server
+        run: |
+          for i in $(seq 1 60); do
+            if curl -sf http://localhost:3000 > /dev/null 2>&1; then
+              echo "Server ready after ${i}s"
+              exit 0
+            fi
+            echo "Waiting... attempt $i/60"
+            sleep 2
+          done
+          echo "Server failed to start. Logs:"
+          cat /tmp/nextjs.log
+          exit 1
+
       - name: Run Cypress E2E Tests
         uses: cypress-io/github-action@v6
         with:
           install: false
-          start: yarn start
-          wait-on: "http://localhost:3000"
-          wait-on-timeout: 120
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
