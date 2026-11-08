@@ -1,3 +1,9 @@
+## [1.2.5](https://github.com/sinahatami/portfolio/compare/v1.2.4...v1.2.5) (2026-11-08)
+
+### Bug Fixes
+
+- remove throw-at-module-load in email and site configs to prevent server crash ([523b77a](https://github.com/sinahatami/portfolio/commit/523b77a0c705e5bef266114f76e38f10e10a3546))
+
 ## [1.2.4](https://github.com/sinahatami/portfolio/compare/v1.2.3...v1.2.4) (2026-11-08)
 
 ### Bug Fixes
