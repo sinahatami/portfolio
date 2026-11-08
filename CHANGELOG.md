@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/sinahatami/portfolio/compare/v1.1.2...v1.2.0) (2026-11-08)
+
+### Bug Fixes
+
+- complete atomic design refactor — restore missing components and fix all build errors ([b4f7b81](https://github.com/sinahatami/portfolio/commit/b4f7b81d475f834bb013b9057f8d59a9f4bb2a0b))
+- remove unused imports in command menu ([2bacbf3](https://github.com/sinahatami/portfolio/commit/2bacbf380b1f29808b3103ad4599a228f4a838b8))
+- resolve broken deep imports after ui components reorganization ([763577c](https://github.com/sinahatami/portfolio/commit/763577c80c762f4cce0da8b3333004834db078d3))
+- resolve theme toggle import path ([7ffabd0](https://github.com/sinahatami/portfolio/commit/7ffabd08d552eea0dbbd69ab96fa4e42f6edd97e))
+
+### Features
+
+- replace projects with all 15 GitHub repos ([001437f](https://github.com/sinahatami/portfolio/commit/001437fb8f2e335576b18c0148d4e5a4a8866782))
+
 ## [1.1.3](https://github.com/sinahatami/portfolio/compare/v1.1.2...v1.1.3) (2026-11-08)
 
 ### Bug Fixes
