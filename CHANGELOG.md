@@ -3,6 +3,13 @@
 ### Bug Fixes
 
 - remove throw-at-module-load in github config to prevent server crash ([f367944](https://github.com/sinahatami/portfolio/commit/f367944f5ac0f9d4a3a50a2c0194cf2d515aaf2c))
+- rename middleware.ts to proxy.ts for Next.js 16 compatibility ([36ee26b](https://github.com/sinahatami/portfolio/commit/36ee26bc7773b634b6846ded8b8b697caa6d1b9f))
+
+## [1.2.3](https://github.com/sinahatami/portfolio/compare/v1.2.2...v1.2.3) (2026-11-08)
+
+### Bug Fixes
+
+- remove throw-at-module-load in github config to prevent server crash ([f367944](https://github.com/sinahatami/portfolio/commit/f367944f5ac0f9d4a3a50a2c0194cf2d515aaf2c))
 
 ## [1.2.2](https://github.com/sinahatami/portfolio/compare/v1.2.1...v1.2.2) (2026-11-08)
 
