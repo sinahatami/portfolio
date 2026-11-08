@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import "./globals.scss";
 import { RESUME_DATA } from "@/data/resume-data";
-import LayoutClient from "@/components/layout-client";
+import { SITE_CONFIG } from "@/config/site";
+import LayoutClient from "@/components-client";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import "./globals.scss";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,7 +19,6 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-// Separate Viewport configuration (Next.js 15 requirement)
 export const viewport: Viewport = {
   themeColor: "#3b82f6",
   width: "device-width",
@@ -26,8 +26,19 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+const getJsonLd = () => ({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: RESUME_DATA.name,
+  url: RESUME_DATA.personalWebsiteUrl,
+  image: RESUME_DATA.avatarUrl,
+  jobTitle: "Software Engineer | Data Scientist",
+  knowsAbout: RESUME_DATA.skills.flatMap((category) => category.items),
+  sameAs: Object.values(RESUME_DATA.contact.social).map((social) => social.url),
+});
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sinahatami.vercel.app"),
+  metadataBase: new URL(SITE_CONFIG.baseUrl),
   title: {
     default: "Sina Hatami | Software Engineer & Data Scientist",
     template: "%s | Sina Hatami",
@@ -35,7 +46,6 @@ export const metadata: Metadata = {
   description: RESUME_DATA.summary.substring(0, 160),
   keywords: ["Software Engineer", "React Developer", "Data Scientist", "Genoa"],
   authors: [{ name: "Sina Hatami" }],
-  // PWA and Mobile configurations handled via Metadata API
   appleWebApp: {
     capable: true,
     title: "Sina Hatami",
@@ -44,14 +54,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://sinahatami.dev",
+    url: SITE_CONFIG.baseUrl,
     siteName: "Sina Hatami Portfolio",
     title: "Sina Hatami | Software Engineer & Data Scientist",
     description: RESUME_DATA.summary.substring(0, 160),
     images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   verification: {
-    google: "nN8A5Y7nz5EbqkjGooC7_XkhKzt06e937w5PJW4C288",
+    google: SITE_CONFIG.googleVerificationId,
+  },
+  other: {
+    "Permissions-Policy": "microphone=*",
   },
 };
 
@@ -60,37 +73,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: RESUME_DATA.name,
-    url: RESUME_DATA.personalWebsiteUrl,
-    image: RESUME_DATA.avatarUrl,
-    jobTitle: "Software Engineer | Data Scientist",
-    knowsAbout: RESUME_DATA.skills.flatMap((category) => category.items),
-    sameAs: Object.values<Record<string, any>>(RESUME_DATA.contact.social).map(
-      (social: any) => social.url
-    ),
-  };
-
   return (
     <html
       lang="en"
       className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth`}
       suppressHydrationWarning
     >
-      <head>
-        {/* Manual preloads and JSON-LD only. No spaces between tags! */}
+      <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(getJsonLd()) }}
+          id="json-ld"
         />
-        <meta httpEquiv="Permissions-Policy" content="microphone=*" />
-      </head>
-      <body
-        className={`${inter.variable} ${jetbrainsMono.variable} bg-background text-foreground antialiased`}
-        suppressHydrationWarning
-      >
         <LayoutClient>{children}</LayoutClient>
         <Analytics />
         <SpeedInsights />

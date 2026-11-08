@@ -1,7 +1,11 @@
 import { ImageResponse } from "next/og";
 import { RESUME_DATA } from "@/data/resume-data";
+import { SITE_CONFIG } from "@/config/site";
 
 export const runtime = "edge";
+
+const OG_SKILL_COUNT = 5;
+const siteHostname = new URL(SITE_CONFIG.baseUrl).hostname;
 
 export async function GET() {
   try {
@@ -62,7 +66,7 @@ export async function GET() {
         <div style={{ display: "flex", marginTop: "40px", gap: "20px" }}>
           {RESUME_DATA.skills
             .flatMap((cat) => cat.items)
-            .slice(0, 5)
+            .slice(0, OG_SKILL_COUNT)
             .map((skill, i) => (
               <div
                 key={i}
@@ -80,7 +84,7 @@ export async function GET() {
         </div>
 
         <div style={{ marginTop: "40px", fontSize: "16px", color: "#6b7280" }}>
-          sinahatami.dev
+          {siteHostname}
         </div>
       </div>,
       {

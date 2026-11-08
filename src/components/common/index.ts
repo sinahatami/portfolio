@@ -1,5 +1,3 @@
-export * from "./error/animation-error-boundary";
-export * from "./error/error-boundary";
 export * from "./list/expandable-list";
 export * from "./layout/section-container";
 export * from "./layout/scroll-reveal";

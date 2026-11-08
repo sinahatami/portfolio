@@ -17,7 +17,6 @@ export function ProgressLoader({
 }: ProgressLoaderProps) {
   const [show, setShow] = useState(true);
 
-  // Handle the exit delay internally
   useEffect(() => {
     if (isLoading || progress < 100) {
       return;
@@ -39,7 +38,6 @@ export function ProgressLoader({
       )}
     >
       <div className="w-full max-w-md px-6 text-center">
-        {/* Name & Title */}
         <div className="animate-in slide-in-from-top-4 fade-in mb-8 duration-500">
           <div className="mb-2 text-3xl font-bold tracking-tight text-white">
             {RESUME_DATA.name}
@@ -49,9 +47,7 @@ export function ProgressLoader({
           </div>
         </div>
 
-        {/* Progress Bar Container */}
         <div className="relative h-1.5 w-full overflow-hidden rounded-full bg-gray-800">
-          {/* The Moving Bar */}
           <div
             className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500 bg-[length:200%_100%] transition-all duration-200 ease-out"
             style={{
@@ -61,7 +57,6 @@ export function ProgressLoader({
           />
         </div>
 
-        {/* Percentage & Status Text */}
         <div className="mt-4 flex items-center justify-between font-mono text-xs text-gray-500">
           <span className="animate-pulse">
             {progress < 100 ? "Loading assets..." : "Initializing..."}

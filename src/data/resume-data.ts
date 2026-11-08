@@ -40,7 +40,7 @@ export const RESUME_DATA: ResumeData = {
       degree:
         "Master of Computer Science | Data Science & Engineering | Artificial Intelligence",
       start: "Sep 2022",
-      end: "Jul 2025",
+      end: "Jul 2026",
       logoUrl: "/logo/unige.png",
       notes: `Thesis: 'A Systematic Review of Recommender Systems'.
         Relevant Coursework: Digital Signal & Image Processing (DSIP), Machine Learning (ML), Computer Vision (CV),
@@ -76,8 +76,8 @@ export const RESUME_DATA: ResumeData = {
         "Convolutional Neural Networks (CNN)",
       ],
       title: "Data Science Researcher (Voluntary)",
-      start: "Sep 2025",
-      end: "Now",
+      start: "Apr 2026",
+      end: "Jul 2026",
       summary:
         "hAppI Lab is a research group at the University of Genoa focused on human activity recognition.",
       description: `I am part of the hAppI Lab team, collaborating with Professor Radoslaw Niewiadomski on the "Towards Commensal Activities Recognition With Machine Learning" project."`,
@@ -98,8 +98,8 @@ export const RESUME_DATA: ResumeData = {
         "Docker",
       ],
       title: "Software Engineer | Data Scientist",
-      start: "Oct 2024",
-      end: "Apr 2025",
+      start: "Nov 2025",
+      end: "Apr 2026",
       summary:
         "Innovative startup offering sustainable digital solutions and green technologies.",
       description:

@@ -1,3 +1,5 @@
+"use client";
+
 import { OrbitControls } from "@react-three/drei";
 import { ProjectCube } from "./project-cube";
 import type { ProjectModel } from "./project-model";

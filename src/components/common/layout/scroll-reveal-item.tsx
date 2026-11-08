@@ -18,7 +18,6 @@ export const ScrollRevealItem = ({
     const element = ref.current;
     if (!element) return;
 
-    // Find our index among siblings to calculate delay
     const parent = element.parentElement;
     if (parent) {
       const siblings = Array.from(parent.children);
@@ -36,14 +35,13 @@ export const ScrollRevealItem = ({
       }
     };
 
-    // Use MutationObserver to watch parent attribute changes
     const observer = new MutationObserver(checkParentVisibility);
     if (parent) {
       observer.observe(parent, {
         attributes: true,
         attributeFilter: ["data-stagger-visible"],
       });
-      checkParentVisibility(); // Initial check
+      checkParentVisibility();
     }
 
     return () => observer.disconnect();

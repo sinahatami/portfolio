@@ -8,7 +8,7 @@ export * from "./media/optimized-canvas";
 export * from "./media/optimized-image";
 export * from "./loaders/progress-loader";
 export * from "./layout/section-header";
-export * from "./loaders/skeleton";
+export * from "./skeleton";
 export * from "./cards/spotlight-card";
 export * from "./layout/static-wrapper";
 export * from "./feedback/toaster";
