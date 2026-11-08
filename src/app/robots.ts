@@ -1,14 +1,12 @@
 import { MetadataRoute } from "next";
-import { RESUME_DATA } from "@/data/resume-data";
+import { SITE_CONFIG } from "@/config/site";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = RESUME_DATA.personalWebsiteUrl;
-
   return {
     rules: {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${SITE_CONFIG.baseUrl}/sitemap.xml`,
   };
 }

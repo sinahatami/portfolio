@@ -1,0 +1,11 @@
+export { ContactSection } from "./contact/contact-section";
+export { EducationSection } from "./education/education-section";
+export { ExperienceSection } from "./experience/experience-section";
+export { default as GitHubActivitySection } from "./github/github-activity-section";
+export { GitHubActivityView } from "./github/github-activity-view";
+export { HeroSection } from "./hero/hero-section";
+export { ProjectsSection } from "./projects/projects-section";
+export { SkillSelection } from "./skills/skill-section";
+export { TechSphereSectionStatic } from "./hero/tech-sphere-section-static";
+export { TechSphereSection } from "./hero/tech-sphere-section";
+export { TestimonialsSection } from "./testimonials/testimonials-section";

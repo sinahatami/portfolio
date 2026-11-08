@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Button,
-} from "@/components/ui";
+import { Card, CardContent, CardHeader, CardTitle, Button } from "@/components";
 import { X, Code, ExternalLink } from "@/lib/icons";
 import type { ProjectModel } from "./project-model";
 

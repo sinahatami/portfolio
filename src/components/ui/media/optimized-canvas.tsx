@@ -1,4 +1,3 @@
-// --- FILE: ./src/components/ui/optimized-canvas.tsx ---
 "use client";
 
 import React, { Suspense, useState, useEffect } from "react";
@@ -21,12 +20,10 @@ export function OptimizedCanvas({
   const [hasError, setHasError] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-  // Only run on client
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Error UI
   const ErrorUI = fallbackComponent || (
     <div
       className={`flex h-full w-full flex-col items-center justify-center rounded-lg border border-gray-800 bg-black p-8 text-center ${className}`}
@@ -47,7 +44,6 @@ export function OptimizedCanvas({
     </div>
   );
 
-  // Loading state
   if (!isClient || webglSupported === null) {
     return (
       <div
@@ -58,25 +54,23 @@ export function OptimizedCanvas({
     );
   }
 
-  // WebGL not supported
   if (webglSupported === false || hasError) {
     return ErrorUI;
   }
 
-  // Safe WebGL context creation with error handling
   const safeGLConfig: Partial<WebGLRendererParameters> = {
     antialias: true,
     alpha: true,
     preserveDrawingBuffer: false,
     powerPreference: "default" as WebGLPowerPreference,
-    failIfMajorPerformanceCaveat: false, // Allow software rendering fallback
+    failIfMajorPerformanceCaveat: false,
   };
 
   return (
     <Canvas
       className={className}
-      frameloop="demand" // Changed from "always" to save resources
-      dpr={[1, 1.5]} // Lower DPR for performance
+      frameloop="demand"
+      dpr={[1, 1.5]}
       gl={safeGLConfig}
       onError={(error) => {
         console.error("WebGL Error:", error);

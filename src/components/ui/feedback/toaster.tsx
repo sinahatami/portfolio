@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
-// This line is the most important for visibility!
 import "react-toastify/dist/ReactToastify.css";
 import { useTheme } from "next-themes";
 

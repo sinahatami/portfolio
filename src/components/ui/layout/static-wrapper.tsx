@@ -1,4 +1,3 @@
-// --- FILE: ./src/components/ui/static-wrapper.tsx ---
 "use client";
 
 interface StaticWrapperProps {
@@ -21,7 +20,6 @@ export function StaticWrapper({
   viewport,
   ...props
 }: StaticWrapperProps) {
-  // Static version - ignore all animation props
   return (
     <div className={className} {...props}>
       {children}

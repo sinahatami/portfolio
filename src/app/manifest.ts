@@ -60,38 +60,6 @@ export default function manifest(): MetadataRoute.Manifest {
         purpose: "maskable",
       },
     ],
-    screenshots: [
-      {
-        src: "/screenshots/desktop.png",
-        sizes: "1920x1080",
-        type: "image/png",
-        form_factor: "wide",
-        label: "Desktop view of the portfolio",
-      },
-      {
-        src: "/screenshots/mobile.png",
-        sizes: "750x1334",
-        type: "image/png",
-        form_factor: "narrow",
-        label: "Mobile view of the portfolio",
-      },
-    ],
     categories: ["productivity", "utilities", "education"],
-    shortcuts: [
-      {
-        name: "View Projects",
-        short_name: "Projects",
-        description: "Browse my software projects",
-        url: "/#projects",
-        icons: [{ src: "/icons/projects.png", sizes: "96x96" }],
-      },
-      {
-        name: "Contact Me",
-        short_name: "Contact",
-        description: "Get in touch with me",
-        url: "/#contact",
-        icons: [{ src: "/icons/contact.png", sizes: "96x96" }],
-      },
-    ],
   };
 }
