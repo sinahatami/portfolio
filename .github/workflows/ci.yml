@@ -41,22 +41,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Debug server startup
-        run: |
-          yarn start &
-          SERVER_PID=$!
-          sleep 8
-          if kill -0 $SERVER_PID 2>/dev/null; then
-            echo "Server is still running after 8s"
-            kill $SERVER_PID
-          else
-            echo "Server exited before 8s"
-            wait $SERVER_PID
-            echo "Exit code: $?"
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Run Cypress E2E Tests
         uses: cypress-io/github-action@v6
         with:
