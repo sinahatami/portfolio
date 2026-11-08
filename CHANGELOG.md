@@ -1,3 +1,9 @@
+## [1.2.1](https://github.com/sinahatami/portfolio/compare/v1.2.0...v1.2.1) (2026-11-08)
+
+### Bug Fixes
+
+- make googleVerificationId optional to unblock CI builds ([ca30eb0](https://github.com/sinahatami/portfolio/commit/ca30eb039370fbd7a2b62152e8089c93092ab4bd))
+
 # [1.2.0](https://github.com/sinahatami/portfolio/compare/v1.1.2...v1.2.0) (2026-11-08)
 
 ### Bug Fixes
