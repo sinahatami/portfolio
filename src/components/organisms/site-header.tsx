@@ -24,6 +24,24 @@ interface SiteHeaderProps {
   profile: Pick<Profile, "name" | "availability">;
 }
 
+/**
+ * The S¹ mark, small: the initial with its red note, on a scrap of twill.
+ * Decorative; the name beside it is the link text.
+ */
+function BrandMark() {
+  return (
+    <span
+      aria-hidden
+      className="twill border-border relative grid size-7 place-items-center rounded-[3px] border text-[0.95rem] leading-none font-extrabold"
+    >
+      <span className="-translate-x-[0.12em]">S</span>
+      <span className="text-accent absolute top-[0.3rem] right-[0.28rem] text-[0.5rem] font-extrabold">
+        1
+      </span>
+    </span>
+  );
+}
+
 export function SiteHeader({ profile }: SiteHeaderProps) {
   const pathname = usePathname();
   const onHome = pathname === "/";
@@ -40,16 +58,19 @@ export function SiteHeader({ profile }: SiteHeaderProps) {
     <header
       data-print="hide"
       className={cn(
-        "bg-background sticky top-0 z-40 border-b transition-colors",
-        scrolled || !onHome ? "border-border" : "border-transparent"
+        "scheme-denim sticky top-0 z-40 border-b transition-shadow",
+        scrolled && "shadow-[0_10px_30px_-18px_rgb(17_26_54/0.7)]"
       )}
     >
       <Container className="flex h-16 items-center gap-8">
         <Link
           href="/"
-          className="hover:text-accent shrink-0 text-lg font-extrabold tracking-[-0.03em] transition-colors"
+          className="group flex shrink-0 items-center gap-2.5 text-lg font-extrabold tracking-[-0.03em]"
         >
-          {profile.name}
+          <BrandMark />
+          <span className="group-hover:text-accent transition-colors">
+            {profile.name}
+          </span>
         </Link>
 
         <nav aria-label="Primary" className="self-stretch max-md:hidden">

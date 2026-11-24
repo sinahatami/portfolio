@@ -98,13 +98,15 @@ export function SkillsExplorer({
                   onClick={() => setSelected(skill.name)}
                   className={cn(
                     "group cursor-pointer",
-                    isSelected ? "bg-accent-wash" : "hover:bg-muted"
+                    isSelected
+                      ? "bg-accent-wash [--loom-float:var(--color-accent)] [--loom-row:var(--color-accent-wash)]"
+                      : "hover:bg-muted hover:[--loom-row:var(--color-muted)]"
                   )}
                 >
                   <th
                     scope="row"
                     className={cn(
-                      "border-border sticky left-0 z-10 border-b p-0 text-left font-semibold",
+                      "sticky left-0 z-20 p-0 text-left font-semibold",
                       isSelected
                         ? "bg-accent-wash"
                         : "bg-background group-hover:bg-muted"
@@ -123,24 +125,31 @@ export function SkillsExplorer({
                   <td
                     aria-hidden
                     className={cn(
-                      "border-border tabular border-b pr-4 text-right font-semibold",
+                      "tabular pr-4 text-right font-semibold",
                       isSelected ? "text-accent" : "text-muted-foreground"
                     )}
                   >
                     {skill.count}
                   </td>
-                  {groups.map((group, index) => (
-                    <Fragment key={group.id}>
-                      {index > 0 ? <td /> : null}
-                      {group.items.map((column) => (
-                        <Cell
-                          key={column.id}
-                          used={usedIn(skill, group.id, column.id)}
-                          selected={isSelected}
-                        />
-                      ))}
-                    </Fragment>
-                  ))}
+                  {groups.map((group, index) => {
+                    const used = group.items.map((column) =>
+                      usedIn(skill, group.id, column.id)
+                    );
+                    return (
+                      <Fragment key={group.id}>
+                        {index > 0 ? <td /> : null}
+                        {group.items.map((column, at) => (
+                          <Cell
+                            key={column.id}
+                            used={used[at] ?? false}
+                            joinsLeft={used[at - 1] ?? false}
+                            joinsRight={used[at + 1] ?? false}
+                            selected={isSelected}
+                          />
+                        ))}
+                      </Fragment>
+                    );
+                  })}
                 </tr>
               );
             })}
@@ -184,16 +193,32 @@ function usedIn(skill: SkillWithUsage, group: string, id: string) {
   return list.some((item) => item.id === id);
 }
 
-function Cell({ used, selected }: { used: boolean; selected: boolean }) {
+function Cell({
+  used,
+  joinsLeft,
+  joinsRight,
+  selected,
+}: {
+  used: boolean;
+  joinsLeft: boolean;
+  joinsRight: boolean;
+  selected: boolean;
+}) {
   return (
-    <td className="border-border border-b text-center">
+    <td
+      className={cn(
+        "loom-cell h-10",
+        selected && "[--loom-weft:var(--color-accent)]"
+      )}
+    >
       {used ? (
         <>
           <span
             aria-hidden
             className={cn(
-              "inline-block size-2.5 rounded-full align-middle",
-              selected ? "bg-accent" : "bg-foreground"
+              "loom-float",
+              joinsLeft ? "-left-px rounded-l-none" : "left-[18%]",
+              joinsRight ? "-right-px rounded-r-none" : "right-[18%]"
             )}
           />
           <span className="sr-only">Used</span>

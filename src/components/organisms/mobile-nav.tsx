@@ -29,7 +29,7 @@ export function MobileNav({ items, isActive }: MobileNavProps) {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-50 bg-black/40 md:hidden dark:bg-black/60" />
-        <Dialog.Content className="bg-background border-border fixed inset-x-0 top-0 z-50 border-b px-5 pt-4 pb-8 shadow-xl md:hidden">
+        <Dialog.Content className="scheme-denim border-border fixed inset-x-0 top-0 z-50 border-b px-5 pt-4 pb-8 shadow-xl md:hidden">
           <div className="flex items-center justify-between">
             <Dialog.Title className="text-muted-foreground text-sm">
               Menu

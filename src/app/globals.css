@@ -4,12 +4,13 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Design tokens: "Evidence".
- * Every claim on the page points to its source. Structure comes from type,
- * rules and alignment, not from cards or colour. Ink is Ligurian slate; the
- * one accent is the red of Genoa's flag, used only for evidence markers,
- * selection and focus.
- * Type: Schibsted Grotesk for everything, from the 176px name to captions.
+ * Design tokens: "Bleu de Gênes".
+ * Genoa's indigo cloth gave jeans their name, and the jacquard loom's punched
+ * cards came before the computer. The site is set like a woven label: an
+ * indigo waistband, the name woven into twill at the top, a red selvedge
+ * line under it, then plain white pages in indigo ink. Selvedge red stays
+ * reserved for evidence markers, selection and focus.
+ * Type: Schibsted Grotesk for everything, from the woven name to captions.
  * Scale: 12/14/16/17/18/21/24/36/44/48/60/72.
  * `static`: emit every token, since some are read only via inline styles.
  */
@@ -39,49 +40,44 @@
   --text-6xl: 4.5rem;
   --text-6xl--line-height: 0.95;
 
-  /* Paper and slate. */
+  /* White page, indigo ink. */
   --color-background: #ffffff;
   --color-surface: #ffffff;
-  --color-foreground: #1d2731;
-  --color-muted: #f2f4f5;
-  --color-muted-foreground: #56616c;
-  --color-border: #d8dce0;
-  --color-primary: #1d2731;
-  --color-primary-foreground: #ffffff;
-  --color-link: #1d2731;
+  --color-foreground: #16203d;
+  --color-muted: #eef1f8;
+  --color-muted-foreground: #525d7c;
+  --color-border: #d7dcea;
+  --color-primary: #1a2850;
+  --color-primary-foreground: #f3eee3;
+  --color-link: #16203d;
 
-  /* Genoa red: evidence markers, the selected row, focus. */
+  /* Selvedge red: evidence markers, the selected row, focus. */
   --color-accent: #c8102e;
   --color-accent-foreground: #ffffff;
   --color-accent-wash: #fbe9ec;
   --color-ring: #c8102e;
   --color-highlight: #fbe9ec;
-  --color-highlight-foreground: #1d2731;
+  --color-highlight-foreground: #16203d;
   --color-destructive: #b3261e;
 
-  /* Sequential slate, for charts such as the GitHub language bar. */
-  --color-series-1: #1d2731;
-  --color-series-2: #4c5864;
-  --color-series-3: #7d8792;
-  --color-series-4: #aab2ba;
-  --color-series-5: #d1d6db;
+  /* The cloth itself: the same in both themes. */
+  --color-denim: #1a2850;
+  --color-denim-deep: #111a36;
+  --color-ecru: #efe8d8;
+  --color-selvedge: #c8102e;
+
+  /* Sequential indigo, for charts such as the GitHub language bar. */
+  --color-series-1: #16203d;
+  --color-series-2: #3b4d85;
+  --color-series-3: #6b7db0;
+  --color-series-4: #9eabd0;
+  --color-series-5: #cdd4ea;
 
   --radius-sm: 3px;
   --radius-md: 6px;
   --radius-lg: 8px;
 
-  --animate-rule: rule 700ms cubic-bezier(0.3, 0.7, 0.2, 1) 150ms backwards;
   --animate-mark: mark 1600ms ease-out;
-
-  /* The hairline under the claim draws once, left to right. */
-  @keyframes rule {
-    from {
-      transform: scaleX(0);
-    }
-    to {
-      transform: scaleX(1);
-    }
-  }
 
   /* A note that was just jumped to flashes its wash, then settles. */
   @keyframes mark {
@@ -95,29 +91,56 @@
 }
 
 .dark {
-  --color-background: #12181e;
-  --color-surface: #182029;
-  --color-foreground: #e6eaed;
-  --color-muted: #1c252e;
-  --color-muted-foreground: #9aa5af;
-  --color-border: #2e3943;
-  --color-primary: #e6eaed;
-  --color-primary-foreground: #12181e;
-  --color-link: #e6eaed;
+  --color-background: #0d142b;
+  --color-surface: #121a35;
+  --color-foreground: #ebe6da;
+  --color-muted: #161f3d;
+  --color-muted-foreground: #a3acc7;
+  --color-border: #263157;
+  --color-primary: #ebe6da;
+  --color-primary-foreground: #111a36;
+  --color-link: #ebe6da;
 
-  --color-accent: #f0505f;
-  --color-accent-foreground: #12181e;
-  --color-accent-wash: #3a1d24;
-  --color-ring: #f0505f;
-  --color-highlight: #3a1d24;
-  --color-highlight-foreground: #e6eaed;
+  --color-accent: #ff5d6e;
+  --color-accent-foreground: #0d142b;
+  --color-accent-wash: #3b1a2c;
+  --color-ring: #ff5d6e;
+  --color-highlight: #3b1a2c;
+  --color-highlight-foreground: #ebe6da;
   --color-destructive: #ff8a80;
 
-  --color-series-1: #e6eaed;
-  --color-series-2: #b7c0c8;
-  --color-series-3: #87929d;
-  --color-series-4: #5d6873;
-  --color-series-5: #3e4852;
+  --color-series-1: #ebe6da;
+  --color-series-2: #b9c0d8;
+  --color-series-3: #8692b6;
+  --color-series-4: #5b6890;
+  --color-series-5: #3a4670;
+}
+
+/*
+ * Denim: the header, the hero band, the footer and the mobile menu. The
+ * tokens are re-pointed for everything inside, so atoms and molecules work
+ * on the cloth unchanged, in either theme.
+ */
+@layer components {
+  .scheme-denim {
+    --color-background: var(--color-denim-deep);
+    --color-surface: var(--color-denim-deep);
+    --color-foreground: var(--color-ecru);
+    --color-muted: #1f2b55;
+    --color-muted-foreground: #aab3d0;
+    --color-border: #2b3a6b;
+    --color-primary: var(--color-ecru);
+    --color-primary-foreground: var(--color-denim-deep);
+    --color-link: var(--color-ecru);
+    --color-accent: #ff5d6e;
+    --color-accent-foreground: var(--color-denim-deep);
+    --color-accent-wash: #3b1a2c;
+    --color-ring: #ff5d6e;
+    --color-highlight: #3b4d85;
+    --color-highlight-foreground: var(--color-ecru);
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+  }
 }
 
 @layer base {
@@ -220,6 +243,104 @@
   .tabular {
     font-variant-numeric: tabular-nums;
   }
+
+  /* Twill, drawn in CSS: the band's texture until the loom has woven it,
+     and its only texture without scripts. */
+  .twill {
+    background-color: var(--color-denim);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgb(255 255 255 / 0.06) 0 1px,
+      transparent 1px 4px
+    );
+  }
+
+  /* The finished edge of the cloth: ecru, a red line, ecru, with the weave
+     showing through as fine ticks. */
+  .selvedge {
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgb(17 26 54 / 0.12) 0 1px,
+        transparent 1px 3px
+      ),
+      linear-gradient(
+        to bottom,
+        var(--color-ecru) 0 3px,
+        var(--color-selvedge) 3px 6px,
+        var(--color-ecru) 6px 100%
+      );
+  }
+}
+
+/* With scripts on, the woven name replaces the heading's own glyphs, which
+   stay in place (transparent) for selection, search and screen readers.
+   Unlayered on purpose, so it wins over the heading's colour utility. */
+.js .woven-title {
+  color: transparent;
+}
+
+/*
+ * The skills loom: each skill row is a weft thread, each role or project
+ * column a warp thread. Unused crossings show the warp passing over the weft
+ * (a small break in the weft); where the skill was used, the weft floats
+ * over the warp, and neighbouring uses join into one long float.
+ */
+@layer components {
+  .loom-cell {
+    position: relative;
+    --loom-weft: var(--color-border);
+  }
+
+  .loom-cell::before,
+  .loom-cell::after {
+    content: "";
+    position: absolute;
+  }
+
+  /* Weft. */
+  .loom-cell::before {
+    inset-inline: 0;
+    top: 50%;
+    height: 2px;
+    translate: 0 -50%;
+    background: var(--loom-weft);
+  }
+
+  /* Warp, crossing over the weft with a hairline of row colour each side. */
+  .loom-cell::after {
+    inset-block: 0;
+    left: 50%;
+    width: 2px;
+    translate: -50% 0;
+    background: var(--color-border);
+    box-shadow:
+      -2px 0 0 var(--loom-row, var(--color-background)),
+      2px 0 0 var(--loom-row, var(--color-background));
+  }
+
+  .loom-float {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    height: 0.625rem;
+    translate: 0 -50%;
+    border-radius: 999px;
+    background: var(--loom-float, var(--color-foreground));
+    box-shadow:
+      inset 0 1.5px 0 rgb(255 255 255 / 0.22),
+      inset 0 -2px 0 rgb(0 0 0 / 0.22);
+  }
+}
+
+/* Light catching the cloth under the pointer. */
+.woven-sheen {
+  background: radial-gradient(
+    24rem circle at var(--sheen-x, -100rem) var(--sheen-y, -100rem),
+    rgb(255 255 255 / 0.28),
+    transparent 70%
+  );
+  mix-blend-mode: soft-light;
 }
 
 /* Article typography, tied to the design tokens. */
@@ -236,14 +357,14 @@
   --tw-prose-quote-borders: var(--color-accent);
   --tw-prose-captions: var(--color-muted-foreground);
   --tw-prose-code: var(--color-foreground);
-  --tw-prose-pre-code: #e6eaed;
-  --tw-prose-pre-bg: #1d2731;
+  --tw-prose-pre-code: #e6e9f2;
+  --tw-prose-pre-bg: #16203d;
   --tw-prose-th-borders: var(--color-border);
   --tw-prose-td-borders: var(--color-border);
 }
 
 .dark .prose {
-  --tw-prose-pre-bg: #0c1115;
+  --tw-prose-pre-bg: #080d1e;
 }
 
 /* Toast notifications (react-toastify) restyled with the tokens. */
@@ -262,7 +383,7 @@
 .Toastify__toast {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  box-shadow: 0 8px 24px -12px rgb(29 39 49 / 0.35);
+  box-shadow: 0 8px 24px -12px rgb(17 26 54 / 0.35);
   font-size: var(--text-sm);
   min-height: 0;
 }
@@ -280,6 +401,21 @@
 
   [data-print="hide"] {
     display: none !important;
+  }
+
+  /* The woven band prints as the plain name in black. */
+  .twill {
+    background: none !important;
+  }
+
+  .twill canvas,
+  .woven-sheen,
+  .selvedge {
+    display: none !important;
+  }
+
+  .woven-title {
+    color: #000 !important;
   }
 
   a {

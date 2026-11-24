@@ -27,11 +27,13 @@ export function ContactConfirmation({ email }: ContactConfirmationProps) {
       <Preview>I received your message and will reply soon.</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
-          <Heading as="h1" style={styles.heading}>
-            {PROFILE.name}
-          </Heading>
-          <Text style={styles.meta}>{PROFILE.role}</Text>
-          <Hr style={styles.ruleStrong} />
+          <Section style={styles.band}>
+            <Heading as="h1" style={styles.heading}>
+              {PROFILE.name}
+            </Heading>
+            <Text style={styles.meta}>{PROFILE.role}</Text>
+          </Section>
+          <Section style={styles.selvedge}>&nbsp;</Section>
           <Text style={styles.text}>Hi,</Text>
           <Text style={styles.text}>
             Thanks for getting in touch. Your message from{" "}

@@ -23,10 +23,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: SITE.colors.paper },
-    { media: "(prefers-color-scheme: dark)", color: SITE.colors.night },
-  ],
+  // The browser chrome matches the denim header in both themes.
+  themeColor: SITE.colors.denimDeep,
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -92,6 +90,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${schibsted.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Marks the page as scripted before first paint, so the woven name
+            replaces the heading's glyphs without a flash. */}
+        <script
+          id="js-flag"
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js')",
+          }}
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"

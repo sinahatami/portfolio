@@ -1,16 +1,21 @@
 import type { CSSProperties } from "react";
 
 /**
- * Email clients need inline styles. These follow the site: slate on white,
- * a heavy tight heading, a 2px slate rule under it, 1px rules after. No
- * cards or tinted boxes. Web fonts are unreliable in mail, so the system
- * face stands in for Schibsted Grotesk.
+ * Email clients need inline styles. These follow the site: a denim block
+ * with the heading in ecru, a selvedge line (ecru, red, ecru) under it, then
+ * indigo ink on white with 1px rules. No cards or tinted boxes in the text.
+ * Web fonts are unreliable in mail, so the system face stands in for
+ * Schibsted Grotesk.
  */
 const palette = {
   paper: "#ffffff",
-  ink: "#1d2731",
-  muted: "#56616c",
-  rule: "#d8dce0",
+  ink: "#16203d",
+  muted: "#525d7c",
+  rule: "#d7dcea",
+  denim: "#1a2850",
+  ecru: "#efe8d8",
+  onDenim: "#aab3d0",
+  selvedge: "#c8102e",
 };
 
 const font =
@@ -29,8 +34,13 @@ export const styles = {
     maxWidth: "560px",
     padding: "0 24px",
   },
+  /** The cloth: the heading and its meta line on denim. */
+  band: {
+    backgroundColor: palette.denim,
+    padding: "28px 28px 26px",
+  },
   heading: {
-    color: palette.ink,
+    color: palette.ecru,
     fontSize: "30px",
     fontWeight: 800,
     letterSpacing: "-0.03em",
@@ -38,16 +48,21 @@ export const styles = {
     margin: 0,
   },
   meta: {
-    color: palette.muted,
+    color: palette.onDenim,
     fontSize: "15px",
     lineHeight: "24px",
     margin: "6px 0 0",
   },
-  /** Opens the content, as the 2px rule opens every list on the site. */
-  ruleStrong: {
-    border: "none",
-    borderTop: `2px solid ${palette.ink}`,
-    margin: "20px 0 24px",
+  metaLink: { color: palette.ecru, textDecoration: "underline" },
+  /** The cloth's finished edge: ecru, a red line, ecru. */
+  selvedge: {
+    backgroundColor: palette.selvedge,
+    borderTop: `3px solid ${palette.ecru}`,
+    borderBottom: `4px solid ${palette.ecru}`,
+    fontSize: 0,
+    height: "3px",
+    lineHeight: "3px",
+    margin: "0 0 28px",
   },
   text: {
     color: palette.ink,
@@ -64,9 +79,9 @@ export const styles = {
     whiteSpace: "pre-wrap",
   },
   button: {
-    backgroundColor: palette.ink,
+    backgroundColor: palette.denim,
     borderRadius: "6px",
-    color: "#ffffff",
+    color: palette.ecru,
     display: "inline-block",
     fontSize: "15px",
     fontWeight: 600,
@@ -84,6 +99,5 @@ export const styles = {
     lineHeight: "20px",
     margin: 0,
   },
-  link: { color: palette.ink, textDecoration: "underline" },
   mutedLink: { color: palette.muted, textDecoration: "underline" },
 } satisfies Record<string, CSSProperties>;

@@ -9,7 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/",
     display: "standalone",
     background_color: SITE.colors.paper,
-    theme_color: SITE.colors.ink,
+    theme_color: SITE.colors.denimDeep,
     // The mark on its rounded tile, and full-bleed versions that Android
     // crops to its own shape (the mark stays inside the safe circle).
     icons: [

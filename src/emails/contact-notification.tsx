@@ -7,6 +7,7 @@ import {
   Html,
   Link,
   Preview,
+  Section,
   Text,
 } from "@react-email/components";
 import { PROFILE } from "@/content/profile";
@@ -28,16 +29,18 @@ export function ContactNotification({
       <Preview>New message from {email}</Preview>
       <Body style={styles.body}>
         <Container style={styles.container}>
-          <Heading as="h1" style={styles.heading}>
-            New message
-          </Heading>
-          <Text style={styles.meta}>
-            From{" "}
-            <Link href={`mailto:${email}`} style={styles.link}>
-              {email}
-            </Link>
-          </Text>
-          <Hr style={styles.ruleStrong} />
+          <Section style={styles.band}>
+            <Heading as="h1" style={styles.heading}>
+              New message
+            </Heading>
+            <Text style={styles.meta}>
+              From{" "}
+              <Link href={`mailto:${email}`} style={styles.metaLink}>
+                {email}
+              </Link>
+            </Text>
+          </Section>
+          <Section style={styles.selvedge}>&nbsp;</Section>
           <Text style={styles.message}>{message}</Text>
           <Hr style={styles.rule} />
           <Text style={styles.footer}>

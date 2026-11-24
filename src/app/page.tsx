@@ -78,7 +78,7 @@ export default async function HomePage() {
       <PageSection
         id="skills"
         title="Skills"
-        description="Each dot is a role or project that used the skill"
+        description="Each bar is a role or project that used the skill"
         hideInPrint
       >
         <SkillsExplorer

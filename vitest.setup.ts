@@ -27,5 +27,14 @@ class MockIntersectionObserver {
 }
 vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
 
+// jsdom has no layout, so a ResizeObserver never fires (the woven name then
+// keeps its heading text and never reaches for a canvas).
+class MockResizeObserver {
+  observe = vi.fn();
+  unobserve = vi.fn();
+  disconnect = vi.fn();
+}
+vi.stubGlobal("ResizeObserver", MockResizeObserver);
+
 window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
 Element.prototype.scrollIntoView = vi.fn();
