@@ -8,6 +8,7 @@ interface EmptyStateProps {
   className?: string;
 }
 
+/** Stands in for an empty list: the list's opening rule, then what to do. */
 export function EmptyState({
   title,
   description,
@@ -15,14 +16,9 @@ export function EmptyState({
   className,
 }: EmptyStateProps) {
   return (
-    <div
-      className={cn(
-        "border-border rounded-lg border border-dashed px-6 py-10",
-        className
-      )}
-    >
-      <p className="text-foreground font-semibold">{title}</p>
-      <div className="text-muted-foreground mt-1 max-w-prose text-sm">
+    <div className={cn("border-foreground border-t-2 pt-5 pb-2", className)}>
+      <p className="text-foreground text-lg font-semibold">{title}</p>
+      <div className="text-muted-foreground mt-1 max-w-prose">
         {description}
       </div>
       {action ? <div className="mt-4">{action}</div> : null}

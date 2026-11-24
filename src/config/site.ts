@@ -14,13 +14,10 @@ export const SITE = {
   /** Brand colours shared by metadata, the manifest and the OG image. */
   colors: {
     paper: "#ffffff",
-    ink: "#0f1e3d",
-    night: "#0a1226",
-    muted: "#586379",
-    rule: "#dde2ea",
-    signal: "#ffcd00",
-    industry: "#0072ce",
-    research: "#c8007a",
-    study: "#00855a",
+    ink: "#1d2731",
+    night: "#12181e",
+    muted: "#56616c",
+    rule: "#d8dce0",
+    accent: "#c8102e",
   },
 } as const;

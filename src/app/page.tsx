@@ -1,9 +1,9 @@
+import { CareerTable } from "@/components/organisms/career-table";
 import { ContactBlock } from "@/components/organisms/contact-block";
 import { Hero } from "@/components/organisms/hero";
 import { ProjectIndex } from "@/components/organisms/project-index";
 import { RecommendationList } from "@/components/organisms/recommendation-list";
 import { RepositorySummary } from "@/components/organisms/repository-summary";
-import { RouteStrip } from "@/components/organisms/route-strip";
 import { SkillsExplorer } from "@/components/organisms/skills-explorer";
 import { PageSection } from "@/components/templates/page-section";
 import {
@@ -14,19 +14,17 @@ import {
   RECOMMENDATIONS,
   SKILL_GROUPS,
 } from "@/content";
-import {
-  buildCareerTimeline,
-  buildRouteStops,
-  educationToCareerEntries,
-  experienceToCareerEntries,
-} from "@/lib/career";
+import { buildRouteStops } from "@/lib/career";
 import { toYearMonth } from "@/lib/dates";
 import { attachRepoActivity, unfeaturedRepos } from "@/lib/projects";
-import { withSkillUsage } from "@/lib/skills";
+import { resolveProofNotes } from "@/lib/proof";
+import { evidenceColumns, rankSkills, withSkillUsage } from "@/lib/skills";
 import { getGitHubActivityService } from "@/server/container";
 
 /** Regenerate hourly so live GitHub data and "today" stay fresh. */
 export const revalidate = 3600;
+
+const count = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
 /**
  * Page = composition root for the UI: it reads content and live data,
@@ -35,17 +33,12 @@ export const revalidate = 3600;
  */
 export default async function HomePage() {
   const now = toYearMonth(new Date());
-  const timeline = buildCareerTimeline(
-    [
-      ...experienceToCareerEntries(EXPERIENCE),
-      ...educationToCareerEntries(EDUCATION),
-    ],
-    now
+  const stops = buildRouteStops(EXPERIENCE, EDUCATION);
+  const firstYear = Math.min(
+    ...stops.map((stop) => Number(stop.period.start.slice(0, 4)))
   );
-  const skills = withSkillUsage(SKILL_GROUPS, {
-    experience: EXPERIENCE,
-    projects: PROJECTS,
-  });
+  const sources = { experience: EXPERIENCE, projects: PROJECTS };
+  const skills = rankSkills(withSkillUsage(SKILL_GROUPS, sources));
   const github = PROFILE.socials.find((social) => social.id === "github");
 
   // GitHub failures resolve to null; projects then render without live data.
@@ -54,35 +47,23 @@ export default async function HomePage() {
 
   return (
     <>
-      <Hero profile={PROFILE} timeline={timeline} now={now} />
+      <Hero
+        profile={PROFILE}
+        notes={resolveProofNotes(PROFILE.proof, RECOMMENDATIONS)}
+      />
 
       <PageSection
         id="experience"
-        title="Route"
-        description="Roles and degrees, newest first"
+        title="Work"
+        description={`${count(EXPERIENCE.length, "role")} and ${count(EDUCATION.length, "degree")} since ${firstYear}`}
       >
-        <RouteStrip
-          stops={buildRouteStops(EXPERIENCE, EDUCATION)}
-          now={now}
-          nextStop={
-            PROFILE.availability.open
-              ? {
-                  title: "Your team",
-                  description:
-                    "Next stop: open to software and ML engineering roles",
-                  href: "#contact",
-                }
-              : undefined
-          }
-        />
+        <CareerTable stops={stops} now={now} />
       </PageSection>
 
       <PageSection
         id="projects"
         title="Projects"
         description="Every public repository, with live GitHub data"
-        tone="band"
-        line="research"
       >
         <ProjectIndex projects={attachRepoActivity(PROJECTS, repos)} />
         <div data-print="hide">
@@ -97,29 +78,25 @@ export default async function HomePage() {
       <PageSection
         id="skills"
         title="Skills"
-        description="Select one to see the roles and projects that used it"
-        line="study"
+        description="Each dot is a role or project that used the skill"
         hideInPrint
       >
-        <SkillsExplorer groups={skills} />
+        <SkillsExplorer
+          skills={skills.used}
+          unused={skills.unused}
+          columns={evidenceColumns(skills.used, sources)}
+        />
       </PageSection>
 
       <PageSection
         id="recommendations"
         title="References"
         description="From a professor, a senior colleague and a CEO"
-        tone="band"
       >
         <RecommendationList recommendations={RECOMMENDATIONS} />
       </PageSection>
 
-      <PageSection
-        id="contact"
-        title="Get in touch"
-        tone="board"
-        line="signal"
-        hideInPrint
-      >
+      <PageSection id="contact" title="Get in touch" hideInPrint>
         <ContactBlock profile={PROFILE} />
       </PageSection>
     </>

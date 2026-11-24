@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Icon, Roundel } from "@/components/atoms";
-import { ChoiceChips, EmptyState, TagList } from "@/components/molecules";
-import type { ProjectDomain } from "@/domain/portfolio";
+import { Button, Icon, TextLink } from "@/components/atoms";
+import { ChoiceChips, EmptyState } from "@/components/molecules";
+import type { YearMonth } from "@/domain/portfolio";
 import { formatYearMonth } from "@/lib/dates";
 import {
   PROJECT_DOMAIN_LABELS,
@@ -12,7 +12,6 @@ import {
   type ProjectFilter,
   type ProjectWithActivity,
 } from "@/lib/projects";
-import { cn } from "@/lib/utils";
 
 interface ProjectIndexProps {
   projects: ProjectWithActivity[];
@@ -55,11 +54,7 @@ export function ProjectIndex({
   const matching = filterProjects(projects, filter);
   const visible = expanded ? matching : matching.slice(0, initialCount);
   const hiddenCount = matching.length - visible.length;
-  const options = projectFilterOptions(projects).map((option) =>
-    option.value === "all"
-      ? option
-      : { ...option, leading: <Roundel domain={option.value} /> }
-  );
+  const options = projectFilterOptions(projects);
 
   return (
     <div>
@@ -71,7 +66,7 @@ export function ProjectIndex({
           setFilter(value);
           setExpanded(false);
         }}
-        className="mb-8"
+        className="mb-6"
       />
 
       {visible.length === 0 ? (
@@ -80,22 +75,22 @@ export function ProjectIndex({
           description="Choose another area to see more work."
         />
       ) : (
-        <ul className="grid gap-5 md:gap-6 lg:grid-cols-2">
+        <ul className="border-foreground border-t-2">
           {visible.map((project) => (
             <li
               key={project.id}
               id={`project-${project.id}`}
               tabIndex={-1}
-              className="ticket-shadow focus-visible:outline-ring rounded-lg outline-offset-4"
+              className="border-border target:animate-mark focus-visible:outline-ring border-b outline-offset-2"
             >
-              <ProjectTicket project={project} />
+              <ProjectRow project={project} />
             </li>
           ))}
         </ul>
       )}
 
       {hiddenCount > 0 || expanded ? (
-        <div className="mt-10 flex justify-center" data-print="hide">
+        <div className="mt-6" data-print="hide">
           <Button
             variant="secondary"
             onClick={() => setExpanded((value) => !value)}
@@ -114,104 +109,71 @@ export function ProjectIndex({
   );
 }
 
-const DOMAIN_STRIPE: Record<ProjectDomain, string> = {
-  web: "bg-domain-web",
-  ml: "bg-domain-ml",
-  data: "bg-domain-data",
-  systems: "bg-domain-systems",
-};
-
 /**
- * A project as a transit ticket: the route stripe in its areas' colours, the
- * fare details, and a tear-off stub with live GitHub data and the links.
+ * A project as one row: what it is, what it does and what it's built with,
+ * then the live GitHub data and the links.
  */
-function ProjectTicket({ project }: { project: ProjectWithActivity }) {
+function ProjectRow({ project }: { project: ProjectWithActivity }) {
   const areas = project.domains
     .map((domain) => PROJECT_DOMAIN_LABELS[domain])
     .join(", ");
 
   return (
-    <article className="ticket bg-ticket flex h-full flex-col rounded-lg [--stub:4.25rem]">
-      <div aria-hidden className="flex h-2 overflow-hidden rounded-t-lg">
-        {project.domains.map((domain) => (
-          <span key={domain} className={cn("flex-1", DOMAIN_STRIPE[domain])} />
-        ))}
+    <article className="grid gap-x-8 gap-y-3 py-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.75fr)_9.5rem] md:py-7">
+      <div>
+        <h3 className="type-title text-[1.375rem] leading-tight text-balance">
+          {project.title}
+        </h3>
+        <p className="text-muted-foreground mt-1 text-[0.9375rem]">
+          <span className="sr-only">Areas: </span>
+          {areas}
+        </p>
       </div>
 
-      <div className="flex flex-1 flex-col px-6 pt-5 pb-6">
-        <div className="flex items-start justify-between gap-4">
-          <h3 className="type-title text-[1.65rem] leading-tight">
-            {project.title}
-          </h3>
-          <p className="flex shrink-0 gap-1 pt-0.5">
-            <span className="sr-only">Areas: {areas}</span>
-            {project.domains.map((domain) => (
-              <Roundel key={domain} domain={domain} />
-            ))}
-          </p>
-        </div>
-        <p className="mt-2 max-w-[62ch]">{project.description}</p>
-        <TagList
-          items={project.stack}
-          label={`Built with`}
-          className="mt-auto pt-5"
-        />
+      <div className="max-w-[62ch]">
+        <p>{project.description}</p>
+        <p className="text-muted-foreground mt-3 text-sm">
+          <span className="sr-only">Built with: </span>
+          {project.stack.join(", ")}
+        </p>
       </div>
 
-      <div className="before:border-border relative flex h-(--stub) shrink-0 items-center justify-between gap-4 px-6 text-sm before:absolute before:inset-x-5 before:top-0 before:border-t-2 before:border-dashed">
+      <div className="text-[0.9375rem] md:text-right">
         {project.activity ? (
-          <p className="min-w-0 leading-tight">
+          <p className="text-muted-foreground leading-snug">
             {project.activity.language ? (
-              <span className="block truncate font-semibold">
+              <span className="text-foreground block font-medium">
                 {project.activity.language}
               </span>
             ) : null}
-            <span className="text-muted-foreground">
-              Updated{" "}
-              <time dateTime={project.activity.updatedAt}>
-                {formatYearMonth(
-                  project.activity.updatedAt.slice(
-                    0,
-                    7
-                  ) as `${number}-${number}`
-                )}
-              </time>
-            </span>
+            Updated{" "}
+            <time dateTime={project.activity.updatedAt}>
+              {formatYearMonth(
+                project.activity.updatedAt.slice(0, 7) as YearMonth
+              )}
+            </time>
           </p>
-        ) : (
-          <span />
-        )}
-        <div className="flex shrink-0 gap-2">
-          <Button asChild variant="secondary" size="sm">
-            <a
-              href={project.sourceUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon name="github" />
-              Code
-              <span className="sr-only">
-                {" "}
-                for {project.title} (opens in a new tab)
-              </span>
-            </a>
-          </Button>
+        ) : null}
+        <p className="mt-2 flex flex-wrap gap-x-5 gap-y-1 md:justify-end">
+          <TextLink
+            href={project.sourceUrl}
+            showExternalIcon={false}
+            className="font-medium"
+          >
+            Source code
+            <span className="sr-only"> for {project.title}</span>
+          </TextLink>
           {project.liveUrl ? (
-            <Button asChild variant="primary" size="sm">
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Live
-                <span className="sr-only">
-                  {" "}
-                  version of {project.title} (opens in a new tab)
-                </span>
-              </a>
-            </Button>
+            <TextLink
+              href={project.liveUrl}
+              showExternalIcon={false}
+              className="font-medium"
+            >
+              Live site
+              <span className="sr-only"> of {project.title}</span>
+            </TextLink>
           ) : null}
-        </div>
+        </p>
       </div>
     </article>
   );

@@ -1,4 +1,3 @@
-import { StatusDot } from "@/components/atoms";
 import type { Profile } from "@/domain/portfolio";
 
 interface AvailabilityProps {
@@ -8,9 +7,6 @@ interface AvailabilityProps {
 export function Availability({ availability }: AvailabilityProps) {
   if (!availability.open) return null;
   return (
-    <p className="text-foreground inline-flex items-center gap-2 text-sm font-medium">
-      <StatusDot />
-      {availability.label}
-    </p>
+    <p className="text-foreground text-sm font-medium">{availability.label}</p>
   );
 }

@@ -2,12 +2,15 @@ import type { Metadata } from "next";
 import { Container } from "@/components/atoms";
 import { EmptyState } from "@/components/molecules";
 import { PostList } from "@/components/organisms/post-list";
+import { PageIntro } from "@/components/templates/page-intro";
 import { getBlogRepository } from "@/server/container";
+
+const DESCRIPTION =
+  "Notes on web performance, React architecture and applied machine learning.";
 
 export const metadata: Metadata = {
   title: "Writing",
-  description:
-    "Notes on web performance, React architecture and applied machine learning.",
+  description: DESCRIPTION,
 };
 
 export default function BlogPage() {
@@ -15,18 +18,8 @@ export default function BlogPage() {
 
   return (
     <>
-      <div className="board">
-        <Container className="py-12 md:py-16">
-          <h1 className="type-display text-6xl leading-none md:text-7xl">
-            Writing
-          </h1>
-          <p className="text-muted-foreground mt-4 max-w-2xl text-xl leading-8">
-            Notes on web performance, React architecture and applied machine
-            learning.
-          </p>
-        </Container>
-      </div>
-      <Container className="py-12 md:py-16">
+      <PageIntro title="Writing" description={DESCRIPTION} />
+      <Container className="mt-10 md:mt-14">
         {posts.length > 0 ? (
           <PostList posts={posts} />
         ) : (

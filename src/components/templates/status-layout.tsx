@@ -1,28 +1,32 @@
 import type { ReactNode } from "react";
 import { Container } from "@/components/atoms";
+import { PageIntro } from "./page-intro";
 
 interface StatusLayoutProps {
-  code: string;
   title: string;
+  /** What happened and what to do about it. */
   description: ReactNode;
   actions: ReactNode;
+  /** Optional content under the actions, e.g. places to go instead. */
+  children?: ReactNode;
 }
 
-/** Layout for not-found and error states. */
+/** Layout for not-found and error states, on the standalone page grid. */
 export function StatusLayout({
-  code,
   title,
   description,
   actions,
+  children,
 }: StatusLayoutProps) {
   return (
-    <Container className="flex min-h-[60vh] flex-col justify-center py-20">
-      <p className="text-muted-foreground tabular text-sm">{code}</p>
-      <h1 className="type-display mt-3 text-4xl md:text-5xl">{title}</h1>
-      <div className="text-muted-foreground mt-4 max-w-prose text-lg">
-        {description}
-      </div>
-      <div className="mt-8 flex flex-wrap gap-3">{actions}</div>
-    </Container>
+    <>
+      <PageIntro title={title} description={description} />
+      <Container className="mt-8 md:mt-10">
+        <div className="flex flex-wrap items-center gap-3" data-print="hide">
+          {actions}
+        </div>
+        {children ? <div className="mt-16 md:mt-24">{children}</div> : null}
+      </Container>
+    </>
   );
 }

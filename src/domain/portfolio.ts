@@ -22,11 +22,34 @@ export interface SocialProfile {
   url: string;
 }
 
+/**
+ * The source behind a phrase in the headline, shown as a numbered note under
+ * it. `after` is the exact headline text the note marker follows.
+ */
+export type ProofNote =
+  | {
+      kind: "fact";
+      after: string;
+      /** The source in a few words, for tight spaces such as the social image. */
+      cite: string;
+      title: string;
+      body: string;
+      link: { label: string; href: string };
+    }
+  | {
+      kind: "reference";
+      after: string;
+      /** A `Recommendation.id`; the note quotes its highlight. */
+      recommendationId: string;
+    };
+
 export interface Profile {
   name: string;
   initials: string;
   role: string;
   headline: string;
+  /** Sources for the headline's claims, in reading order. */
+  proof: ProofNote[];
   intro: string;
   /** Plain-text description used for SEO and social cards. */
   description: string;

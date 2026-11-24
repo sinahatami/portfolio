@@ -1,7 +1,7 @@
-import { Button, Icon, TextLink } from "@/components/atoms";
+import { TextLink } from "@/components/atoms";
 import type { GitHubActivity, Repo } from "@/domain/github";
 
-/** Categorical series tokens, theme-aware via CSS variables. */
+/** Sequential slate shades, theme-aware via CSS variables. */
 const seriesColor = (index: number) => `var(--color-series-${(index % 5) + 1})`;
 
 interface RepositorySummaryProps {
@@ -12,29 +12,32 @@ interface RepositorySummaryProps {
 }
 
 /**
- * Closes the projects section with the live GitHub picture: repository count,
- * languages drawn as one segmented line, and anything not featured above.
+ * Closes the projects section with the live GitHub picture: repository
+ * count, repositories by language as one bar, and anything not listed above.
  */
 export function RepositorySummary({
   activity,
   others,
   profileUrl,
 }: RepositorySummaryProps) {
+  const total =
+    activity?.languages.reduce((sum, language) => sum + language.repos, 0) ?? 0;
+
   return (
-    <div className="board board-map mt-12 grid gap-6 overflow-hidden rounded-lg p-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:p-8">
+    <div className="bg-muted mt-10 grid gap-x-12 gap-y-5 rounded-md px-5 py-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:px-7">
       <div className="min-w-0">
         {activity ? (
           <>
-            <h3 className="type-title text-2xl md:text-3xl">
-              <span className="tabular text-signal">
-                {activity.profile.publicRepos}
-              </span>{" "}
+            <h3 className="type-title text-xl md:text-2xl">
+              <span className="tabular">{activity.profile.publicRepos}</span>{" "}
               public repositories since {activity.profile.memberSince}
             </h3>
             {activity.languages.length > 0 ? (
               <>
-                {/* Languages as one line, with a station at each change */}
-                <div className="mt-5 flex h-3 items-center" aria-hidden>
+                <div
+                  aria-hidden
+                  className="mt-4 flex h-2 max-w-xl gap-0.5 overflow-hidden rounded-full"
+                >
                   {activity.languages.map((language, index) => (
                     <span
                       key={language.name}
@@ -42,17 +45,12 @@ export function RepositorySummary({
                         flexGrow: language.repos,
                         backgroundColor: seriesColor(index),
                       }}
-                      className="relative h-full first:rounded-l-full last:rounded-r-full"
-                    >
-                      {index > 0 ? (
-                        <span className="border-board-foreground bg-board absolute top-1/2 left-0 z-10 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px]" />
-                      ) : null}
-                    </span>
+                    />
                   ))}
                 </div>
                 <ul
                   className="text-muted-foreground mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm"
-                  aria-label="Repositories by primary language"
+                  aria-label={`Repositories by primary language, ${total} in all`}
                 >
                   {activity.languages.map((language, index) => (
                     <li
@@ -61,11 +59,13 @@ export function RepositorySummary({
                     >
                       <span
                         aria-hidden
-                        className="size-3 rounded-full"
+                        className="size-2.5 rounded-full"
                         style={{ backgroundColor: seriesColor(index) }}
                       />
                       {language.name}
-                      <span className="tabular">{language.repos}</span>
+                      <span className="tabular text-foreground font-medium">
+                        {language.repos}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -87,7 +87,7 @@ export function RepositorySummary({
           </>
         ) : (
           <>
-            <h3 className="type-title text-2xl">More on GitHub</h3>
+            <h3 className="type-title text-xl">More on GitHub</h3>
             <p className="text-muted-foreground mt-1">
               Live repository data didn&apos;t load this time. Every project
               above links to its source.
@@ -95,13 +95,13 @@ export function RepositorySummary({
           </>
         )}
       </div>
-      <Button asChild size="lg">
-        <a href={profileUrl} target="_blank" rel="noopener noreferrer">
-          <Icon name="github" />
-          Open GitHub profile
-          <span className="sr-only"> (opens in a new tab)</span>
-        </a>
-      </Button>
+      <TextLink
+        href={profileUrl}
+        showExternalIcon={false}
+        className="font-semibold"
+      >
+        GitHub profile
+      </TextLink>
     </div>
   );
 }

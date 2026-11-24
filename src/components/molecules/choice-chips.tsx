@@ -1,14 +1,11 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export interface ChoiceOption<T extends string> {
   value: T;
   label: string;
   count?: number;
-  /** Decorative mark before the label, e.g. a line roundel. */
-  leading?: ReactNode;
 }
 
 interface ChoiceChipsProps<T extends string> {
@@ -19,7 +16,7 @@ interface ChoiceChipsProps<T extends string> {
   className?: string;
 }
 
-/** Single-select toggle group (e.g. project filters). */
+/** Single-select toggle group (e.g. project filters), set as a segmented row. */
 export function ChoiceChips<T extends string>({
   label,
   options,
@@ -31,7 +28,7 @@ export function ChoiceChips<T extends string>({
     <div
       role="group"
       aria-label={label}
-      className={cn("flex flex-wrap gap-2", className)}
+      className={cn("flex flex-wrap gap-1.5", className)}
     >
       {options.map((option) => {
         const selected = option.value === value;
@@ -42,20 +39,17 @@ export function ChoiceChips<T extends string>({
             aria-pressed={selected}
             onClick={() => onChange(option.value)}
             className={cn(
-              "font-display inline-flex h-10 items-center gap-2 rounded-full border-2 text-base font-semibold transition-colors",
-              option.leading ? "pr-3.5 pl-1" : "px-3.5",
+              "inline-flex h-9 items-center gap-2 rounded-md border px-3 text-[0.9375rem] font-medium transition-colors",
               selected
                 ? "border-foreground bg-foreground text-background"
-                : "border-border text-foreground hover:border-foreground/50"
+                : "border-border text-foreground hover:border-foreground/60"
             )}
           >
-            {option.leading}
             {option.label}
             {option.count !== undefined ? (
               <span
                 className={cn(
-                  "tabular text-xs",
-                  "font-sans font-normal",
+                  "tabular text-sm font-normal",
                   selected ? "text-background/70" : "text-muted-foreground"
                 )}
               >

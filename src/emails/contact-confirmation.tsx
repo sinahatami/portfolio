@@ -30,7 +30,8 @@ export function ContactConfirmation({ email }: ContactConfirmationProps) {
           <Heading as="h1" style={styles.heading}>
             {PROFILE.name}
           </Heading>
-          <Text style={styles.subheading}>{PROFILE.role}</Text>
+          <Text style={styles.meta}>{PROFILE.role}</Text>
+          <Hr style={styles.ruleStrong} />
           <Text style={styles.text}>Hi,</Text>
           <Text style={styles.text}>
             Thanks for getting in touch. Your message from{" "}
@@ -38,7 +39,7 @@ export function ContactConfirmation({ email }: ContactConfirmationProps) {
             within a day.
           </Text>
           {github ? (
-            <Section style={{ margin: "24px 0" }}>
+            <Section style={{ marginTop: "24px" }}>
               <Link href={github.url} style={styles.button}>
                 See my work on GitHub
               </Link>
@@ -48,7 +49,7 @@ export function ContactConfirmation({ email }: ContactConfirmationProps) {
           <Text style={styles.footer}>
             {PROFILE.name}, {PROFILE.location.label}
             <br />
-            <Link href={PROFILE.website} style={styles.link}>
+            <Link href={PROFILE.website} style={styles.mutedLink}>
               {new URL(PROFILE.website).hostname}
             </Link>
           </Text>

@@ -6,8 +6,31 @@ export const PROFILE: Profile = {
   role: "Software engineer and data scientist",
   headline:
     "I build web platforms and the machine-learning systems behind them.",
+  proof: [
+    {
+      kind: "fact",
+      after: "web platforms",
+      cite: "Iran EIT",
+      title: "Iran EIT, 2021 to 2022",
+      body: "A micro-frontend platform of 25+ modules, handling more than 100,000 insurance transactions a day.",
+      link: { label: "See the role", href: "#experience-iran-eit" },
+    },
+    {
+      kind: "fact",
+      after: "machine-learning systems",
+      cite: "HoldsUp and ChangeRadar",
+      title: "HoldsUp, ChangeRadar and commensal activity recognition",
+      body: "Checking statistical claims against official data, tracing the impact of code changes with retrieval, and recognising activities from video.",
+      link: { label: "See the projects", href: "#projects" },
+    },
+    {
+      kind: "reference",
+      after: "behind them.",
+      recommendationId: "payam-jabbari",
+    },
+  ],
   intro:
-    "Four years shipping production software: ERP suites for government and academic institutions, then a micro-frontend platform handling more than 100,000 insurance transactions a day. From 2022 to 2026 I studied Data Science & AI at the University of Genoa, where I also worked on activity-recognition research at the hAppI Lab.",
+    "Four years of production software, a master's in data science and AI from the University of Genoa, and research on activity recognition at the hAppI Lab.",
   description:
     "Sina Hatami is a software engineer and data scientist in Genoa, Italy, building scalable web platforms and machine-learning systems with React, Next.js, Python and TensorFlow.",
   location: {

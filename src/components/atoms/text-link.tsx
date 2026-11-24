@@ -29,8 +29,8 @@ export function TextLink({
   const classes = cn(
     "inline-flex items-baseline gap-0.5 transition-colors",
     tone === "inline"
-      ? "text-link decoration-link/35 hover:decoration-link underline underline-offset-[0.2em]"
-      : "text-foreground hover:text-link",
+      ? "text-link decoration-link/35 hover:text-accent hover:decoration-accent underline decoration-1 underline-offset-[0.22em]"
+      : "text-foreground hover:text-accent",
     className
   );
 

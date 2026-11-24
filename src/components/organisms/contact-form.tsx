@@ -102,7 +102,7 @@ export function ContactForm() {
       </FormField>
 
       <div className="flex flex-wrap items-center gap-4">
-        <Button type="submit" size="lg" variant="signal" disabled={pending}>
+        <Button type="submit" size="lg" disabled={pending}>
           <Icon
             name={pending ? "loader" : "mail"}
             className={cn(pending && "animate-spin")}
@@ -119,7 +119,7 @@ export function ContactForm() {
         >
           {result.status === "success" ? (
             <span className="inline-flex items-center gap-1.5">
-              <Icon name="check" className="text-lane-study size-4" />
+              <Icon name="check" className="size-4" />
               {result.message}
             </span>
           ) : (

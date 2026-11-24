@@ -1,11 +1,7 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
-import {
-  Barlow,
-  Barlow_Semi_Condensed,
-  JetBrains_Mono,
-} from "next/font/google";
+import { JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
 import type { ReactNode } from "react";
 import { SiteShell } from "@/components/templates/site-shell";
 import { siteEnv } from "@/config/env";
@@ -13,17 +9,10 @@ import { SITE } from "@/config/site";
 import { PROFILE, SKILL_GROUPS } from "@/content";
 import "./globals.css";
 
-const barlow = Barlow({
+const schibsted = Schibsted_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-barlow",
-  display: "swap",
-});
-
-const barlowCondensed = Barlow_Semi_Condensed({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-barlow-condensed",
+  style: ["normal", "italic"],
+  variable: "--font-schibsted",
   display: "swap",
 });
 
@@ -100,7 +89,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${barlow.variable} ${barlowCondensed.variable} ${jetbrainsMono.variable}`}
+      className={`${schibsted.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
       <body>

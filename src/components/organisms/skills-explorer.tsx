@@ -1,141 +1,233 @@
 "use client";
 
-import { useState } from "react";
-import { TextLink } from "@/components/atoms";
-import type { SkillGroupWithUsage, SkillWithUsage } from "@/lib/skills";
+import { Fragment, useState } from "react";
+import { Button, Icon, TextLink } from "@/components/atoms";
+import type { EvidenceColumn, RankedSkill, SkillWithUsage } from "@/lib/skills";
 import { cn } from "@/lib/utils";
 
 interface SkillsExplorerProps {
-  groups: SkillGroupWithUsage[];
+  /** Skills with evidence, most-used first. */
+  skills: RankedSkill[];
+  /** Skills in the toolkit that no listed role or project uses yet. */
+  unused: string[];
+  columns: { roles: EvidenceColumn[]; projects: EvidenceColumn[] };
+  /** Rows shown before "Show all". */
+  initialCount?: number;
 }
-
-const evidenceCount = (skill: SkillWithUsage) =>
-  skill.usage.roles.length + skill.usage.projects.length;
 
 const plural = (count: number, word: string) =>
   `${count} ${word}${count === 1 ? "" : "s"}`;
 
 /**
- * Skills as evidence: choosing a skill shows, on a departure board, the roles
- * and projects that used it, instead of self-rated percentages.
+ * Skills as evidence: a matrix of skills against the roles and projects that
+ * used them. Choosing a skill lists that evidence with links underneath.
  */
-export function SkillsExplorer({ groups }: SkillsExplorerProps) {
-  const [selected, setSelected] = useState<{
-    group: string;
-    skill: SkillWithUsage;
-  } | null>(() => {
-    const first = groups[0];
-    const skill = first?.skills.find((s) => evidenceCount(s) > 0);
-    return first && skill ? { group: first.id, skill } : null;
-  });
+export function SkillsExplorer({
+  skills,
+  unused,
+  columns,
+  initialCount = 12,
+}: SkillsExplorerProps) {
+  const [selected, setSelected] = useState(skills[0]?.name ?? null);
+  const [expanded, setExpanded] = useState(false);
+  const rows = expanded ? skills : skills.slice(0, initialCount);
+  const current = skills.find((skill) => skill.name === selected);
+  const groups = [
+    { id: "roles", label: "Roles", items: columns.roles },
+    { id: "projects", label: "Projects", items: columns.projects },
+  ].filter((group) => group.items.length > 0);
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[minmax(0,1.45fr)_minmax(20rem,1fr)] lg:gap-14">
-      <div className="grid content-start gap-9">
-        {groups.map((group) => (
-          <div key={group.id}>
-            <h3 className="type-title text-xl">{group.title}</h3>
-            <ul className="mt-3 flex flex-wrap gap-2" aria-label={group.title}>
-              {group.skills.map((skill) => {
-                const count = evidenceCount(skill);
-                const isSelected =
-                  selected?.group === group.id &&
-                  selected.skill.name === skill.name;
-                return (
-                  <li key={skill.name}>
+    <div>
+      <div className="relative -mx-5 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0">
+        <table className="border-collapse text-[0.9375rem]">
+          <caption className="sr-only">
+            Skills, and the roles and projects that used each one
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col" className="bg-background sticky left-0 z-10">
+                <span className="sr-only">Skill</span>
+              </th>
+              <th scope="col">
+                <span className="sr-only">Uses</span>
+              </th>
+              {groups.map((group, index) => (
+                <Fragment key={group.id}>
+                  {index > 0 ? <td /> : null}
+                  {group.items.map((column) => (
+                    <th
+                      key={column.id}
+                      scope="col"
+                      title={column.title}
+                      className="w-9 min-w-9 p-0 align-bottom font-normal"
+                    >
+                      <div className="relative h-36">
+                        <span className="text-muted-foreground absolute bottom-1 left-1/2 w-[10.5rem] origin-bottom-left -rotate-[55deg] truncate text-left text-sm">
+                          {column.label}
+                        </span>
+                      </div>
+                    </th>
+                  ))}
+                </Fragment>
+              ))}
+            </tr>
+            <tr>
+              <td className="bg-background sticky left-0 z-10" />
+              <td />
+              {groups.map((group, index) => (
+                <Fragment key={group.id}>
+                  {index > 0 ? <td className="w-5" /> : null}
+                  <th
+                    scope="colgroup"
+                    colSpan={group.items.length}
+                    className="border-foreground border-b-2 pt-2 pb-1 pl-2 text-left text-[0.9375rem] font-semibold"
+                  >
+                    {group.label}
+                  </th>
+                </Fragment>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((skill) => {
+              const isSelected = skill.name === selected;
+              return (
+                <tr
+                  key={skill.name}
+                  onClick={() => setSelected(skill.name)}
+                  className={cn(
+                    "group cursor-pointer",
+                    isSelected ? "bg-accent-wash" : "hover:bg-muted"
+                  )}
+                >
+                  <th
+                    scope="row"
+                    className={cn(
+                      "border-border sticky left-0 z-10 border-b p-0 text-left font-semibold",
+                      isSelected
+                        ? "bg-accent-wash"
+                        : "bg-background group-hover:bg-muted"
+                    )}
+                  >
                     <button
                       type="button"
                       aria-pressed={isSelected}
-                      {...(count > 0
-                        ? {
-                            "aria-label": `${skill.name}, ${plural(count, "use")}`,
-                          }
-                        : {})}
-                      onClick={() => setSelected({ group: group.id, skill })}
-                      className={cn(
-                        "inline-flex h-9 items-center gap-2 rounded-full border-2 pr-1.5 pl-3.5 font-medium transition-[color,background-color,border-color,transform] duration-150 active:scale-[0.97]",
-                        count === 0 && "pr-3.5",
-                        isSelected
-                          ? "border-signal bg-signal text-signal-foreground"
-                          : count > 0
-                            ? "border-foreground/80 hover:bg-foreground hover:text-background"
-                            : "border-border text-muted-foreground hover:border-foreground/50"
-                      )}
+                      aria-label={`${skill.name}, ${plural(skill.count, "use")}`}
+                      onClick={() => setSelected(skill.name)}
+                      className="block w-full py-2 pr-4 pl-2 text-left whitespace-nowrap sm:w-48"
                     >
                       {skill.name}
-                      {count > 0 ? (
-                        <span
-                          aria-hidden
-                          className={cn(
-                            "tabular grid h-6 min-w-6 place-items-center rounded-full px-1.5 text-xs font-semibold",
-                            isSelected
-                              ? "bg-signal-foreground text-signal"
-                              : "bg-muted text-foreground"
-                          )}
-                        >
-                          {count}
-                        </span>
-                      ) : null}
                     </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ))}
+                  </th>
+                  <td
+                    aria-hidden
+                    className={cn(
+                      "border-border tabular border-b pr-4 text-right font-semibold",
+                      isSelected ? "text-accent" : "text-muted-foreground"
+                    )}
+                  >
+                    {skill.count}
+                  </td>
+                  {groups.map((group, index) => (
+                    <Fragment key={group.id}>
+                      {index > 0 ? <td /> : null}
+                      {group.items.map((column) => (
+                        <Cell
+                          key={column.id}
+                          used={usedIn(skill, group.id, column.id)}
+                          selected={isSelected}
+                        />
+                      ))}
+                    </Fragment>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
 
-      <div className="lg:sticky lg:top-24 lg:self-start">
-        <div
-          aria-live="polite"
-          className="board board-map overflow-hidden rounded-lg p-6 shadow-[0_24px_48px_-24px_rgb(9_19_48/0.6)] md:p-7"
-        >
-          {selected ? (
-            <SkillEvidence skill={selected.skill} />
-          ) : (
-            <p className="text-muted-foreground">
-              Choose a skill to see the roles and projects where I used it.
-            </p>
-          )}
+      {skills.length > initialCount ? (
+        <div className="mt-4" data-print="hide">
+          <Button
+            variant="secondary"
+            onClick={() => setExpanded((value) => !value)}
+          >
+            {expanded
+              ? "Show fewer skills"
+              : `Show all ${skills.length} skills`}
+            <Icon
+              name="chevron-down"
+              className={expanded ? "rotate-180" : undefined}
+            />
+          </Button>
         </div>
+      ) : null}
+
+      <div aria-live="polite" className="mt-10">
+        {current ? <SkillEvidence skill={current} /> : null}
       </div>
+
+      {unused.length > 0 ? (
+        <p className="text-muted-foreground mt-8 max-w-[70ch] text-[0.9375rem]">
+          Also in the toolkit, not yet on a listed role or project:{" "}
+          {unused.join(", ")}.
+        </p>
+      ) : null}
     </div>
   );
 }
 
-function SkillEvidence({ skill }: { skill: SkillWithUsage }) {
-  const { roles, projects } = skill.usage;
-  const empty = roles.length === 0 && projects.length === 0;
+function usedIn(skill: SkillWithUsage, group: string, id: string) {
+  const list = group === "roles" ? skill.usage.roles : skill.usage.projects;
+  return list.some((item) => item.id === id);
+}
 
+function Cell({ used, selected }: { used: boolean; selected: boolean }) {
   return (
-    <div key={skill.name}>
-      <p className="text-muted-foreground text-sm">Departures for</p>
-      <h4 className="type-display text-signal motion-safe:animate-flap mt-1 origin-top text-4xl leading-none font-extrabold">
-        {skill.name}
-      </h4>
-      <p className="text-muted-foreground mt-2 text-sm">
-        {empty
-          ? "Part of my toolkit, but not tagged on a listed role or project yet."
-          : `${plural(roles.length, "role")} and ${plural(projects.length, "project")}`}
-      </p>
-      {empty ? null : (
+    <td className="border-border border-b text-center">
+      {used ? (
         <>
-          <EvidenceList
-            title="Roles"
-            items={roles.map((role) => ({
-              ...role,
-              href: `#experience-${role.id}`,
-            }))}
+          <span
+            aria-hidden
+            className={cn(
+              "inline-block size-2.5 rounded-full align-middle",
+              selected ? "bg-accent" : "bg-foreground"
+            )}
           />
-          <EvidenceList
-            title="Projects"
-            items={projects.map((project) => ({
-              ...project,
-              href: `#project-${project.id}`,
-            }))}
-          />
+          <span className="sr-only">Used</span>
         </>
-      )}
+      ) : null}
+    </td>
+  );
+}
+
+function SkillEvidence({ skill }: { skill: RankedSkill }) {
+  const { roles, projects } = skill.usage;
+  return (
+    <div className="border-foreground grid gap-x-10 gap-y-6 border-t-2 pt-5 md:grid-cols-[minmax(0,0.8fr)_minmax(0,0.8fr)_minmax(0,2.4fr)]">
+      <div>
+        <h3 className="type-title text-2xl">{skill.name}</h3>
+        <p className="text-muted-foreground mt-1">
+          {plural(roles.length, "role")} and{" "}
+          {plural(projects.length, "project")}
+        </p>
+      </div>
+      <EvidenceList
+        title="Roles"
+        items={roles.map((role) => ({
+          ...role,
+          href: `#experience-${role.id}`,
+        }))}
+      />
+      <EvidenceList
+        title="Projects"
+        items={projects.map((project) => ({
+          ...project,
+          href: `#project-${project.id}`,
+        }))}
+      />
     </div>
   );
 }
@@ -147,22 +239,16 @@ function EvidenceList({
   title: string;
   items: { id: string; label: string; href: string }[];
 }) {
-  if (items.length === 0) return null;
+  if (items.length === 0) return <div />;
   return (
-    <div className="mt-6">
-      <h5 className="text-muted-foreground font-semibold">{title}</h5>
-      <ul className="border-border mt-2 border-t">
-        {items.map((item, index) => (
-          <li
-            key={item.id}
-            className="border-border motion-safe:animate-flap flex items-center gap-3 border-b py-2.5"
-            style={{ animationDelay: `${index * 45}ms` }}
-          >
-            <span
-              aria-hidden
-              className="border-foreground size-3 shrink-0 rounded-full border-[3px]"
-            />
-            <TextLink href={item.href} tone="quiet" className="font-medium">
+    <div>
+      <h4 className="text-muted-foreground text-[0.9375rem] font-medium">
+        {title}
+      </h4>
+      <ul className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1">
+        {items.map((item) => (
+          <li key={item.id}>
+            <TextLink href={item.href} className="font-medium">
               {item.label}
             </TextLink>
           </li>

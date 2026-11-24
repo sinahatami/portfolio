@@ -11,11 +11,18 @@ export interface SectionLink {
 }
 
 export const HOME_SECTIONS = [
-  { id: "about", label: "About", aliases: ["home", "top", "intro", "map"] },
+  { id: "about", label: "About", aliases: ["home", "top", "intro", "sources"] },
   {
     id: "experience",
-    label: "Experience",
-    aliases: ["work", "jobs", "route", "education", "degree", "university"],
+    label: "Work",
+    aliases: [
+      "experience",
+      "jobs",
+      "career",
+      "education",
+      "degree",
+      "university",
+    ],
   },
   {
     id: "projects",
@@ -36,14 +43,40 @@ export type HomeSectionId = (typeof HOME_SECTIONS)[number]["id"];
 export interface NavItem {
   label: string;
   href: string;
+  /** What's there, in a few words, for lists of destinations (e.g. the 404). */
+  summary: string;
   /** Section id used for scroll-spy highlighting, if any. */
   sectionId?: HomeSectionId;
 }
 
 export const PRIMARY_NAV: NavItem[] = [
-  { label: "Experience", href: "/#experience", sectionId: "experience" },
-  { label: "Projects", href: "/#projects", sectionId: "projects" },
-  { label: "Skills", href: "/#skills", sectionId: "skills" },
-  { label: "Writing", href: "/blog" },
-  { label: "Contact", href: "/#contact", sectionId: "contact" },
+  {
+    label: "Work",
+    href: "/#experience",
+    sectionId: "experience",
+    summary: "Roles and degrees, newest first",
+  },
+  {
+    label: "Projects",
+    href: "/#projects",
+    sectionId: "projects",
+    summary: "Every public repository, with live GitHub data",
+  },
+  {
+    label: "Skills",
+    href: "/#skills",
+    sectionId: "skills",
+    summary: "The roles and projects behind each skill",
+  },
+  {
+    label: "Writing",
+    href: "/blog",
+    summary: "Notes on web performance, React and applied machine learning",
+  },
+  {
+    label: "Contact",
+    href: "/#contact",
+    sectionId: "contact",
+    summary: "Email, or send a message from the site",
+  },
 ];

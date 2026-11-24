@@ -2,25 +2,6 @@ import type { Project } from "@/domain/portfolio";
 
 export const PROJECTS: Project[] = [
   {
-    id: "portfolio",
-    title: "This portfolio",
-    description:
-      "Next.js 16 and React 19 site with a typed content layer, server-rendered sections, live GitHub data, a rate-limited server-action contact pipeline, and a command palette with voice control. Structured with atomic design and SOLID boundaries.",
-    domains: ["web"],
-    stack: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Tailwind CSS",
-      "Server Actions",
-      "Resend",
-      "Vitest",
-      "Playwright",
-    ],
-    sourceUrl: "https://github.com/sinahatami/portfolio",
-    liveUrl: "https://sinahatami.vercel.app",
-  },
-  {
     id: "holdsup",
     title: "HoldsUp",
     description:
@@ -38,6 +19,25 @@ export const PROJECTS: Project[] = [
     domains: ["ml"],
     stack: ["Python", "RAG", "LLM", "Semantic Search", "NLP", "Streamlit"],
     sourceUrl: "https://github.com/sinahatami/ChangeRadar",
+  },
+  {
+    id: "portfolio",
+    title: "This portfolio",
+    description:
+      "Next.js 16 and React 19 site with a typed content layer, server-rendered sections, live GitHub data, a rate-limited server-action contact pipeline, and a command palette with voice control. Structured with atomic design and SOLID boundaries.",
+    domains: ["web"],
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Server Actions",
+      "Resend",
+      "Vitest",
+      "Playwright",
+    ],
+    sourceUrl: "https://github.com/sinahatami/portfolio",
+    liveUrl: "https://sinahatami.vercel.app",
   },
   {
     id: "rick-and-morty",

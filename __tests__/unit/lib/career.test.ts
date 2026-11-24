@@ -1,104 +1,31 @@
-import {
-  buildCareerTimeline,
-  buildRouteStops,
-  experienceToCareerEntries,
-  latestEntry,
-  type CareerEntry,
-} from "@/lib/career";
+import { buildRouteStops, careerAxis, periodBar } from "@/lib/career";
 import { EDUCATION } from "@/content/education";
 import { EXPERIENCE } from "@/content/experience";
 
-const entry = (overrides: Partial<CareerEntry>): CareerEntry => ({
-  id: "x",
-  lane: "industry",
-  organization: "Org",
-  title: "Role",
-  period: { start: "2020-01", end: "2020-12" },
-  summary: "",
-  href: "#x",
-  ...overrides,
-});
-
-describe("buildCareerTimeline", () => {
-  const timeline = buildCareerTimeline(
-    [
-      entry({ id: "a", period: { start: "2020-01", end: "2020-12" } }),
-      entry({ id: "b", lane: "study", period: { start: "2021-01" } }),
-    ],
+describe("careerAxis and periodBar", () => {
+  const axis = careerAxis(
+    [{ start: "2020-01", end: "2020-12" }, { start: "2021-01" }],
     "2021-12"
   );
 
   it("spans whole years from the first start to the year after now", () => {
-    expect(timeline.ticks.map((tick) => tick.year)).toEqual([2020, 2021, 2022]);
-    expect(timeline.ticks[0]?.offset).toBe(0);
-    expect(timeline.ticks[2]?.offset).toBe(100);
+    expect(axis).toEqual({ firstYear: 2020, start: 2020 * 12, end: 2022 * 12 });
   });
 
-  it("positions entries proportionally, treating open periods as ongoing", () => {
-    const [industry, study] = timeline.lanes;
-    expect(industry?.entries[0]).toMatchObject({ offset: 0, span: 50 });
-    expect(study?.entries[0]).toMatchObject({ offset: 50, span: 50 });
-    expect(industry?.end).toBe(50);
-    expect(timeline.now.offset).toBe(100);
+  it("places periods proportionally with inclusive months", () => {
+    expect(
+      periodBar({ start: "2020-01", end: "2020-12" }, axis, "2021-12")
+    ).toEqual({ offset: 0, span: 50 });
+    expect(
+      periodBar({ start: "2021-07", end: "2021-09" }, axis, "2021-12")
+    ).toEqual({ offset: 75, span: 12.5 });
   });
 
-  it("orders lines research, industry, study and omits empty ones", () => {
-    const all = buildCareerTimeline(
-      [
-        entry({ id: "s", lane: "study" }),
-        entry({ id: "i", lane: "industry" }),
-        entry({ id: "r", lane: "research" }),
-      ],
-      "2020-12"
-    );
-    expect(all.lanes.map((lane) => lane.id)).toEqual([
-      "research",
-      "industry",
-      "study",
-    ]);
-    expect(timeline.lanes.map((lane) => lane.id)).toEqual([
-      "industry",
-      "study",
-    ]);
-  });
-
-  it("finds gaps on a line and interchanges between lines", () => {
-    const map = buildCareerTimeline(
-      [
-        entry({ id: "job1", period: { start: "2020-01", end: "2020-06" } }),
-        entry({ id: "job2", period: { start: "2021-01", end: "2021-06" } }),
-        entry({
-          id: "msc",
-          lane: "study",
-          period: { start: "2020-06", end: "2020-12" },
-        }),
-      ],
-      "2021-12"
-    );
-    const industry = map.lanes.find((lane) => lane.id === "industry");
-    expect(industry?.gaps).toEqual([{ from: 25, to: 50 }]);
-    expect(map.interchanges).toEqual([
-      {
-        id: "job1-msc",
-        offset: map.lanes[1]?.entries[0]?.offset,
-        lanes: ["industry", "study"],
-        at: "2020-06",
-      },
-    ]);
-  });
-
-  it("defaults the selection to the most recently started entry", () => {
-    expect(latestEntry(timeline)?.id).toBe("b");
-  });
-});
-
-describe("experienceToCareerEntries", () => {
-  it("routes research roles to the research line", () => {
-    const lanes = Object.fromEntries(
-      experienceToCareerEntries(EXPERIENCE).map((e) => [e.id, e.lane])
-    );
-    expect(lanes["happi-lab"]).toBe("research");
-    expect(lanes["bpt-soft"]).toBe("industry");
+  it("runs open periods to now", () => {
+    expect(periodBar({ start: "2021-01" }, axis, "2021-12")).toEqual({
+      offset: 50,
+      span: 50,
+    });
   });
 });
 
@@ -114,6 +41,12 @@ describe("buildRouteStops", () => {
       "experience-bpt-soft",
       "education-bzte",
     ]);
+  });
+
+  it("puts research roles on the research line", () => {
+    const lanes = Object.fromEntries(stops.map((stop) => [stop.id, stop.lane]));
+    expect(lanes["happi-lab"]).toBe("research");
+    expect(lanes["bpt-soft"]).toBe("industry");
   });
 
   it("describes degrees with their focus and thesis", () => {

@@ -21,7 +21,7 @@ const SPY_IDS = PRIMARY_NAV.flatMap((item) =>
 );
 
 interface SiteHeaderProps {
-  profile: Pick<Profile, "name" | "initials" | "availability">;
+  profile: Pick<Profile, "name" | "availability">;
 }
 
 export function SiteHeader({ profile }: SiteHeaderProps) {
@@ -36,34 +36,28 @@ export function SiteHeader({ profile }: SiteHeaderProps) {
       ? onHome && activeSection === item.sectionId
       : pathname.startsWith(item.href);
 
-  const activeIndex = PRIMARY_NAV.findIndex(isActive);
-
   return (
     <header
       data-print="hide"
       className={cn(
-        "bg-background/80 sticky top-0 z-40 backdrop-blur-md backdrop-saturate-150 transition-shadow",
-        (scrolled || !onHome) && "shadow-[0_10px_30px_-20px_rgb(15_30_61/0.45)]"
+        "bg-background sticky top-0 z-40 border-b transition-colors",
+        scrolled || !onHome ? "border-border" : "border-transparent"
       )}
     >
-      <Container className="flex h-16 items-center gap-5">
+      <Container className="flex h-16 items-center gap-8">
         <Link
           href="/"
-          aria-label={`${profile.name}, home`}
-          className="grid size-10 shrink-0 place-items-center rounded-full bg-[conic-gradient(from_-135deg,var(--color-lane-research)_0_37.5%,var(--color-lane-industry)_0_62.5%,var(--color-lane-study)_0)] p-[3px] transition-transform hover:rotate-12"
+          className="hover:text-accent shrink-0 text-lg font-extrabold tracking-[-0.03em] transition-colors"
         >
-          <span className="font-display bg-board text-board-foreground grid size-full place-items-center rounded-full text-sm font-bold tracking-wide">
-            {profile.initials}
-          </span>
+          {profile.name}
         </Link>
 
-        <nav aria-label="Primary" className="max-md:hidden">
-          <ul className="flex items-center gap-1">
-            {PRIMARY_NAV.map((item, index) => {
-              const active = index === activeIndex;
-              const passed = activeIndex > -1 && index < activeIndex;
+        <nav aria-label="Primary" className="self-stretch max-md:hidden">
+          <ul className="flex h-full items-stretch gap-6">
+            {PRIMARY_NAV.map((item) => {
+              const active = isActive(item);
               return (
-                <li key={item.href}>
+                <li key={item.href} className="flex">
                   <Link
                     href={item.href}
                     aria-current={
@@ -74,25 +68,14 @@ export function SiteHeader({ profile }: SiteHeaderProps) {
                         : undefined
                     }
                     className={cn(
-                      "relative block rounded-md px-3 py-2 font-medium transition-colors",
+                      "relative flex items-center text-[0.9375rem] font-medium transition-colors",
+                      "after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:origin-left after:transition-transform after:duration-300",
                       active
-                        ? "text-foreground"
-                        : "text-foreground/70 hover:text-foreground"
+                        ? "text-foreground after:bg-accent after:scale-x-100"
+                        : "text-muted-foreground hover:text-foreground after:bg-accent after:scale-x-0"
                     )}
                   >
                     {item.label}
-                    {/* Station on the line along the bottom of the header */}
-                    <span
-                      aria-hidden
-                      className={cn(
-                        "absolute -bottom-[18px] left-1/2 size-3 -translate-x-1/2 rounded-full border-[2.5px] transition-[background-color,border-color,scale] duration-300",
-                        active
-                          ? "border-foreground bg-signal scale-[1.35]"
-                          : passed
-                            ? "border-lane-industry bg-lane-industry"
-                            : "border-foreground/30 bg-background"
-                      )}
-                    />
                   </Link>
                 </li>
               );
@@ -101,7 +84,7 @@ export function SiteHeader({ profile }: SiteHeaderProps) {
         </nav>
 
         <div className="ml-auto flex items-center gap-1">
-          <span className="mr-3 max-lg:hidden">
+          <span className="mr-4 max-lg:hidden">
             <Availability availability={profile.availability} />
           </span>
           <CommandTrigger onOpen={() => setPaletteOpen(true)} />
@@ -109,11 +92,6 @@ export function SiteHeader({ profile }: SiteHeaderProps) {
           <MobileNav items={PRIMARY_NAV} isActive={isActive} />
         </div>
       </Container>
-
-      {/* The line: a track with the reading progress drawn over it */}
-      <div aria-hidden className="bg-border/70 relative h-[3px]">
-        <div className="scroll-progress bg-lane-industry absolute inset-0" />
-      </div>
     </header>
   );
 }

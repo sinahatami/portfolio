@@ -9,27 +9,29 @@ Personal site of Sina Hatami, software engineer and data scientist in Genoa, Ita
 
 ## What's on the site
 
-- **Route map**: the career drawn as a transit map. Industry, research and study are lines, each role or degree is a station, and switches between lines are interchanges. Hover, focus or tap a station to read it.
-- **Route**: roles and degrees as one strip map, newest first, ending at an open "next stop".
-- **Projects**: every public repository, joined with live GitHub data (primary language, last update) and filterable by area. Areas are shown as line roundels: web, machine learning, data and signals, systems and XR.
-- **Skills as evidence**: choosing a skill lists the roles and projects that used it. The list is derived from the content, not self-rated.
-- **References**: recommendation letters reproduced verbatim, with the PDF originals.
-- **Contact**: a validated form backed by a rate-limited server action and Resend.
+- **Sourced headline**: each claim in the opening line carries a numbered note, and the notes underneath give the evidence: the role, the projects, or a sentence quoted from a recommendation letter.
+- **Work**: roles and degrees as rows, newest first. Each period is drawn as a bar on one shared timeline, so overlaps and gaps are visible at a glance.
+- **Projects**: every public repository, joined with live GitHub data (primary language, last update) and filterable by area: web, machine learning, data and signals, systems and XR. A summary of all public repositories by language closes the section.
+- **Skills as evidence**: a matrix of skills against the roles and projects that used them, with one dot per use and the best-evidenced skills first. Choosing a skill lists its sources with links. Nothing is self-rated; it all comes from the content.
+- **References**: recommendation letters quoted verbatim, with the PDF originals.
+- **Writing**: articles written in Markdown, at `/blog`.
+- **Contact**: a validated form backed by a rate-limited server action and Resend. It sends a notification to the inbox and a confirmation to the visitor.
 - **Command palette** (`⌘K` / `Ctrl+K`) and **voice control**, both driven by one command registry.
 - Light and dark themes, a print stylesheet for a résumé printout, and keyboard and screen-reader support.
 
-## Design system: "Line map"
+## Design system: "Evidence"
 
-| Token        | Light     | Dark      | Use                                   |
-| ------------ | --------- | --------- | ------------------------------------- |
-| Paper        | `#ffffff` | `#0a1226` | Page background                       |
-| Ink / board  | `#0f1e3d` | `#13224a` | Text, buttons, station boards         |
-| Industry     | `#0072ce` | `#3d9df0` | Industry line, web roundel            |
-| Research     | `#c8007a` | `#f05bb0` | Research line, machine-learning roundel |
-| Study        | `#00965e` | `#2fbf86` | Study line                            |
-| Signal       | `#ffcd00` | `#ffcd00` | Selected station, next stop, focus on boards |
+Every claim on the page points to its source. Structure comes from type, rules and alignment rather than cards, shadows or colour: a 2px rule opens each list and 1px rules separate the rows.
 
-The type is **Barlow** for reading and **Barlow Semi Condensed** for signage and headings. The deep blue "board" sections (hero, contact, footer) re-point the colour tokens through a `.board` scope, so components work on them without changes. All tokens live in [`src/app/globals.css`](src/app/globals.css).
+| Token        | Light     | Dark      | Use                                                  |
+| ------------ | --------- | --------- | ---------------------------------------------------- |
+| Paper        | `#ffffff` | `#12181e` | Page background                                      |
+| Ink          | `#1d2731` | `#e6eaed` | Text, rules, primary buttons                         |
+| Muted text   | `#56616c` | `#9aa5af` | Descriptions, dates, metadata                        |
+| Rule         | `#d8dce0` | `#2e3943` | Row dividers and borders                             |
+| Evidence red | `#c8102e` | `#f0505f` | Note markers, selected skill, active nav item, focus |
+
+Red is reserved for evidence and selection; nothing else uses it. The type is **Schibsted Grotesk** throughout, with **JetBrains Mono** for code. Kerning is turned off, because this face's kerning opens visible gaps before commas at reading sizes. The icon is the S¹ mark: the initial with a red note number, like the claims in the headline. All tokens live in [`src/app/globals.css`](src/app/globals.css).
 
 ## Architecture
 
@@ -37,18 +39,18 @@ The type is **Barlow** for reading and **Barlow Semi Condensed** for signage and
 src/
 ├── app/                 Routes (Next.js App Router) — the "pages" of atomic design
 ├── components/
-│   ├── atoms/           Button, Roundel, LineBadge, Input, Icon, TextLink…
+│   ├── atoms/           Button, Input, Icon, TextLink, Kbd…
 │   ├── molecules/       FormField, PeriodLabel, ChoiceChips, ThemeToggle…
-│   ├── organisms/       Hero, RouteMap, RouteStrip, ProjectIndex, ContactForm, CommandPalette…
-│   ├── templates/       SiteShell, PageSection, ArticleLayout, StatusLayout
+│   ├── organisms/       Hero, CareerTable, ProjectIndex, SkillsExplorer, ContactForm, CommandPalette…
+│   ├── templates/       SiteShell, PageSection, PageIntro, ArticleLayout, StatusLayout
 │   └── providers/       Theme and command-center context
 ├── content/             Typed site content (profile, experience, projects, posts/*.md)
 ├── domain/              Entities and ports (interfaces) shared by every layer
-├── lib/                 Pure logic: dates, career map geometry, repo matching, skill evidence, commands
+├── lib/                 Pure logic: dates, career timeline, headline notes, repo matching, skill evidence, commands
 ├── server/              Use cases and adapters (GitHub, email, rate limiting, blog)
 │   └── container.ts     Composition root — the only place concrete adapters are chosen
 ├── actions/             Server actions (thin HTTP adapters over use cases)
-├── emails/              React Email templates
+├── emails/              React Email templates (notification and confirmation)
 ├── hooks/               Client hooks (scroll spy, speech recognition…)
 └── config/              Navigation, site settings, environment access
 ```
@@ -71,7 +73,6 @@ src/
 | Null Object        | `UnconfiguredEmailSender` when no email provider is configured              |
 | Command + Factory  | `buildCommands()` registry consumed by the palette and voice control        |
 | Composition root   | `server/container.ts` with lazy singletons                                  |
-| Scoped theming     | `.board` re-points design tokens for content on the station board           |
 | Observer           | `useScrollSpy` over `IntersectionObserver`                                  |
 | Polymorphic slot   | `Button asChild` via Radix `Slot`                                           |
 

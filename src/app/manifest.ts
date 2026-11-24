@@ -10,55 +10,21 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: SITE.colors.paper,
     theme_color: SITE.colors.ink,
+    // The mark on its rounded tile, and full-bleed versions that Android
+    // crops to its own shape (the mark stays inside the safe circle).
     icons: [
-      {
-        src: "/icons/icon-72x72.png",
-        sizes: "72x72",
+      ...[192, 512].map((size) => ({
+        src: `/icons/icon-${size}x${size}.png`,
+        sizes: `${size}x${size}`,
         type: "image/png",
-        purpose: "maskable",
-      },
-      {
-        src: "/icons/icon-96x96.png",
-        sizes: "96x96",
+        purpose: "any" as const,
+      })),
+      ...[192, 512].map((size) => ({
+        src: `/icons/icon-maskable-${size}x${size}.png`,
+        sizes: `${size}x${size}`,
         type: "image/png",
-        purpose: "maskable",
-      },
-      {
-        src: "/icons/icon-128x128.png",
-        sizes: "128x128",
-        type: "image/png",
-        purpose: "maskable",
-      },
-      {
-        src: "/icons/icon-144x144.png",
-        sizes: "144x144",
-        type: "image/png",
-        purpose: "maskable",
-      },
-      {
-        src: "/icons/icon-152x152.png",
-        sizes: "152x152",
-        type: "image/png",
-        purpose: "maskable",
-      },
-      {
-        src: "/icons/icon-192x192.png",
-        sizes: "192x192",
-        type: "image/png",
-        purpose: "maskable",
-      },
-      {
-        src: "/icons/icon-384x384.png",
-        sizes: "384x384",
-        type: "image/png",
-        purpose: "maskable",
-      },
-      {
-        src: "/icons/icon-512x512.png",
-        sizes: "512x512",
-        type: "image/png",
-        purpose: "maskable",
-      },
+        purpose: "maskable" as const,
+      })),
     ],
     categories: ["productivity", "utilities", "education"],
   };

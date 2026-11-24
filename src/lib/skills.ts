@@ -77,3 +77,86 @@ export function withSkillUsage(
     })),
   }));
 }
+
+/** A skill with how many roles and projects used it. */
+export interface RankedSkill extends SkillWithUsage {
+  count: number;
+}
+
+/**
+ * Flattens the groups into one list ranked by evidence: most-used first,
+ * ties alphabetical. A skill listed in several groups appears once, under
+ * its first spelling. Skills with no evidence are returned by name.
+ */
+export function rankSkills(groups: SkillGroupWithUsage[]): {
+  used: RankedSkill[];
+  unused: string[];
+} {
+  const seen = new Set<string>();
+  const unique = groups
+    .flatMap((group) => group.skills)
+    .filter((skill) => {
+      const key = normalizeSkill(skill.name);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .map((skill) => ({
+      ...skill,
+      count: skill.usage.roles.length + skill.usage.projects.length,
+    }));
+
+  return {
+    used: unique
+      .filter((skill) => skill.count > 0)
+      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name)),
+    unused: unique.filter((skill) => skill.count === 0).map((s) => s.name),
+  };
+}
+
+/** "Wildfire Risk Prediction (Master's Thesis)" → "Wildfire Risk Prediction". */
+export function shortTitle(title: string): string {
+  return title
+    .replace(/\s*\(.*\)\s*$/, "")
+    .replace(/:.*$/, "")
+    .trim();
+}
+
+export interface EvidenceColumn {
+  id: string;
+  label: string;
+  /** Full name when `label` is shortened. */
+  title: string;
+}
+
+/**
+ * The matrix columns: every role and project that used at least one of the
+ * skills, in the order the content lists them.
+ */
+export function evidenceColumns(
+  skills: SkillWithUsage[],
+  sources: { experience: Experience[]; projects: Project[] }
+): { roles: EvidenceColumn[]; projects: EvidenceColumn[] } {
+  const roleIds = new Set(
+    skills.flatMap((skill) => skill.usage.roles.map((role) => role.id))
+  );
+  const projectIds = new Set(
+    skills.flatMap((skill) => skill.usage.projects.map((p) => p.id))
+  );
+  return {
+    roles: sources.experience
+      .filter((role) => roleIds.has(role.id))
+      .map((role) => ({
+        id: role.id,
+        label: role.company,
+        title: role.company,
+      })),
+    projects: sources.projects
+      .filter((project) => projectIds.has(project.id))
+      .map((project) => ({
+        id: project.id,
+        label: shortTitle(project.title),
+        title: project.title,
+      })),
+  };
+}

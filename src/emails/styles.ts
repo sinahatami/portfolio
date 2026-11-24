@@ -1,57 +1,71 @@
 import type { CSSProperties } from "react";
 
-/** Email clients need inline styles; these mirror the site's palette. */
+/**
+ * Email clients need inline styles. These follow the site: slate on white,
+ * a heavy tight heading, a 2px slate rule under it, 1px rules after. No
+ * cards or tinted boxes. Web fonts are unreliable in mail, so the system
+ * face stands in for Schibsted Grotesk.
+ */
 const palette = {
-  paper: "#f0f3f7",
-  surface: "#ffffff",
-  ink: "#0f1e3d",
-  muted: "#586379",
-  rule: "#dde2ea",
-  link: "#0067bd",
-  line: "#0072ce",
+  paper: "#ffffff",
+  ink: "#1d2731",
+  muted: "#56616c",
+  rule: "#d8dce0",
 };
+
+const font =
+  '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
 
 export const styles = {
   body: {
     backgroundColor: palette.paper,
     color: palette.ink,
-    fontFamily:
-      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+    fontFamily: font,
     margin: 0,
-    padding: "32px 0",
+    padding: "40px 0",
   },
   container: {
-    backgroundColor: palette.surface,
-    border: `1px solid ${palette.rule}`,
-    borderTop: `8px solid ${palette.ink}`,
-    borderRadius: "4px",
     margin: "0 auto",
     maxWidth: "560px",
-    padding: "32px",
+    padding: "0 24px",
   },
   heading: {
     color: palette.ink,
-    fontSize: "22px",
-    fontWeight: 700,
-    letterSpacing: "-0.01em",
-    margin: "0 0 4px",
+    fontSize: "30px",
+    fontWeight: 800,
+    letterSpacing: "-0.03em",
+    lineHeight: "34px",
+    margin: 0,
   },
-  subheading: { color: palette.muted, fontSize: "14px", margin: "0 0 24px" },
-  text: { color: palette.ink, fontSize: "16px", lineHeight: "26px" },
-  quote: {
-    backgroundColor: palette.paper,
-    borderLeft: `4px solid ${palette.line}`,
-    borderRadius: "4px",
-    color: palette.ink,
+  meta: {
+    color: palette.muted,
     fontSize: "15px",
     lineHeight: "24px",
-    margin: "16px 0",
-    padding: "12px 16px",
+    margin: "6px 0 0",
+  },
+  /** Opens the content, as the 2px rule opens every list on the site. */
+  ruleStrong: {
+    border: "none",
+    borderTop: `2px solid ${palette.ink}`,
+    margin: "20px 0 24px",
+  },
+  text: {
+    color: palette.ink,
+    fontSize: "16px",
+    lineHeight: "26px",
+    margin: "0 0 16px",
+  },
+  /** The visitor's message, as they wrote it. */
+  message: {
+    color: palette.ink,
+    fontSize: "17px",
+    lineHeight: "28px",
+    margin: 0,
     whiteSpace: "pre-wrap",
   },
   button: {
     backgroundColor: palette.ink,
-    borderRadius: "4px",
+    borderRadius: "6px",
     color: "#ffffff",
     display: "inline-block",
     fontSize: "15px",
@@ -59,7 +73,17 @@ export const styles = {
     padding: "12px 20px",
     textDecoration: "none",
   },
-  rule: { borderColor: palette.rule, margin: "28px 0 16px" },
-  footer: { color: palette.muted, fontSize: "12px", lineHeight: "20px" },
-  link: { color: palette.link },
+  rule: {
+    border: "none",
+    borderTop: `1px solid ${palette.rule}`,
+    margin: "28px 0 16px",
+  },
+  footer: {
+    color: palette.muted,
+    fontSize: "13px",
+    lineHeight: "20px",
+    margin: 0,
+  },
+  link: { color: palette.ink, textDecoration: "underline" },
+  mutedLink: { color: palette.muted, textDecoration: "underline" },
 } satisfies Record<string, CSSProperties>;

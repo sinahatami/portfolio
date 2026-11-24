@@ -1,26 +1,23 @@
-import { Button, Icon } from "@/components/atoms";
+import { TextLink } from "@/components/atoms";
 import type { SocialProfile } from "@/domain/portfolio";
+import { cn } from "@/lib/utils";
 
 interface SocialLinksProps {
   socials: SocialProfile[];
+  className?: string;
 }
 
-export function SocialLinks({ socials }: SocialLinksProps) {
+/** Profiles as plain named links; the name says more than an icon. */
+export function SocialLinks({ socials, className }: SocialLinksProps) {
   return (
-    <ul className="flex items-center gap-1">
+    <ul
+      className={cn("flex flex-wrap items-center gap-x-5 gap-y-1", className)}
+    >
       {socials.map((social) => (
         <li key={social.id}>
-          <Button variant="ghost" size="icon" asChild>
-            <a
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${social.label} (opens in a new tab)`}
-              title={social.label}
-            >
-              <Icon name={social.id} />
-            </a>
-          </Button>
+          <TextLink href={social.url} showExternalIcon={false}>
+            {social.label}
+          </TextLink>
         </li>
       ))}
     </ul>

@@ -29,12 +29,14 @@ export async function generateMetadata({
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const post = getBlogRepository().findBySlug((await params).slug);
+  const repository = getBlogRepository();
+  const post = repository.findBySlug((await params).slug);
   if (!post) notFound();
 
   const { content, ...summary } = post;
+  const others = repository.list().filter((item) => item.slug !== post.slug);
   return (
-    <ArticleLayout post={summary}>
+    <ArticleLayout post={summary} others={others}>
       <ArticleBody markdown={content} />
     </ArticleLayout>
   );

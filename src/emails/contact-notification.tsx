@@ -31,20 +31,20 @@ export function ContactNotification({
           <Heading as="h1" style={styles.heading}>
             New message
           </Heading>
-          <Text style={styles.subheading}>
+          <Text style={styles.meta}>
             From{" "}
             <Link href={`mailto:${email}`} style={styles.link}>
               {email}
             </Link>
           </Text>
-          <Text style={styles.quote}>{message}</Text>
-          <Text style={styles.text}>
-            Reply to this email to answer directly.
-          </Text>
+          <Hr style={styles.ruleStrong} />
+          <Text style={styles.message}>{message}</Text>
           <Hr style={styles.rule} />
           <Text style={styles.footer}>
+            Reply to this email to answer directly.
+            <br />
             Sent from the contact form on{" "}
-            <Link href={PROFILE.website} style={styles.link}>
+            <Link href={PROFILE.website} style={styles.mutedLink}>
               {new URL(PROFILE.website).hostname}
             </Link>
             .

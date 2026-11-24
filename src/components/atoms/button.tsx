@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 export const buttonVariants = cva(
   [
-    "inline-flex shrink-0 items-center justify-center gap-2 rounded-md font-display font-semibold whitespace-nowrap",
+    "inline-flex shrink-0 items-center justify-center gap-2 rounded-md font-semibold whitespace-nowrap",
     "transition-colors duration-150 disabled:pointer-events-none disabled:opacity-50",
     "[&_svg]:size-4 [&_svg]:shrink-0",
   ],
@@ -13,17 +13,15 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "border-2 border-primary bg-primary text-primary-foreground hover:bg-primary/85",
+          "bg-primary text-primary-foreground hover:bg-primary/85 active:bg-primary/75",
         secondary:
-          "border-2 border-foreground bg-transparent text-foreground hover:bg-foreground hover:text-background",
-        signal:
-          "border-2 border-signal bg-signal text-signal-foreground hover:brightness-105",
+          "border border-foreground/30 bg-transparent text-foreground hover:border-foreground hover:bg-muted",
         ghost: "text-muted-foreground hover:bg-muted hover:text-foreground",
       },
       size: {
         sm: "h-8 px-3 text-sm",
         md: "h-10 px-4 text-base",
-        lg: "h-12 px-5 text-lg",
+        lg: "h-12 px-5 text-base",
         icon: "size-10",
         "icon-sm": "size-8",
       },

@@ -27,15 +27,18 @@ export function SiteShell({
       <CommandCenterProvider>
         <a
           href="#main"
-          className="bg-signal text-signal-foreground sr-only z-50 rounded-md px-4 py-2 font-semibold focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+          className="bg-primary text-primary-foreground sr-only z-50 rounded-md px-4 py-2 font-semibold focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
         >
           Skip to content
         </a>
-        <SiteHeader profile={profile} />
-        <main id="main" tabIndex={-1} className="outline-none">
-          {children}
-        </main>
-        <SiteFooter profile={profile} version={version} year={year} />
+        {/* Full-height column: short pages keep the footer at the bottom. */}
+        <div className="flex min-h-dvh flex-col">
+          <SiteHeader profile={profile} />
+          <main id="main" tabIndex={-1} className="flex-1 outline-none">
+            {children}
+          </main>
+          <SiteFooter profile={profile} version={version} year={year} />
+        </div>
         <CommandPalette />
         <VoiceStatus />
         <Toaster />

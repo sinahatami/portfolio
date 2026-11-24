@@ -52,7 +52,7 @@ export function MobileNav({ items, isActive }: MobileNavProps) {
                     onClick={() => setOpen(false)}
                     className={cn(
                       "type-title border-border block border-b py-3 text-2xl",
-                      isActive(item) ? "text-link" : "text-foreground"
+                      isActive(item) ? "text-accent" : "text-foreground"
                     )}
                   >
                     {item.label}

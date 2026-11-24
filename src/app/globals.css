@@ -4,19 +4,18 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Design tokens: "Line map".
- * The career is drawn as a transit map: industry, research and study are
- * lines; roles are stations. Signage blue-ink boards, saturated line colours,
- * and one signal yellow for "you are here" moments and selections.
- * Type: Barlow for reading, Barlow Semi Condensed for signage and headings.
- * Scale: 12/14/16/18/21/24/36/48/60/72.
- * `static`: emit every token, since charts read some only via inline styles.
+ * Design tokens: "Evidence".
+ * Every claim on the page points to its source. Structure comes from type,
+ * rules and alignment, not from cards or colour. Ink is Ligurian slate; the
+ * one accent is the red of Genoa's flag, used only for evidence markers,
+ * selection and focus.
+ * Type: Schibsted Grotesk for everything, from the 176px name to captions.
+ * Scale: 12/14/16/17/18/21/24/36/44/48/60/72.
+ * `static`: emit every token, since some are read only via inline styles.
  */
 @theme static {
-  --font-sans: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
-  --font-display:
-    var(--font-barlow-condensed), var(--font-barlow), ui-sans-serif, system-ui,
-    sans-serif;
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
   --text-xs: 0.75rem;
@@ -40,122 +39,42 @@
   --text-6xl: 4.5rem;
   --text-6xl--line-height: 0.95;
 
+  /* Paper and slate. */
   --color-background: #ffffff;
   --color-surface: #ffffff;
-  --color-foreground: #0f1e3d;
-  --color-muted: #f0f3f7;
-  --color-muted-foreground: #586379;
-  --color-border: #dde2ea;
-  --color-ring: #0072ce;
-  --color-primary: #0f1e3d;
+  --color-foreground: #1d2731;
+  --color-muted: #f2f4f5;
+  --color-muted-foreground: #56616c;
+  --color-border: #d8dce0;
+  --color-primary: #1d2731;
   --color-primary-foreground: #ffffff;
-  --color-link: #0067bd;
-  --color-highlight: #ffcd00;
-  --color-highlight-foreground: #0f1e3d;
-  --color-signal: #ffcd00;
-  --color-signal-foreground: #0f1e3d;
-  --color-destructive: #c4161c;
+  --color-link: #1d2731;
 
-  /* Quiet band behind tickets and cards, and the ticket paper itself. */
-  --color-band: #f2f5f9;
-  --color-ticket: #ffffff;
+  /* Genoa red: evidence markers, the selected row, focus. */
+  --color-accent: #c8102e;
+  --color-accent-foreground: #ffffff;
+  --color-accent-wash: #fbe9ec;
+  --color-ring: #c8102e;
+  --color-highlight: #fbe9ec;
+  --color-highlight-foreground: #1d2731;
+  --color-destructive: #b3261e;
 
-  /* Station board: the deep blue signage band. */
-  --color-board: #0f1e3d;
-  --color-board-deep: #091330;
-  --color-board-foreground: #ffffff;
-
-  /* Career lines. */
-  --color-lane-industry: #0072ce;
-  --color-lane-research: #c8007a;
-  --color-lane-study: #00855a;
-  --color-lane-foreground: #ffffff;
-
-  /* Project areas, drawn as line roundels. */
-  --color-domain-web: #0072ce;
-  --color-domain-ml: #c8007a;
-  --color-domain-data: #ffcd00;
-  --color-domain-systems: #00a3ad;
-
-  /* Categorical series, e.g. the GitHub language line. */
-  --color-series-1: #0f1e3d;
-  --color-series-2: #0072ce;
-  --color-series-3: #c8007a;
-  --color-series-4: #00855a;
-  --color-series-5: #ffcd00;
+  /* Sequential slate, for charts such as the GitHub language bar. */
+  --color-series-1: #1d2731;
+  --color-series-2: #4c5864;
+  --color-series-3: #7d8792;
+  --color-series-4: #aab2ba;
+  --color-series-5: #d1d6db;
 
   --radius-sm: 3px;
-  --radius-md: 4px;
+  --radius-md: 6px;
   --radius-lg: 8px;
 
-  --animate-reveal: reveal 1400ms cubic-bezier(0.3, 0.6, 0.2, 1) 500ms backwards;
-  --animate-draw: draw 1100ms cubic-bezier(0.55, 0, 0.2, 1) backwards;
-  --animate-beacon: beacon 2.4s cubic-bezier(0.2, 0.6, 0.3, 1) 2s infinite;
-  --animate-train: train 5s cubic-bezier(0.45, 0, 0.25, 1) 2.2s infinite;
-  --animate-flap: flap 420ms cubic-bezier(0.2, 0.8, 0.3, 1) backwards;
+  --animate-rule: rule 700ms cubic-bezier(0.3, 0.7, 0.2, 1) 150ms backwards;
+  --animate-mark: mark 1600ms ease-out;
 
-  @keyframes reveal {
-    from {
-      clip-path: inset(0 100% 0 0);
-    }
-    to {
-      clip-path: inset(0 0 0 0);
-    }
-  }
-
-  /* Paths drawn with pathLength="1" and stroke-dasharray="1". */
-  @keyframes draw {
-    from {
-      stroke-dashoffset: 1;
-    }
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-
-  /* Expanding ring around the open "next stop". */
-  @keyframes beacon {
-    from {
-      transform: scale(1);
-      opacity: 0.7;
-    }
-    70%,
-    to {
-      transform: scale(2.6);
-      opacity: 0;
-    }
-  }
-
-  /* A train running the open line towards the next stop. */
-  @keyframes train {
-    0% {
-      translate: 0 0;
-      opacity: 0;
-    }
-    12%,
-    78% {
-      opacity: 1;
-    }
-    92%,
-    100% {
-      translate: var(--travel, 0) 0;
-      opacity: 0;
-    }
-  }
-
-  /* Split-flap turn for departure-board text. */
-  @keyframes flap {
-    from {
-      transform: perspective(400px) rotateX(-80deg);
-      opacity: 0;
-    }
-    to {
-      transform: perspective(400px) rotateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes grow-x {
+  /* The hairline under the claim draws once, left to right. */
+  @keyframes rule {
     from {
       transform: scaleX(0);
     }
@@ -163,146 +82,42 @@
       transform: scaleX(1);
     }
   }
+
+  /* A note that was just jumped to flashes its wash, then settles. */
+  @keyframes mark {
+    from {
+      background-color: var(--color-accent-wash);
+    }
+    to {
+      background-color: transparent;
+    }
+  }
 }
 
 .dark {
-  --color-background: #0a1226;
-  --color-surface: #101b35;
-  --color-foreground: #e9eef7;
-  --color-muted: #132042;
-  --color-muted-foreground: #9da9c2;
-  --color-border: #24345a;
-  --color-ring: #ffcd00;
-  --color-primary: #e9eef7;
-  --color-primary-foreground: #0a1226;
-  --color-link: #5fb1f6;
-  --color-destructive: #ff7a7a;
+  --color-background: #12181e;
+  --color-surface: #182029;
+  --color-foreground: #e6eaed;
+  --color-muted: #1c252e;
+  --color-muted-foreground: #9aa5af;
+  --color-border: #2e3943;
+  --color-primary: #e6eaed;
+  --color-primary-foreground: #12181e;
+  --color-link: #e6eaed;
 
-  --color-band: #0d1830;
-  --color-ticket: #14234a;
+  --color-accent: #f0505f;
+  --color-accent-foreground: #12181e;
+  --color-accent-wash: #3a1d24;
+  --color-ring: #f0505f;
+  --color-highlight: #3a1d24;
+  --color-highlight-foreground: #e6eaed;
+  --color-destructive: #ff8a80;
 
-  --color-board: #13224a;
-  --color-board-deep: #0b1633;
-
-  --color-lane-industry: #3d9df0;
-  --color-lane-research: #f05bb0;
-  --color-lane-study: #2fbf86;
-  --color-lane-foreground: #0a1226;
-
-  --color-domain-web: #3d9df0;
-  --color-domain-ml: #f05bb0;
-  --color-domain-systems: #2cc6cf;
-
-  --color-series-1: #e9eef7;
-  --color-series-2: #3d9df0;
-  --color-series-3: #f05bb0;
-  --color-series-4: #2fbf86;
-  --color-series-5: #ffcd00;
-}
-
-/*
- * Board scope: content set on the deep blue station board (hero, contact,
- * footer). Tokens are re-pointed so atoms keep working unchanged.
- */
-.board {
-  --color-background: var(--color-board);
-  --color-foreground: var(--color-board-foreground);
-  --color-surface: rgb(255 255 255 / 0.07);
-  --color-muted: rgb(255 255 255 / 0.1);
-  --color-muted-foreground: rgb(255 255 255 / 0.74);
-  --color-border: rgb(255 255 255 / 0.2);
-  --color-ring: #ffcd00;
-  --color-primary: #ffffff;
-  --color-primary-foreground: #0f1e3d;
-  --color-link: #ffffff;
-  --color-destructive: #ffb4a8;
-  /* Lines glow brighter on the night board. */
-  --color-lane-industry: #3d9df0;
-  --color-lane-research: #f05bb0;
-  --color-lane-study: #2fbf86;
-  --color-lane-foreground: #0a1226;
-  --color-domain-web: #3d9df0;
-  --color-domain-ml: #f05bb0;
-  --color-domain-systems: #2cc6cf;
-  --color-series-1: #e9eef7;
-  --color-series-2: #3d9df0;
-  --color-series-3: #f05bb0;
-  --color-series-4: #2fbf86;
-  --color-series-5: #ffcd00;
-  background-color: var(--color-board);
-  color: var(--color-board-foreground);
-}
-
-/*
- * Night map: the board with a faint map grid that fades out towards the
- * edges, and a deeper tone at the bottom.
- */
-.board-map {
-  position: relative;
-  isolation: isolate;
-  background-image: linear-gradient(
-    to bottom,
-    var(--color-board) 0%,
-    var(--color-board-deep) 100%
-  );
-}
-
-.board-map::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
-  background-position: center top;
-  mask-image: radial-gradient(
-    ellipse 75% 80% at 70% 20%,
-    #000 20%,
-    transparent 100%
-  );
-}
-
-/*
- * Ticket: paper with two punched notches where the stub tears off.
- * --stub is the stub height; the notches sit on the perforation.
- */
-.ticket {
-  --notch: 0.7rem;
-  --cut: calc(100% - var(--stub, 4.5rem));
-  mask:
-    radial-gradient(circle var(--notch) at 0 var(--cut), #0000 97%, #000 100%) 0
-      0 / 51% 100% no-repeat,
-    radial-gradient(
-        circle var(--notch) at 100% var(--cut),
-        #0000 97%,
-        #000 100%
-      )
-      100% 0 / 51% 100% no-repeat;
-}
-
-.ticket-shadow {
-  filter: drop-shadow(0 1px 1px rgb(15 30 61 / 0.06))
-    drop-shadow(0 10px 22px rgb(15 30 61 / 0.09));
-}
-
-.dark .ticket-shadow {
-  filter: drop-shadow(0 12px 24px rgb(0 0 0 / 0.35));
-}
-
-/* Header progress along the line; a static track where unsupported. */
-.scroll-progress {
-  transform: scaleX(0);
-  transform-origin: left;
-}
-
-@supports (animation-timeline: scroll()) {
-  .scroll-progress {
-    animation: grow-x linear both;
-    animation-timeline: scroll(root block);
-  }
+  --color-series-1: #e6eaed;
+  --color-series-2: #b7c0c8;
+  --color-series-3: #87929d;
+  --color-series-4: #5d6873;
+  --color-series-5: #3e4852;
 }
 
 @layer base {
@@ -326,11 +141,33 @@
     @apply bg-background text-foreground font-sans antialiased;
     font-size: 1.0625rem;
     line-height: 1.6;
-    font-feature-settings: "kern", "liga", "calt";
+    /* Kerning off: this face's kerning pushes "t," "g," and "g" + letter
+       apart, which reads as a stray space at text sizes. Its default
+       spacing holds up unkerned at every size used here, display included. */
+    font-feature-settings:
+      "kern" 0,
+      "liga",
+      "calt";
   }
 
   * {
     @apply border-border;
+  }
+
+  /* Chrome sets list markers in tabular figures, which in this face widens
+     the full stop ("1 ."). */
+  ::marker {
+    font-variant-numeric: normal;
+  }
+
+  /* Code reads as typed: no "=>" turning into an arrow, no joined glyphs. */
+  code,
+  kbd,
+  pre,
+  samp {
+    font-feature-settings:
+      "liga" 0,
+      "calt" 0;
   }
 
   ::selection {
@@ -339,8 +176,8 @@
   }
 
   :focus-visible {
-    outline: 3px solid var(--color-ring);
-    outline-offset: 2px;
+    outline: 2px solid var(--color-ring);
+    outline-offset: 3px;
     border-radius: 2px;
   }
 
@@ -365,19 +202,21 @@
 }
 
 @layer utilities {
-  /* Signage display type: condensed, heavy, set tight. */
+  /* Display type: heavy and set tight; the larger it gets, the tighter. */
   .type-display {
     font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: -0.012em;
+    font-weight: 800;
+    letter-spacing: -0.035em;
   }
 
   .type-title {
     font-family: var(--font-display);
     font-weight: 700;
-    letter-spacing: -0.004em;
+    letter-spacing: -0.02em;
   }
 
+  /* Figures that line up in columns. Not set globally: in this face the
+     tabular feature also widens full stops and commas. */
   .tabular {
     font-variant-numeric: tabular-nums;
   }
@@ -394,17 +233,17 @@
   --tw-prose-bullets: var(--color-border);
   --tw-prose-hr: var(--color-border);
   --tw-prose-quotes: var(--color-foreground);
-  --tw-prose-quote-borders: var(--color-lane-industry);
+  --tw-prose-quote-borders: var(--color-accent);
   --tw-prose-captions: var(--color-muted-foreground);
   --tw-prose-code: var(--color-foreground);
-  --tw-prose-pre-code: #e6edf2;
-  --tw-prose-pre-bg: #0f1e3d;
+  --tw-prose-pre-code: #e6eaed;
+  --tw-prose-pre-bg: #1d2731;
   --tw-prose-th-borders: var(--color-border);
   --tw-prose-td-borders: var(--color-border);
 }
 
 .dark .prose {
-  --tw-prose-pre-bg: #060c1b;
+  --tw-prose-pre-bg: #0c1115;
 }
 
 /* Toast notifications (react-toastify) restyled with the tokens. */
@@ -414,16 +253,16 @@
   --toastify-color-dark: var(--color-surface);
   --toastify-text-color-light: var(--color-foreground);
   --toastify-text-color-dark: var(--color-foreground);
-  --toastify-color-success: var(--color-lane-study);
+  --toastify-color-success: var(--color-foreground);
   --toastify-color-error: var(--color-destructive);
-  --toastify-color-progress-light: var(--color-lane-industry);
-  --toastify-color-progress-dark: var(--color-lane-industry);
+  --toastify-color-progress-light: var(--color-accent);
+  --toastify-color-progress-dark: var(--color-accent);
 }
 
 .Toastify__toast {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  box-shadow: 0 8px 24px -12px rgb(15 30 61 / 0.35);
+  box-shadow: 0 8px 24px -12px rgb(29 39 49 / 0.35);
   font-size: var(--text-sm);
   min-height: 0;
 }
@@ -441,18 +280,6 @@
 
   [data-print="hide"] {
     display: none !important;
-  }
-
-  .board-map::before {
-    display: none;
-  }
-
-  .board {
-    --color-foreground: #000;
-    --color-muted-foreground: #333;
-    --color-border: #ccc;
-    background: none !important;
-    color: #000 !important;
   }
 
   a {
