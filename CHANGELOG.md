@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/sinahatami/portfolio/compare/v1.3.0...v1.4.0) (2026-11-24)
+
+### Features
+
+- redesign the site around sourced claims ([0f00b79](https://github.com/sinahatami/portfolio/commit/0f00b795749d8fd2c3223972fdf2a8c4492fa959))
+- weave the name into a denim design ([d5f5ea1](https://github.com/sinahatami/portfolio/commit/d5f5ea14d834b4e4dd328cb87131c88147d66293))
+
 # [1.3.0](https://github.com/sinahatami/portfolio/compare/v1.2.5...v1.3.0) (2026-11-24)
 
 ### Features
