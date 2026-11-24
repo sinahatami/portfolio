@@ -1,75 +1,39 @@
-import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+"use client";
 
-export function useScrollSpy(sectionIds: string[]) {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeSection, setActiveSection] = useState("about");
-  const pathname = usePathname();
+import { useEffect, useState } from "react";
+
+/**
+ * Observer pattern over IntersectionObserver: reports which section currently
+ * crosses a band just below the header. No scroll listeners, no layout reads.
+ */
+export function useScrollSpy(ids: readonly string[], enabled = true) {
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const key = ids.join("|");
 
   useEffect(() => {
-    let isMounted = true;
-
-    const handleScroll = () => {
-      if (!isMounted || pathname !== "/") return;
-
-      const shouldBeScrolled = window.scrollY > 20;
-      if (isScrolled !== shouldBeScrolled) {
-        setIsScrolled(shouldBeScrolled);
-      }
-
-      const totalScroll =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const currentProgress =
-        totalScroll > 0 ? (window.scrollY / totalScroll) * 100 : 0;
-      setScrollProgress(currentProgress);
-
-      const current = sectionIds.find((section) => {
-        const element = document.getElementById(section);
-        if (!element) return false;
-        const rect = element.getBoundingClientRect();
-        return rect.top <= 100 && rect.bottom >= 100;
-      });
-
-      if (current) setActiveSection(current);
-    };
-
-    if (pathname.startsWith("/blog")) {
-      setActiveSection("blog");
-      setIsScrolled(true);
-    } else if (pathname === "/") {
-      handleScroll();
+    if (!enabled) {
+      setActiveId(null);
+      return;
     }
+    const elements = key
+      .split("|")
+      .map((id) => document.getElementById(id))
+      .filter((element): element is HTMLElement => element !== null);
+    if (elements.length === 0) return;
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      isMounted = false;
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [pathname, isScrolled, sectionIds]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible[0]) setActiveId(visible[0].target.id);
+      },
+      { rootMargin: "-30% 0px -60% 0px" }
+    );
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [key, enabled]);
 
-    const hash = window.location.hash.substring(1);
-    if (!hash) return;
-
-    let attempts = 0;
-    const interval = setInterval(() => {
-      const element = document.getElementById(hash);
-      if (element) {
-        const offset = window.innerWidth < 768 ? 64 : 80;
-        const y = element.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top: y, behavior: "smooth" });
-        setActiveSection(hash);
-        clearInterval(interval);
-      }
-      attempts++;
-      if (attempts > 20) clearInterval(interval);
-    }, 100);
-
-    return () => clearInterval(interval);
-  }, [pathname]);
-
-  return { isScrolled, scrollProgress, activeSection, pathname };
+  return activeId;
 }

@@ -36,16 +36,15 @@
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
     "verbatimModuleSyntax": false,
-    "types": ["node", "jest", "@testing-library/jest-dom"]
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom/vitest"]
   },
   "include": [
     "next-env.d.ts",
-    "jest.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     ".next/dev/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "cypress", "**/*.cy.ts"]
+  "exclude": ["node_modules", "playwright-report", "test-results"]
 }

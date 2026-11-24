@@ -1,28 +1,41 @@
-import { getAllPosts } from "@/lib/blog";
-import { SectionContainer } from "@/components/common";
-import { BlogList } from "@/components/features";
+import type { Metadata } from "next";
+import { Container } from "@/components/atoms";
+import { EmptyState } from "@/components/molecules";
+import { PostList } from "@/components/organisms/post-list";
+import { getBlogRepository } from "@/server/container";
 
-export const metadata = {
-  title: "Blog | Sina Hatami",
-  description: "Thoughts on software engineering, performance, and design.",
+export const metadata: Metadata = {
+  title: "Writing",
+  description:
+    "Notes on web performance, React architecture and applied machine learning.",
 };
 
 export default function BlogPage() {
-  const posts = getAllPosts();
+  const posts = getBlogRepository().list();
 
   return (
-    <SectionContainer className="pt-32 pb-20">
-      <div className="mb-16">
-        <h1 className="mb-6 bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-4xl font-bold tracking-tight text-transparent lg:text-6xl dark:from-white dark:to-slate-400">
-          Technical Writing
-        </h1>
-        <p className="text-muted-foreground max-w-2xl text-xl leading-relaxed">
-          Deep dives into web development patterns, performance optimization
-          strategies, and modern software architecture.
-        </p>
+    <>
+      <div className="board">
+        <Container className="py-12 md:py-16">
+          <h1 className="type-display text-6xl leading-none md:text-7xl">
+            Writing
+          </h1>
+          <p className="text-muted-foreground mt-4 max-w-2xl text-xl leading-8">
+            Notes on web performance, React architecture and applied machine
+            learning.
+          </p>
+        </Container>
       </div>
-
-      <BlogList posts={posts} />
-    </SectionContainer>
+      <Container className="py-12 md:py-16">
+        {posts.length > 0 ? (
+          <PostList posts={posts} />
+        ) : (
+          <EmptyState
+            title="No articles yet"
+            description="New writing will appear here."
+          />
+        )}
+      </Container>
+    </>
   );
 }

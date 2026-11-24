@@ -1,15 +1,15 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { SITE } from "@/config/site";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Sina Hatami | Software Engineer & Data Scientist",
     short_name: "Sina Hatami",
-    description:
-      "Interactive 3D portfolio showcasing software engineering and data science expertise.",
+    description: SITE.description,
     start_url: "/",
     display: "standalone",
-    background_color: "#0a0a0a",
-    theme_color: "#3b82f6",
+    background_color: SITE.colors.paper,
+    theme_color: SITE.colors.ink,
     icons: [
       {
         src: "/icons/icon-72x72.png",

@@ -1,189 +1,125 @@
-# 🌐 Sina Hatami | Software Engineer & Data Scientist
+# Sina Hatami — Portfolio
 
-## 🎯 Portfolio Overview
+Personal site of Sina Hatami, software engineer and data scientist in Genoa, Italy.
 
-A cutting-edge, high-performance portfolio website built with modern web technologies. This project showcases **4+ years of expertise** in React, Next.js, TypeScript, and AI/ML technologies.
+- Live: [sinahatami.vercel.app](https://sinahatami.vercel.app/)
+- Source: [github.com/sinahatami/portfolio](https://github.com/sinahatami/portfolio)
 
-[![Portfolio Preview](/public/screenshot.png)](https://sinahatami.vercel.app/)
+[![Portfolio preview](/public/screenshot.png)](https://sinahatami.vercel.app/)
 
----
+## What's on the site
 
-### 🔗 Quick Links
+- **Route map**: the career drawn as a transit map. Industry, research and study are lines, each role or degree is a station, and switches between lines are interchanges. Hover, focus or tap a station to read it.
+- **Route**: roles and degrees as one strip map, newest first, ending at an open "next stop".
+- **Projects**: every public repository, joined with live GitHub data (primary language, last update) and filterable by area. Areas are shown as line roundels: web, machine learning, data and signals, systems and XR.
+- **Skills as evidence**: choosing a skill lists the roles and projects that used it. The list is derived from the content, not self-rated.
+- **References**: recommendation letters reproduced verbatim, with the PDF originals.
+- **Contact**: a validated form backed by a rate-limited server action and Resend.
+- **Command palette** (`⌘K` / `Ctrl+K`) and **voice control**, both driven by one command registry.
+- Light and dark themes, a print stylesheet for a résumé printout, and keyboard and screen-reader support.
 
-* 🚀 **Live Demo:** [sinahatami.vercel.app](https://sinahatami.vercel.app/)
-* 💻 **GitHub Repository:** [github.com/sinahatami/portfolio](https://github.com/sinahatami/portfolio)
+## Design system: "Line map"
 
-## ✨ Key Features
+| Token        | Light     | Dark      | Use                                   |
+| ------------ | --------- | --------- | ------------------------------------- |
+| Paper        | `#ffffff` | `#0a1226` | Page background                       |
+| Ink / board  | `#0f1e3d` | `#13224a` | Text, buttons, station boards         |
+| Industry     | `#0072ce` | `#3d9df0` | Industry line, web roundel            |
+| Research     | `#c8007a` | `#f05bb0` | Research line, machine-learning roundel |
+| Study        | `#00965e` | `#2fbf86` | Study line                            |
+| Signal       | `#ffcd00` | `#ffcd00` | Selected station, next stop, focus on boards |
 
-### 🎨 Modern UI/UX
+The type is **Barlow** for reading and **Barlow Semi Condensed** for signage and headings. The deep blue "board" sections (hero, contact, footer) re-point the colour tokens through a `.board` scope, so components work on them without changes. All tokens live in [`src/app/globals.css`](src/app/globals.css).
 
-```
-● Dark/Light Theme : Fully customizable theme system with persistent user preferences.
-● Interactive 3D Elements : Tech sphere visualization and project showcases using
-Three.js.
-● Smooth Animations : Native CSS-powered transitions, keyframes, and micro-interactions.
-● Responsive Design : Flawless experience across all device sizes (mobile, tablet,
-desktop).
-● Custom Cursor : Interactive cursor with hover effects (optimized for desktop).
-```
-### ⚡ Performance Optimized
-
-```
-● Next.js 14 App Router : Utilizing the latest React Server Components (RSC) architecture.
-● Image Optimization : Automatic compression, lazy loading, and WebP support.
-● Code Splitting : Dynamic imports implemented for heavy 3D and interactive components.
-● PWA Support : Fully installable as a Progressive Web App.
-● Core Web Vitals : Real-time monitoring for optimal LCP, FID, and CLS scores.
-```
-### 🔧 Technical Excellence
+## Architecture
 
 ```
-● TypeScript First : End-to-end type safety across the entire application.
-● 3D Integration : WebGL-based tech visualization with graceful fallbacks for older
-devices.
-● Real-time Data : GitHub API integration for live activity and repository tracking.
-● Contact Form : Server-side validation with Resend email integration.
-● SEO & Accessibility : WCAG 2.1 AA compliant and optimized for search engine crawlers.
-```
-
-## 📊 Tech Stack
-
-```
-Category Technologies
-Core Framework Next.js 14 (App Router), React 18,
-TypeScript 5
-Styling & UI Tailwind CSS, Shadcn/ui,
-Lucide React
-3D & Graphics Three.js, @react-three/fiber,
-@react-three/drei, WebGL
-Backend & APIs Resend (Email), GitHub REST API, Next.js
-Server Actions
-Monitoring Vercel Analytics, Speed Insights,
-Performance Observer API
-Dev Tools ESLint, Prettier, Husky, Commitlint
-```
-## 🏗 Project Structure
-
 src/
-├── app/ # Next.js 14 App Router (Pages & API)
+├── app/                 Routes (Next.js App Router) — the "pages" of atomic design
 ├── components/
-│ ├── 3d/ # Three.js / WebGL Components
-│ ├── sections/ # Page Sections (Hero, Skills, Projects, etc.)
-│ ├── layout/ # Navigation, Footer, Scroll components
-│ ├── features/ # Cursor, Command Menu, Voice features
-│ ├── ui/ # Base UI Components (Buttons, Cards, Badges)
-│ └── pwa/ # PWA Registry & Offline indicators
-├── contexts/ # Global State (Skills, Theme)
-├── hooks/ # Custom React Hooks (WebGL, Performance)
-├── data/ # Static Content & Resume Data
-├── lib/ # Utility functions & Shared logic
-├── actions/ # Next.js Server Actions (Contact form)
-├── types/ # Global TypeScript Definitions
-└── config/ # Feature flags & Animation configs
-
-## 🚀 Getting Started
-
-
-### Prerequisites
-
+│   ├── atoms/           Button, Roundel, LineBadge, Input, Icon, TextLink…
+│   ├── molecules/       FormField, PeriodLabel, ChoiceChips, ThemeToggle…
+│   ├── organisms/       Hero, RouteMap, RouteStrip, ProjectIndex, ContactForm, CommandPalette…
+│   ├── templates/       SiteShell, PageSection, ArticleLayout, StatusLayout
+│   └── providers/       Theme and command-center context
+├── content/             Typed site content (profile, experience, projects, posts/*.md)
+├── domain/              Entities and ports (interfaces) shared by every layer
+├── lib/                 Pure logic: dates, career map geometry, repo matching, skill evidence, commands
+├── server/              Use cases and adapters (GitHub, email, rate limiting, blog)
+│   └── container.ts     Composition root — the only place concrete adapters are chosen
+├── actions/             Server actions (thin HTTP adapters over use cases)
+├── emails/              React Email templates
+├── hooks/               Client hooks (scroll spy, speech recognition…)
+└── config/              Navigation, site settings, environment access
 ```
-● Node.js 18.17 or later
-● npm, yarn, or pnpm
+
+### Principles in practice
+
+- **Single responsibility** — content, pure logic, server use cases and presentation live in separate layers. The contact server action only adapts the request; `ContactService` owns the use case.
+- **Open/closed** — sections, navigation and commands are data. Adding a section to `config/navigation.ts` updates the header, scroll spy, command palette and voice control without touching them.
+- **Liskov substitution** — atoms accept their native element props, so a `Button` or `Input` can replace the element it wraps.
+- **Interface segregation** — ports are small (`EmailSender.send`, `RateLimiter.consume`, `GitHubClient`), and organisms receive only the data they render.
+- **Dependency inversion** — use cases depend on interfaces in `domain/` and `server/*`; `server/container.ts` injects the concrete adapters. Pages pass plain props into presentational organisms.
+
+### Patterns
+
+| Pattern            | Where                                                                       |
+| ------------------ | --------------------------------------------------------------------------- |
+| Repository         | `BlogRepository` → `FileSystemBlogRepository`                               |
+| Adapter            | `GitHubRestClient`, `ResendEmailSender`, `useSpeechRecognition`             |
+| Strategy           | `RateLimiter` → `FixedWindowRateLimiter` (swap for Redis/KV)                |
+| Null Object        | `UnconfiguredEmailSender` when no email provider is configured              |
+| Command + Factory  | `buildCommands()` registry consumed by the palette and voice control        |
+| Composition root   | `server/container.ts` with lazy singletons                                  |
+| Scoped theming     | `.board` re-points design tokens for content on the station board           |
+| Observer           | `useScrollSpy` over `IntersectionObserver`                                  |
+| Polymorphic slot   | `Button asChild` via Radix `Slot`                                           |
+
+## Getting started
+
+Requires Node.js 20+ and Yarn 1.
+
+```bash
+yarn install
+yarn dev
 ```
-### Installation & Setup
 
-1. **Clone the repository**
-    git clone
-    [https://github.com/sinahatami/portfolio.git](https://github.com/sinahatami/portfolio.git)
-    cd portfolio
-2. **Install dependencies**
-    npm install
-3. **Environment Configuration**
-    Create a .env.local file in the root directory:
-    # Required for contact form
-    RESEND_API_KEY=your_resend_api_key_here
-    # Optional: GitHub API for enhanced features
-    GITHUB_TOKEN=your_github_personal_access_token_here
-    # Optional: Analytics
-    NEXT_PUBLIC_GA_ID=your_google_analytics_id
-4. **Run Development Server**
-    npm run dev
-    Open [http://localhost:3000](http://localhost:3000) to view the result.
+Create `.env.local` (all values optional for local development):
 
-## 📦 Available Scripts
-
+```bash
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+GITHUB_TOKEN=            # raises the GitHub API rate limit
+RESEND_API_KEY=          # without it, the contact form reports that email is not configured
+ADMIN_EMAIL=             # inbox for contact messages
+FROM_EMAIL=              # verified sender for notifications
+REPLY_TO_EMAIL=          # sender for the visitor's confirmation
+GOOGLE_VERIFICATION_ID=
 ```
-● npm run dev: Start development server with Turbopack.
-● npm run build: Build the application for production.
-● npm run start: Start production server.
-● npm run lint: Run ESLint to find code issues.
-● npm run format: Format code with Prettier.
-● npm run type-check: Validate TypeScript types.
-● npm run analyze: Analyze bundle sizes for optimization.
-```
-## 🚢 Deployment
 
-### Vercel (Recommended)
+## Scripts
 
+| Command                 | Purpose                                                             |
+| ----------------------- | ------------------------------------------------------------------- |
+| `yarn dev`              | Development server (Turbopack)                                      |
+| `yarn build`            | Production build                                                    |
+| `yarn start`            | Serve the production build                                          |
+| `yarn lint`             | ESLint                                                              |
+| `yarn type-check`       | TypeScript, strict mode                                             |
+| `yarn test`             | Vitest unit and component tests                                     |
+| `yarn test:coverage`    | Vitest with V8 coverage                                             |
+| `yarn test:e2e`         | Playwright end-to-end tests (desktop and mobile Chrome)             |
+| `yarn lighthouse [url]` | Lighthouse scores for mobile and desktop, reports in `.lighthouse/` |
+| `yarn knip`             | Find unused files, exports and packages                             |
 
-The easiest way to deploy this portfolio is using the Vercel Platform.
+End-to-end tests and Lighthouse run against the production build, so run
+`yarn build` first. Playwright starts the server itself; for Lighthouse, run
+`yarn start` in another terminal. The first Playwright run needs a browser:
+`yarn playwright install chromium`.
 
-1. Push your code to a GitHub repository.
-2. Import the project into Vercel.
-3. Add your environment variables in the Vercel Dashboard.
-4. Deploy!
+## Contact
 
-### Manual Build
+Sina Hatami — [hatamisinaa@gmail.com](mailto:hatamisinaa@gmail.com) · [LinkedIn](https://www.linkedin.com/in/sina-hatami/) · [GitHub](https://github.com/sinahatami)
 
-npm run build
-npm run start
+## License
 
-## 🛠 Performance Optimization
-
-This portfolio achieves **100/100 Lighthouse scores** through:
-● **Caching** : Static Site Generation (SSG) with Incremental Static Regeneration (ISR).
-● **Bundle Optimization** : Tree-shaking and aggressive code splitting via `next/dynamic` for heavy client features (e.g., UI menus, 3D components, and large forms).
-● **WebGL & 3D Execution** : Deeply lazy-loaded `@react-three/fiber` and `three.js` ecosystems. Only executed on user interaction or off the critical render path.
-● **Asset Strategy** : Next/Image for WebP delivery, LCP prioritized rendering (with fade-in animations removed for critical paint elements), and optimized font loading.
-● **Monitoring** : Integration with Vercel Speed Insights and Web Vitals tracking.
-
-## 🤝 Contributing
-
-Contributions are welcome!
-
-1. Fork the Project.
-2. Create your Feature Branch (git checkout -b feature/AmazingFeature).
-3. Commit your Changes (git commit -m 'Add AmazingFeature').
-4. Push to the Branch (git push origin feature/AmazingFeature).
-5. Open a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 📬 Contact
-
-**Sina Hatami** - Software Engineer | Data Scientist
-
-* **📧 Email:** [hatamisinaa@gmail.com](mailto:hatamisinaa@gmail.com)
-* **🌐 Website:** [sinahatami.vercel.app](https://sinahatami.vercel.app/)
-* **💼 LinkedIn:** [linkedin.com/in/sina-hatami](https://www.linkedin.com/in/sina-hatami/)
-* **🐙 GitHub:** [github.com/sinahatami](https://github.com/sinahatami)
-* **📍 Location:** [Genoa, Italy](https://www.google.com/maps/search/?api=1&query=Genoa,+Italy)
-
-<div align="center">
-
-
-<br />
-Made with ❤ using Next.js, TypeScript, and Tailwind CSS
-<br />
-<strong>⭐ Star this repository if you found it helpful!</strong>
-<br />
-<br />
-<a href="https://www.google.com/search?q=https://github.com/sinahatami/portfolio">
-<img src="https://img.shields.io/github/stars/sinahatami/portfolio?style=social" alt="Github
-Stars" />
-</a>
-</div>
-
-
+MIT

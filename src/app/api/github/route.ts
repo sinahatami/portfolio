@@ -1,19 +1,17 @@
 import { NextResponse } from "next/server";
-import { GITHUB_CONFIG } from "@/config/github";
-import { getGitHubStats } from "@/lib/github-route-handler";
+import { getGitHubActivityService } from "@/server/container";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export async function GET() {
-  try {
-    const stats = await getGitHubStats(GITHUB_CONFIG.token);
-    return NextResponse.json(stats);
-  } catch (error) {
-    // The service layer should handle logging, but we can log here too if needed
-    console.error("API route error:", error);
+  const activity = await getGitHubActivityService().getActivity();
+
+  if (!activity) {
     return NextResponse.json(
-      { error: "Failed to fetch GitHub data" },
-      { status: 500 }
+      { error: "GitHub activity is temporarily unavailable." },
+      { status: 503 }
     );
   }
+
+  return NextResponse.json(activity);
 }
